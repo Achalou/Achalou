@@ -31,10 +31,10 @@ nav{position:sticky;top:0;z-index:10;background:rgba(251,248,240,.95);backdrop-f
 .hero{min-height:78vh;display:grid;place-items:center;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:var(--blue)}h1{font-family:Georgia,serif;font-size:clamp(3.5rem,9vw,7.5rem);line-height:.9;margin:.15em 0;white-space:nowrap}.tag{font-size:clamp(1.35rem,3vw,2.1rem);font-weight:700;margin:0 0 24px}.lead{font-size:1.15rem;max-width:650px}.cta{display:inline-block;margin-top:18px;padding:13px 20px;background:var(--blue);color:#fff;text-decoration:none;border-radius:999px;font-weight:800}.logo-card{background:#fff;border-radius:28px;padding:18px;box-shadow:0 18px 60px #0002}.logo-card img{display:block;width:100%;border-radius:18px}.logo-card{position:relative;overflow:hidden}.logo-card .concert-poster{display:none;width:100%;aspect-ratio:1944/767;background:#fff;border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;grid-template-columns:66% 34%;align-items:stretch}
 .logo-card.has-concert>img{display:none}
 .logo-card.has-concert .concert-poster{display:grid}
-.poster-copy{min-width:0;padding:clamp(14px,2vw,26px);display:flex;flex-direction:column;justify-content:center}
-.concert-poster .poster-date{font-family:Georgia,serif;font-size:2.15rem;font-weight:700;line-height:1.02;margin:0 0 10px;color:var(--ink);white-space:nowrap}
-.concert-poster .poster-meta{font-size:.96rem;font-weight:850;color:var(--blue);line-height:1.25;white-space:nowrap}
-.poster-badge{background:#015d9b;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px}
+.poster-copy{min-width:0;padding:clamp(14px,2vw,26px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+.concert-poster .poster-date{font-family:Georgia,serif;font-size:2.15rem;font-weight:700;line-height:1.08;margin:0 0 10px;color:var(--ink);max-width:100%;text-align:center}
+.concert-poster .poster-meta{font-size:.96rem;font-weight:850;color:var(--blue);line-height:1.25;max-width:100%;text-align:center;overflow-wrap:anywhere;word-break:normal}.poster-time,.poster-place{display:block}.poster-place{margin-top:2px}
+.poster-badge{background:var(--blue);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px}
 .poster-badge img{display:block!important;width:112%!important;height:112%!important;max-width:none!important;max-height:none!important;object-fit:contain;border-radius:0!important;animation:none!important}
 @media(max-width:760px){.logo-card .concert-poster{aspect-ratio:1944/767;grid-template-columns:66% 34%}.poster-copy{padding:12px}.concert-poster .poster-date{font-size:clamp(1.05rem,5vw,1.75rem)}.concert-poster .poster-meta{font-size:clamp(.62rem,2.7vw,.9rem)}.poster-badge{padding:2px}}
 section{padding:82px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem);margin:0 0 24px}.intro{background:var(--sand)}.copy{font-size:1.2rem;max-width:800px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid #0001;border-radius:20px;padding:26px;min-height:180px}.card h3{font-size:1.4rem;margin-top:0}.date{font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.08em}.placeholder{border:2px dashed #0002;min-height:220px;border-radius:22px;display:grid;place-items:center;text-align:center;padding:24px;background:#fff8}.contact{background:var(--blue);color:#fff}.socials{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.social{display:inline-block;padding:13px 20px;background:#fff;color:var(--blue);text-decoration:none;border-radius:999px;font-weight:900}.foot{padding:30px 0;text-align:center;font-size:.9rem}.tech{font-size:.75rem;opacity:.6;margin-top:7px}
@@ -213,15 +213,17 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const prettyTime = next.heure ? String(next.heure).replace(':','h') : '';
     poster.innerHTML='<div class="poster-copy">'+
       '<div class="poster-date">'+esc(date)+'</div>'+
-      '<div class="poster-meta">'+(prettyTime ? esc(prettyTime)+' · ' : '')+esc(next.lieu)+'</div>'+
+      '<div class="poster-meta">'+(prettyTime ? '<span class="poster-time">'+esc(prettyTime)+'</span>' : '')+'<span class="poster-place">'+esc(next.lieu)+'</span></div>'+
       '</div><div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
+    requestAnimationFrame(fitHeroConcert);
   }
 
   function fitText(el, maxPx, minPx){
     if(!el) return;
     let size=maxPx;
     el.style.fontSize=size+'px';
-    while(size>minPx && (el.scrollWidth>el.clientWidth || el.scrollHeight>el.clientHeight)){
+    const box=el.parentElement;
+    while(size>minPx && (el.scrollWidth>el.clientWidth || box.scrollHeight>box.clientHeight)){
       size-=1;
       el.style.fontSize=size+'px';
     }
@@ -233,8 +235,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const dateEl=poster.querySelector('.poster-date');
     const metaEl=poster.querySelector('.poster-meta');
     const panelWidth=poster.getBoundingClientRect().width;
-    fitText(dateEl, Math.min(40, Math.max(24, panelWidth*0.075)), 20);
-    fitText(metaEl, Math.min(18, Math.max(13, panelWidth*0.032)), 11);
+    fitText(dateEl, Math.min(40, Math.max(24, panelWidth*0.075)), 18);
+    fitText(metaEl, Math.min(18, Math.max(13, panelWidth*0.032)), 10);
   }
 
   fitHeroConcert();

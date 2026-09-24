@@ -28,18 +28,16 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6}a{color:inherit}.wrap{width:min(var(--max),calc(100% - 36px));margin:auto}
 .skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;background:#fff;padding:10px;z-index:99}
 nav{position:sticky;top:0;z-index:10;background:rgba(251,248,240,.95);backdrop-filter:blur(8px);border-bottom:1px solid #0001}.nav{display:flex;align-items:center;justify-content:space-between;min-height:68px}.brand{font-weight:900;font-size:1.35rem;text-decoration:none;white-space:nowrap}.links{display:flex;gap:22px}.links a{text-decoration:none;font-weight:650;white-space:nowrap}
-.hero{min-height:78vh;display:grid;place-items:center;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:var(--blue)}h1{font-family:Georgia,serif;font-size:clamp(3.5rem,9vw,7.5rem);line-height:.9;margin:.15em 0;white-space:nowrap}.tag{font-size:clamp(1.35rem,3vw,2.1rem);font-weight:700;margin:0 0 24px}.lead{font-size:1.15rem;max-width:650px}.cta{display:inline-block;margin-top:18px;padding:13px 20px;background:var(--blue);color:#fff;text-decoration:none;border-radius:999px;font-weight:800}.logo-card{background:#fff;border-radius:28px;padding:18px;box-shadow:0 18px 60px #0002}.logo-card img{display:block;width:100%;border-radius:18px}.logo-card{position:relative;overflow:hidden}.logo-card .concert-poster{display:none;aspect-ratio:1.95/1;background:#fff;border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;min-height:250px;grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:stretch}
+.hero{min-height:78vh;display:grid;place-items:center;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:var(--blue)}h1{font-family:Georgia,serif;font-size:clamp(3.5rem,9vw,7.5rem);line-height:.9;margin:.15em 0;white-space:nowrap}.tag{font-size:clamp(1.35rem,3vw,2.1rem);font-weight:700;margin:0 0 24px}.lead{font-size:1.15rem;max-width:650px}.cta{display:inline-block;margin-top:18px;padding:13px 20px;background:var(--blue);color:#fff;text-decoration:none;border-radius:999px;font-weight:800}.logo-card{background:#fff;border-radius:28px;padding:18px;box-shadow:0 18px 60px #0002}.logo-card img{display:block;width:100%;border-radius:18px}.logo-card{position:relative;overflow:hidden}.logo-card .concert-poster{display:none;aspect-ratio:1.95/1;background:#fff;border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;min-height:250px;grid-template-columns:minmax(0,1.55fr) minmax(0,.85fr);align-items:stretch}
 .logo-card.has-concert>img{display:none}
 .logo-card.has-concert .concert-poster{display:grid}
-.poster-copy{padding:clamp(24px,4vw,42px);display:flex;flex-direction:column;justify-content:center}
-.concert-poster .poster-label{text-transform:uppercase;letter-spacing:.16em;font-weight:900;font-size:.78rem;color:var(--blue)}
-.concert-poster .poster-date{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.65rem);font-weight:700;line-height:1.02;margin:10px 0 8px;color:var(--ink)}
-.concert-poster .poster-time{font-weight:900;font-size:1rem;color:var(--blue);margin-bottom:8px}
-.concert-poster .poster-place{font-size:clamp(1rem,1.8vw,1.3rem);font-weight:800;color:var(--ink);line-height:1.25}
-.concert-poster .poster-info{margin-top:10px;font-size:.88rem;color:#53606a}
-.poster-art{background:var(--blue);display:grid;place-items:center;padding:22px;overflow:hidden}
+.poster-copy{padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;justify-content:center}
+.concert-poster .poster-date{font-family:Georgia,serif;font-size:clamp(1.9rem,3.4vw,3.15rem);font-weight:700;line-height:1.02;margin:0 0 18px;color:var(--ink)}
+.concert-poster .poster-time{font-weight:900;font-size:1rem;color:var(--ink);margin:-8px 0 12px}
+.concert-poster .poster-place{font-size:clamp(1.05rem,1.9vw,1.35rem);font-weight:850;color:var(--blue);line-height:1.25}
+.poster-art{background:var(--blue);display:grid;place-items:center;padding:18px;overflow:hidden}
 .poster-art img{display:block!important;width:100%!important;height:auto!important;max-height:100%;object-fit:contain;border-radius:0!important;animation:aclBreathe 7s ease-in-out 1.2s infinite}
-@media(max-width:760px){.logo-card .concert-poster{grid-template-columns:minmax(0,2fr) minmax(0,1fr);min-height:210px}.poster-copy{padding:22px}.concert-poster .poster-date{font-size:clamp(1.65rem,8vw,2.5rem)}}
+@media(max-width:760px){.logo-card .concert-poster{grid-template-columns:minmax(0,1.5fr) minmax(105px,.8fr);min-height:205px}.poster-copy{padding:22px}.concert-poster .poster-date{font-size:clamp(1.7rem,8vw,2.5rem)}}
 section{padding:82px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem);margin:0 0 24px}.intro{background:var(--sand)}.copy{font-size:1.2rem;max-width:800px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid #0001;border-radius:20px;padding:26px;min-height:180px}.card h3{font-size:1.4rem;margin-top:0}.date{font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.08em}.placeholder{border:2px dashed #0002;min-height:220px;border-radius:22px;display:grid;place-items:center;text-align:center;padding:24px;background:#fff8}.contact{background:var(--blue);color:#fff}.socials{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.social{display:inline-block;padding:13px 20px;background:#fff;color:var(--blue);text-decoration:none;border-radius:999px;font-weight:900}.foot{padding:30px 0;text-align:center;font-size:.9rem}.tech{font-size:.75rem;opacity:.6;margin-top:7px}
 @media(max-width:760px){.hero{min-height:auto;padding:48px 0}.hero-grid{grid-template-columns:1fr;gap:28px}.logo-card{order:-1}.cards{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column;padding:12px 0}.links{gap:14px;padding-bottom:8px;width:100%;overflow:auto;font-size:.85rem}section{padding:60px 0}h1{font-size:clamp(3.2rem,16vw,5rem)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -214,11 +212,10 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     panel.classList.add('has-concert');
     poster.hidden=false;
     const prettyTime = next.heure ? String(next.heure).replace(':','h') : '';
-    poster.innerHTML='<div class="poster-copy"><div class="poster-label">Prochain concert</div>'+
+    poster.innerHTML='<div class="poster-copy">'+
       '<div class="poster-date">'+esc(date)+'</div>'+
       (prettyTime ? '<div class="poster-time">'+esc(prettyTime)+'</div>' : '')+
       '<div class="poster-place">'+esc(next.lieu)+'</div>'+
-      (next.info ? '<div class="poster-info">'+esc(next.info)+'</div>' : '')+
       '</div><div class="poster-art"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
   }
 

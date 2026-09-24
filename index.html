@@ -80,17 +80,24 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   .links a{transition:none}
 }
 
+
+/* Prochain concert automatique dans l'accueil */
+.hero-concert{margin:.15em 0 18px;max-width:680px}
+.hero-concert .next-label{text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--blue);font-size:.9rem}
+.hero-concert .next-date{font-family:Georgia,serif;font-weight:700;font-size:clamp(2.15rem,5.5vw,4.6rem);line-height:1;margin:.14em 0;white-space:nowrap}
+.hero-concert .next-place{font-size:clamp(1.1rem,2.3vw,1.45rem);font-weight:750}
+
 </style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#photos">Photos</a><a href="#contact">Contact</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow">Duo · musique traditionnelle</div><h1>A’Cha Lou</h1><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card"><img src="acha-lou-logo.png" alt="A’Cha Lou, duo de musique traditionnelle : accordéoniste et violoniste chanteur"></div></div></section>
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card"><img src="acha-lou-logo.png" alt="A’Cha Lou, duo de musique traditionnelle : accordéoniste et violoniste chanteur"></div></div></section>
 
 <section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
-<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div class="cards"><article class="card"><div class="date">Prochaines dates</div><h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article><article class="card"><div class="date">Archive</div><h3>Gazette Café · Montpellier</h3><p>19 novembre 2025</p></article><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
+<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div class="cards"><div id="concertsAuto"></div><article class="card"><div class="date">Archive</div><h3>Gazette Café · Montpellier</h3><p>19 novembre 2025</p></article><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
 
 <section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div class="placeholder"><strong>Les premiers extraits arriveront ici.</strong></div></div></section>
 
@@ -149,6 +156,58 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
       ));
     },{rootMargin:'-28% 0px -55% 0px',threshold:[0,.1,.25,.5]});
     sections.forEach(s=>observer.observe(s));
+  }
+})();
+</script>
+
+
+<script src="concerts.js"></script>
+
+<script>
+(function(){
+  const data = Array.isArray(window.ACHALOU_CONCERTS) ? window.ACHALOU_CONCERTS : [];
+  const valid = data
+    .filter(c => c && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '') && c.lieu)
+    .map(c => ({...c, when:new Date(c.date+'T23:59:59')}))
+    .filter(c => !isNaN(c.when));
+
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const upcoming = valid.filter(c => c.when >= today).sort((a,b)=>a.when-b.when);
+  const next = upcoming[0];
+
+  const host = document.getElementById('concertsAuto');
+  if(host){
+    if(next){
+      const date = new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'})
+        .format(new Date(next.date+'T12:00:00'));
+      host.innerHTML = '<article class="card"><div class="date">Prochaine date</div>'+
+        '<h3>'+esc(next.lieu)+'</h3><p>'+esc(date)+(next.heure ? ' · '+esc(next.heure) : '')+'</p>'+
+        (next.info ? '<p>'+esc(next.info)+'</p>' : '')+'</article>';
+    } else {
+      host.innerHTML = '<article class="card"><div class="date">Prochaines dates</div>'+
+        '<h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article>';
+    }
+  }
+
+  if(next){
+    const title=document.getElementById('heroTitle');
+    const box=document.getElementById('heroConcert');
+    if(title && box){
+      const date = new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'})
+        .format(new Date(next.date+'T12:00:00')).toUpperCase();
+      title.hidden=true;
+      box.hidden=false;
+      box.innerHTML='<div class="next-label">Prochain concert</div>'+
+        '<div class="next-date">'+esc(date)+'</div>'+
+        '<div class="next-place">'+esc(next.lieu)+'</div>';
+    }
+  }
+
+  function esc(s){
+    const d=document.createElement('div');
+    d.textContent=String(s || '');
+    return d.innerHTML;
   }
 })();
 </script>

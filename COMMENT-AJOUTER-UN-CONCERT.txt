@@ -1,0 +1,33 @@
+A’CHA LOU — AJOUTER UN CONCERT FACILEMENT
+
+Désormais, tu ne touches plus à index.html.
+
+1. Sur GitHub, ouvre le fichier : concerts.js
+2. Clique sur le petit crayon pour le modifier.
+3. Entre les concerts entre les crochets [ ].
+
+EXEMPLE :
+
+window.ACHALOU_CONCERTS = [
+  { date: "2026-10-12", lieu: "Gazette Café · Montpellier", heure: "20h30", info: "" },
+];
+
+Pour deux concerts :
+
+window.ACHALOU_CONCERTS = [
+  { date: "2026-10-12", lieu: "Gazette Café · Montpellier", heure: "20h30", info: "" },
+  { date: "2026-11-08", lieu: "Nom du lieu · Ville", heure: "18h00", info: "" },
+];
+
+4. Clique sur Commit changes.
+
+C’EST TOUT.
+
+Le site :
+- choisit automatiquement la prochaine date future ;
+- l’affiche dans la rubrique Concerts ;
+- l’affiche automatiquement à la place du grand « A’Cha Lou » sur l’accueil ;
+- passe automatiquement au concert suivant lorsque la date est passée ;
+- revient à « A’Cha Lou » lorsqu’il n’y a plus de concert futur.
+
+IMPORTANT : écris toujours la date sous la forme AAAA-MM-JJ.

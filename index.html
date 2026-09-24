@@ -53,25 +53,62 @@ section{padding:82px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4
   .cta:hover,.social:hover,.card:hover,.placeholder:hover{transform:none!important;box-shadow:none!important}
 }
 
+
+/* Finitions discrètes */
+.music-line{height:46px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.music-line svg{width:min(520px,80vw);height:30px}
+.music-line path{fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:700;animation:drawMusic 2.1s ease .7s forwards}
+@keyframes drawMusic{to{stroke-dashoffset:0}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.seen{opacity:1;transform:none}
+.float-tools{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;gap:9px;flex-direction:column}
+.float-btn{width:46px;height:46px;border:0;border-radius:50%;background:var(--blue);color:#fff;box-shadow:0 8px 24px #0003;display:grid;place-items:center;font-size:1.15rem;cursor:pointer;text-decoration:none;transition:transform .2s ease,opacity .2s ease}
+.float-btn:hover{transform:translateY(-2px)}#topBtn{opacity:0;pointer-events:none}#topBtn.show{opacity:1;pointer-events:auto}
+@media(min-width:761px){#shareBtn{display:none}}
+@media(prefers-reduced-motion:reduce){.music-line path{animation:none;stroke-dashoffset:0}.reveal{opacity:1;transform:none;transition:none}.float-btn{transition:none}}
+
 </style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#photos">Photos</a><a href="#contact">Contact</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow">Duo · musique traditionnelle</div><h1>A’Cha Lou</h1><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts">Voir les concerts</a></div><div class="logo-card"><img src="acha-lou-logo.png" alt="A’Cha Lou, duo de musique traditionnelle : accordéoniste et violoniste chanteur"></div></div></section>
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow">Duo · musique traditionnelle</div><h1>A’Cha Lou</h1><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card"><img src="acha-lou-logo.png" alt="A’Cha Lou, duo de musique traditionnelle : accordéoniste et violoniste chanteur"></div></div></section>
 
-<section class="intro" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
+<div class="music-line" aria-hidden="true"><svg viewBox="0 0 520 30" role="presentation"><path d="M4 16 C42 3 62 27 100 15 S158 4 194 16 S252 27 286 15 S340 4 376 16 S434 27 516 14"/></svg></div>
+<section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
-<section id="concerts"><div class="wrap"><h2>Concerts</h2><div class="cards"><article class="card"><div class="date">Prochaines dates</div><h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article><article class="card"><div class="date">Archive</div><h3>Gazette Café · Montpellier</h3><p>19 novembre 2025</p></article><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
+<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div class="cards"><article class="card"><div class="date">Prochaines dates</div><h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article><article class="card"><div class="date">Archive</div><h3>Gazette Café · Montpellier</h3><p>19 novembre 2025</p></article><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
 
-<section class="intro" id="musique"><div class="wrap"><h2>Musique</h2><div class="placeholder"><strong>Les premiers extraits arriveront ici.</strong></div></div></section>
+<section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div class="placeholder"><strong>Les premiers extraits arriveront ici.</strong></div></div></section>
 
-<section id="photos"><div class="wrap"><h2>Photos</h2><div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div></div></section>
+<section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div></div></section>
 
-<section class="contact" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer">Instagram · @achalou24</a></div></div></section>
+<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div></section>
 </main>
 <footer class="foot"><div class="wrap"><strong>A’Cha Lou · Musique trad</strong><div class="tech">Site officiel · Montpellier / Occitanie · connexion HTTPS</div></div></footer>
+
+<div class="float-tools" aria-label="Outils">
+<button class="float-btn" id="shareBtn" type="button" aria-label="Partager A’Cha Lou" title="Partager">↗</button>
+<a class="float-btn" id="topBtn" href="#accueil" aria-label="Retour en haut" title="Retour en haut">↑</a>
+</div>
+<script>
+(function(){
+  const sections=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('seen');io.unobserve(e.target)}}),{threshold:.12});
+    sections.forEach(s=>io.observe(s));
+  }else{sections.forEach(s=>s.classList.add('seen'))}
+  const top=document.getElementById('topBtn');
+  const toggle=()=>top.classList.toggle('show',window.scrollY>500);
+  addEventListener('scroll',toggle,{passive:true});toggle();
+  const share=document.getElementById('shareBtn');
+  if(!navigator.share){share.style.display='none'}else{
+    share.addEventListener('click',()=>navigator.share({title:"A’Cha Lou",text:"A’Cha Lou — Duo de musique trad",url:location.href}).catch(()=>{}));
+  }
+})();
+</script>
+
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"a0e391cce3c6f9c596f6af67d38ee65b"}'></script>
 <!-- End Cloudflare Web Analytics -->

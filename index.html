@@ -272,12 +272,29 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 
-/* Seule modification : marge blanche extérieure plus fine sur les 4 côtés */
-.logo-card{
-  padding:6px!important;
+@media(min-width:761px){
+  .logo-card.has-concert{
+    width:max-content!important;
+    height:max-content!important;
+    justify-self:center;
+    padding:6px!important;
+  }
+  .logo-card.has-concert .concert-poster{
+    transform:none!important;
+    transform-origin:top left!important;
+  }
 }
-@media(max-width:760px){
-  .logo-card{padding:6px!important}
+
+
+@media(min-width:761px){
+  /* Personnages grands, sans modifier la géométrie du panneau */
+  .poster-badge{padding:0!important}
+  .poster-badge img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
 }
 
 </style>
@@ -443,9 +460,11 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
       const refW=Math.min(520, poster.closest('.logo-card').clientWidth || 520);
       const refH=205;
       const scale=Math.min(1, refW/naturalW, refH/h);
-      poster.style.transform='scale('+scale+')';
-      // Réserve dans la mise en page la place correspondant à la taille visible.
-      poster.parentElement.style.minHeight=Math.ceil(h*scale)+'px';
+      // 'zoom' réduit aussi la boîte de mise en page, contrairement à transform.
+      // Ainsi le cadre blanc épouse réellement le panneau sur les 4 côtés.
+      poster.style.transform='none';
+      poster.style.zoom=String(scale);
+      poster.parentElement.style.minHeight='0px';
     });
   }
 

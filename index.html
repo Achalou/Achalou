@@ -380,8 +380,21 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 <script>
 (function(){
-  const data = Array.isArray(window.ACHALOU_CONCERTS) ? window.ACHALOU_CONCERTS : [];
+  const allData = Array.isArray(window.ACHALOU_CONCERTS) ? window.ACHALOU_CONCERTS : [];
   const now = new Date();
+
+  // Modification 1 — Étape 2 : seuls les concerts publiés sont visibles.
+  // Un brouillon programmé devient automatiquement visible à la date prévue.
+  // Les éléments placés dans la corbeille restent invisibles pendant leur conservation de 30 jours.
+  const data = allData.filter(c=>{
+    if(!c || c.supprimeLe) return false;
+    if(c.statut !== 'brouillon') return true; // compatibilité avec les anciens concerts
+    if(!c.publicationProgrammee) return false;
+    const parts=new Intl.DateTimeFormat('fr-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now);
+    const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+    const parisNow=`${v.year}-${v.month}-${v.day}T${v.hour}:${v.minute}`;
+    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(c.publicationProgrammee) && c.publicationProgrammee <= parisNow;
+  });
 
   function parseTime(value){
     const m=String(value || '').trim().match(/^(\d{1,2})(?::|h)?(\d{2})?$/i);

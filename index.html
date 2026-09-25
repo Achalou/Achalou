@@ -313,6 +313,26 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+
+/* Animation uniquement lorsqu'un concert est affiché.
+   Elle joue une fois au chargement puis le panneau reste parfaitement immobile. */
+@keyframes concertAttention{
+  0%   {transform:translateY(0) scale(1)}
+  16%  {transform:translateY(-4px) scale(1.018)}
+  32%  {transform:translateY(1px) scale(1)}
+  48%  {transform:translateY(-3px) scale(1.014)}
+  64%  {transform:translateY(1px) scale(1)}
+  80%  {transform:translateY(-2px) scale(1.008)}
+  100% {transform:translateY(0) scale(1)}
+}
+.logo-card.has-concert{
+  animation:concertAttention 1.15s cubic-bezier(.22,.8,.3,1) .35s 1 both;
+  transform-origin:center center;
+}
+@media(prefers-reduced-motion:reduce){
+  .logo-card.has-concert{animation:none!important}
+}
+
 </style>
 </head>
 <body>

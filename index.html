@@ -176,6 +176,50 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   .poster-badge{width:100%;height:auto;aspect-ratio:709/558}
 }
 
+
+/* CORRECTION FINALE : la partie gauche fixe la hauteur.
+   La partie bleue et l'icône grandissent ensuite proportionnellement. */
+@media(min-width:761px){
+  .logo-card{overflow:visible}
+  .logo-card .concert-poster{
+    display:none;
+    width:auto;
+    max-width:none;
+    height:auto;
+    aspect-ratio:auto;
+    grid-template-columns:none;
+    align-items:stretch;
+  }
+  .logo-card.has-concert .concert-poster{display:flex}
+  .poster-copy{
+    flex:0 0 360px;
+    width:360px;
+    height:auto;
+    min-width:360px;
+    overflow:visible;
+  }
+  .poster-badge{
+    flex:0 0 auto;
+    width:0;
+    height:auto;
+    min-width:0;
+    aspect-ratio:auto;
+    padding:0;
+    background:var(--blue);
+    overflow:hidden;
+  }
+  .poster-badge img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    border-radius:0!important;
+    animation:none!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -297,7 +341,42 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
   '<div class="poster-place">'+esc(next.lieu)+'</div>'+
   '</div><div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
-    requestAnimationFrame(fitHeroConcert);
+    requestAnimationFrame(()=>{
+      fitHeroConcert();
+      sizeConcertPoster();
+    });
+  }
+
+
+  function sizeConcertPoster(){
+    const poster=document.getElementById('concertPoster');
+    if(!poster || poster.hidden || innerWidth<=760) return;
+
+    const copy=poster.querySelector('.poster-copy');
+    const badge=poster.querySelector('.poster-badge');
+    const icon=badge && badge.querySelector('img');
+    if(!copy || !badge || !icon) return;
+
+    // On repart d'une géométrie neutre pour mesurer uniquement le texte de gauche.
+    poster.style.height='auto';
+    poster.style.width='auto';
+    badge.style.width='0px';
+
+    requestAnimationFrame(()=>{
+      const h=Math.ceil(copy.scrollHeight);
+      const ratio=(icon.naturalWidth && icon.naturalHeight)
+        ? icon.naturalWidth/icon.naturalHeight
+        : 1.5;
+
+      // Même hauteur à droite ; largeur droite et icône augmentent
+      // exactement dans la même proportion.
+      const rightW=Math.round(h*ratio);
+      const leftW=Math.ceil(copy.getBoundingClientRect().width);
+
+      poster.style.height=h+'px';
+      badge.style.width=rightW+'px';
+      poster.style.width=(leftW+rightW)+'px';
+    });
   }
 
   function fitText(el, maxPx, minPx){
@@ -325,7 +404,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   let fitTimer;
   addEventListener('resize',()=>{
     clearTimeout(fitTimer);
-    fitTimer=setTimeout(fitHeroConcert,100);
+    fitTimer=setTimeout(()=>{fitHeroConcert();sizeConcertPoster();},100);
   });
 
   function esc(s){

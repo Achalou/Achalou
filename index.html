@@ -405,62 +405,69 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 
-/* SANS CONCERT : même construction visuelle que le panneau concert */
+/* SANS CONCERT : conserver intégralement le logo original.
+   On ne reconstruit plus le texte ni le bloc bleu. */
 .logo-card:not(.has-concert){
   padding:6px!important;
   min-height:0!important;
   height:auto!important;
+  width:auto!important;
+  max-width:100%!important;
 }
-.normal-logo{
-  width:100%;
-  aspect-ratio:1944/767;
-  display:grid;
-  grid-template-columns:66% 34%;
-  overflow:hidden;
-  background:#fff;
-  border:1.5px solid var(--ink);
-  border-radius:18px;
-}
-.normal-logo-name{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-width:0;
-  padding:10px;
-  color:#000;
-  font-family:"Brush Script MT","Segoe Script","URW Chancery L",cursive;
-  font-size:clamp(2rem,5.4vw,4.4rem);
-  font-weight:700;
-  line-height:1;
-  white-space:nowrap;
-}
-.normal-logo-blue{
-  min-width:0;
-  width:100%;
-  height:100%;
-  padding:0;
-  background:var(--blue);
-  border-radius:0 16px 16px 0;
-  overflow:hidden;
-}
-.normal-logo-blue img{
+.logo-card:not(.has-concert) > img{
+  display:block!important;
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
   object-fit:contain!important;
-  border-radius:0!important;
-  animation:none!important;
+  margin:0!important;
 }
-.logo-card.has-concert .normal-logo{display:none}
 
+/* En portrait, ne jamais rogner le logo sans concert. */
 @media(max-width:600px) and (orientation:portrait){
-  .normal-logo{
-    aspect-ratio:2/1;
-    grid-template-columns:50% 50%;
+  .logo-card:not(.has-concert) > img{
+    width:100%!important;
+    height:auto!important;
+    object-fit:contain!important;
   }
-  .normal-logo-name{
-    padding:5px;
-    font-size:clamp(1.2rem,7.2vw,2rem);
+}
+
+
+/* SANS CONCERT — retraitement uniquement de la zone bleue.
+   Le logo original reste dessous, intact. */
+.logo-card:not(.has-concert){
+  position:relative!important;
+  overflow:hidden!important;
+}
+.logo-card:not(.has-concert)::after{
+  content:"";
+  position:absolute;
+  top:6px;
+  right:6px;
+  bottom:6px;
+  width:33.5%;
+  background-color:var(--blue);
+  background-image:url("acha-lou-icon.png");
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:auto 100%;
+  border-radius:0 16px 16px 0;
+  pointer-events:none;
+}
+
+/* Sur téléphone portrait, garder une largeur raisonnable sans toucher au texte du logo. */
+@media(max-width:600px) and (orientation:portrait){
+  .logo-card:not(.has-concert)::after{
+    width:34%;
   }
+}
+
+
+/* Même principe de taille que le panneau concert :
+   hauteur disponible × ratio naturel de l'icône. */
+.logo-card:not(.has-concert)::after{
+  width:var(--normal-blue-width,33.5%)!important;
+  max-width:45%!important;
+  background-size:auto 100%!important;
 }
 
 </style>
@@ -469,13 +476,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#photos">Photos</a><a href="#contact">Contact</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card" id="heroPanel">
-<div class="normal-logo" aria-label="A’Cha Lou, duo de musique traditionnelle">
-  <div class="normal-logo-name">A’Cha Lou</div>
-  <div class="normal-logo-blue"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>
-</div>
-<div class="concert-poster" id="concertPoster" hidden></div>
-</div></div></section>
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card" id="heroPanel"><img src="acha-lou-logo.png" alt="A’Cha Lou, duo de musique traditionnelle : accordéoniste et violoniste chanteur"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
 
 <section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
@@ -679,4 +680,24 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"a0e391cce3c6f9c596f6af67d38ee65b"}'></script>
 <!-- End Cloudflare Web Analytics -->
+
+<script>
+(function(){
+  function syncNormalLogoIcon(){
+    const card=document.querySelector('.logo-card:not(.has-concert)');
+    if(!card) return;
+    const img=new Image();
+    img.onload=function(){
+      const innerH=Math.max(0, card.clientHeight-12);
+      if(!innerH || !img.naturalHeight) return;
+      const ratio=img.naturalWidth/img.naturalHeight;
+      card.style.setProperty('--normal-blue-width', Math.round(innerH*ratio)+'px');
+    };
+    img.src='acha-lou-icon.png';
+  }
+  addEventListener('load',syncNormalLogoIcon);
+  addEventListener('resize',syncNormalLogoIcon);
+})();
+</script>
+
 </body></html>

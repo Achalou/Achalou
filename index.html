@@ -220,6 +220,22 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+
+/* Finition : séparation droite entre blanc et bleu,
+   coins arrondis uniquement à droite, et réduction uniforme
+   si la carte calculée dépasse la taille de référence. */
+@media(min-width:761px){
+  .poster-badge{
+    border-radius:0 16px 16px 0!important;
+  }
+  .poster-badge img{
+    border-radius:0 16px 16px 0!important;
+  }
+  .logo-card .concert-poster{
+    transform-origin:center center;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -373,9 +389,19 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
       const rightW=Math.round(h*ratio);
       const leftW=Math.ceil(copy.getBoundingClientRect().width);
 
+      const naturalW=leftW+rightW;
       poster.style.height=h+'px';
       badge.style.width=rightW+'px';
-      poster.style.width=(leftW+rightW)+'px';
+      poster.style.width=naturalW+'px';
+
+      // Taille de référence du panneau d'origine. Si le contenu calculé est
+      // plus grand, on réduit TOUT uniformément : texte, bleu et personnages.
+      const refW=Math.min(520, poster.closest('.logo-card').clientWidth || 520);
+      const refH=205;
+      const scale=Math.min(1, refW/naturalW, refH/h);
+      poster.style.transform='scale('+scale+')';
+      // Réserve dans la mise en page la place correspondant à la taille visible.
+      poster.parentElement.style.minHeight=Math.ceil(h*scale)+'px';
     });
   }
 

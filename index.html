@@ -236,6 +236,50 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+
+/* Finition visuelle du panneau concert */
+@media(min-width:761px){
+  /* La bordure extérieure appartient au panneau complet.
+     On enlève toute bordure/ligne propre à la zone bleue. */
+  .poster-badge{
+    border:0!important;
+    border-left:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+    border-radius:0 16px 16px 0!important;
+    box-sizing:border-box;
+    padding:7%!important;
+    background:var(--blue)!important;
+  }
+
+  /* Les personnages respirent davantage sans changer leur proportion. */
+  .poster-badge img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    border:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+    border-radius:0!important;
+  }
+
+  /* Pas de trait de séparation vertical entre blanc et bleu. */
+  .poster-copy{
+    border-right:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+  }
+}
+
+
+/* Cadre blanc extérieur plus fin */
+.logo-card{
+  padding:10px!important;
+}
+@media(max-width:760px){
+  .logo-card{padding:8px!important}
+}
+
 </style>
 </head>
 <body>

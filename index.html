@@ -312,7 +312,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 <section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
-<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div class="cards"><div id="concertsAuto"></div><article class="card"><div class="date">Archive</div><h3>Gazette Café · Montpellier</h3><p>19 novembre 2025</p></article><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
+<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div id="concertsUpcoming"></div><div id="concertsPast"></div><div class="cards"><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
 
 <section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div class="placeholder"><strong>Les premiers extraits arriveront ici.</strong></div></div></section>
 
@@ -381,28 +381,69 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 <script>
 (function(){
   const data = Array.isArray(window.ACHALOU_CONCERTS) ? window.ACHALOU_CONCERTS : [];
-  const valid = data
-    .filter(c => c && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '') && c.lieu)
-    .map(c => ({...c, when:new Date(c.date+'T23:59:59')}))
-    .filter(c => !isNaN(c.when));
-
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const upcoming = valid.filter(c => c.when >= today).sort((a,b)=>a.when-b.when);
-  const next = upcoming[0];
 
-  const host = document.getElementById('concertsAuto');
-  if(host){
-    if(next){
-      const date = new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'})
-        .format(new Date(next.date+'T12:00:00'));
-      host.innerHTML = '<article class="card"><div class="date">Prochaine date</div>'+
-        '<h3>'+esc(next.lieu)+'</h3><p>'+esc(date)+(next.heure ? ' · '+esc(next.heure) : '')+'</p>'+
-        (next.info ? '<p>'+esc(next.info)+'</p>' : '')+'</article>';
-    } else {
-      host.innerHTML = '<article class="card"><div class="date">Prochaines dates</div>'+
-        '<h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article>';
+  function parseTime(value){
+    const m=String(value || '').trim().match(/^(\d{1,2})(?::|h)?(\d{2})?$/i);
+    if(!m) return null;
+    const h=Number(m[1]), min=Number(m[2] || 0);
+    if(h<0 || h>23 || min<0 || min>59) return null;
+    return {h,min};
+  }
+
+  function concertTimes(c){
+    const base=new Date(c.date+'T12:00:00');
+    if(isNaN(base)) return null;
+    const t=parseTime(c.heure);
+    let start, end;
+    if(t){
+      start=new Date(base.getFullYear(),base.getMonth(),base.getDate(),t.h,t.min,0,0);
+      end=new Date(start.getTime()+3*60*60*1000);
+    }else{
+      start=new Date(base.getFullYear(),base.getMonth(),base.getDate(),0,0,0,0);
+      end=new Date(base.getFullYear(),base.getMonth(),base.getDate(),23,59,59,999);
     }
+    return {start,end};
+  }
+
+  const valid=data
+    .filter(c=>c && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '') && c.lieu)
+    .map(c=>{
+      const times=concertTimes(c);
+      return times ? {...c,...times} : null;
+    })
+    .filter(Boolean)
+    .sort((a,b)=>a.start-b.start);
+
+  // Un concert reste « actuel » jusqu'à 3 h après son heure de début.
+  // Sans heure indiquée, il reste actuel jusqu'à la fin de la journée.
+  const upcoming=valid.filter(c=>c.end>=now);
+  const past=valid.filter(c=>c.end<now).sort((a,b)=>b.start-a.start);
+  const next=upcoming[0];
+
+  const fmtDate=c=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'}).format(new Date(c.date+'T12:00:00'));
+  const fmtTime=c=>c.heure ? String(c.heure).replace(':','h') : '';
+
+  function concertCard(c,label){
+    const time=fmtTime(c);
+    return '<article class="card"><div class="date">'+esc(label)+'</div><h3>'+esc(c.lieu)+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
+  }
+
+  const futureHost=document.getElementById('concertsUpcoming');
+  if(futureHost){
+    if(upcoming.length){
+      futureHost.innerHTML='<h3>Prochaines dates</h3><div class="cards">'+upcoming.map((c,i)=>concertCard(c,i===0?'Prochaine date':'À venir')).join('')+'</div>';
+    }else{
+      futureHost.innerHTML='<div class="cards"><article class="card"><div class="date">Prochaines dates</div><h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article></div>';
+    }
+  }
+
+  const pastHost=document.getElementById('concertsPast');
+  if(pastHost){
+    const gazette={date:'2025-11-19',lieu:'Gazette Café · Montpellier',heure:'',info:''};
+    const hasGazette=past.some(c=>c.date===gazette.date && String(c.lieu).toLowerCase().includes('gazette'));
+    const archives=hasGazette ? past : [...past,gazette].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    pastHost.innerHTML='<h3>Concerts passés</h3><div class="cards">'+archives.map(c=>concertCard(c,'Archive')).join('')+'</div>';
   }
 
   const title=document.getElementById('heroTitle');
@@ -413,67 +454,47 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   const panel=document.getElementById('heroPanel');
   const poster=document.getElementById('concertPoster');
   if(next && panel && poster){
-    const date = new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'})
-      .format(new Date(next.date+'T12:00:00'));
+    const date=fmtDate(next);
     panel.classList.add('has-concert');
     poster.hidden=false;
-    const prettyTime = next.heure ? String(next.heure).replace(':','h') : '';
+    const prettyTime=fmtTime(next);
     poster.innerHTML='<div class="poster-copy">'+
-  '<div class="poster-date">'+esc(date)+'</div>'+
-  '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
-  '<div class="poster-place">'+esc(next.lieu)+'</div>'+
-  '</div><div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
-    requestAnimationFrame(()=>{
-      fitHeroConcert();
-      sizeConcertPoster();
-    });
+      '<div class="poster-date">'+esc(date)+'</div>'+ 
+      '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+ 
+      '<div class="poster-place">'+esc(next.lieu)+'</div>'+ 
+      '</div><div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
+    requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });
   }
-
 
   function sizeConcertPoster(){
     const poster=document.getElementById('concertPoster');
     if(!poster || poster.hidden) return;
-
     const copy=poster.querySelector('.poster-copy');
     const badge=poster.querySelector('.poster-badge');
     const icon=badge && badge.querySelector('img');
     if(!copy || !badge || !icon) return;
-
-    // On repart d'une géométrie neutre pour mesurer uniquement le texte de gauche.
     poster.style.height='auto';
     poster.style.width='auto';
     badge.style.width='0px';
-
     requestAnimationFrame(()=>{
       const h=Math.ceil(copy.scrollHeight);
-      const ratio=(icon.naturalWidth && icon.naturalHeight)
-        ? icon.naturalWidth/icon.naturalHeight
-        : 1.5;
-
-      // Même hauteur à droite ; largeur droite et icône augmentent
-      // exactement dans la même proportion.
+      const ratio=(icon.naturalWidth && icon.naturalHeight) ? icon.naturalWidth/icon.naturalHeight : 1.5;
       const rightW=Math.round(h*ratio);
       const leftW=Math.ceil(copy.getBoundingClientRect().width);
-
       const naturalW=leftW+rightW;
       poster.style.height=h+'px';
       badge.style.width=rightW+'px';
       poster.style.width=naturalW+'px';
-
-      // Taille de référence du panneau d'origine. Si le contenu calculé est
-      // plus grand, on réduit TOUT uniformément : texte, bleu et personnages.
       const refW=Math.min(520, poster.closest('.logo-card').clientWidth || 520);
       const refH=205;
       const scale=Math.min(1, refW/naturalW, refH/h);
-      // 'zoom' réduit aussi la boîte de mise en page, contrairement à transform.
-      // Ainsi le cadre blanc épouse réellement le panneau sur les 4 côtés.
       poster.style.transform='none';
       poster.style.zoom=String(scale);
       poster.parentElement.style.minHeight='0px';
     });
   }
 
-  function fitText(el, maxPx, minPx){
+  function fitText(el,maxPx,minPx){
     if(!el) return;
     let size=maxPx;
     el.style.fontSize=size+'px';
@@ -489,7 +510,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     if(!poster || poster.hidden) return;
     const dateEl=poster.querySelector('.poster-date');
     const panelWidth=poster.getBoundingClientRect().width;
-    fitText(dateEl, Math.min(40, Math.max(24, panelWidth*0.075)), 18);
+    fitText(dateEl,Math.min(40,Math.max(24,panelWidth*0.075)),18);
   }
 
   fitHeroConcert();

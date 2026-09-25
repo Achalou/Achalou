@@ -314,22 +314,45 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 
-/* Animation sans toucher au transform/zoom du panneau concert */
-@keyframes concertGlow{
-  0%   {box-shadow:0 0 0 0 rgba(15,111,158,0), 0 0 0 rgba(15,111,158,0)}
-  12%  {box-shadow:0 0 0 8px rgba(15,111,158,.24), 0 0 28px rgba(15,111,158,.30)}
-  24%  {box-shadow:0 0 0 3px rgba(15,111,158,.08), 0 0 12px rgba(15,111,158,.12)}
-  40%  {box-shadow:0 0 0 11px rgba(15,111,158,.22), 0 0 36px rgba(15,111,158,.28)}
-  54%  {box-shadow:0 0 0 3px rgba(15,111,158,.07), 0 0 12px rgba(15,111,158,.10)}
-  70%  {box-shadow:0 0 0 9px rgba(15,111,158,.18), 0 0 30px rgba(15,111,158,.24)}
-  84%  {box-shadow:0 0 0 2px rgba(15,111,158,.05), 0 0 8px rgba(15,111,158,.08)}
-  100% {box-shadow:0 0 0 0 rgba(15,111,158,0), 0 0 0 rgba(15,111,158,0)}
+/* Entrée spectaculaire du panneau concert.
+   Un conteneur visuel tourne, sans toucher au zoom/dimensionnement interne du poster. */
+.logo-card.has-concert{
+  perspective:1100px;
+}
+@keyframes concertSpinArrival{
+  0%{
+    opacity:0;
+    translate:110vw 0;
+    rotate:0deg;
+  }
+  18%{opacity:1}
+  70%{
+    translate:-18px 0;
+    rotate:-740deg;
+  }
+  84%{
+    translate:10px 0;
+    rotate:-715deg;
+  }
+  93%{
+    translate:-4px 0;
+    rotate:-722deg;
+  }
+  100%{
+    opacity:1;
+    translate:0 0;
+    rotate:-720deg;
+  }
 }
 .logo-card.has-concert .concert-poster{
-  animation:concertGlow 4.8s ease-in-out .45s 1;
+  animation:concertSpinArrival 3.8s cubic-bezier(.16,.72,.22,1) .25s 1 both;
+  transform-origin:center center;
+  will-change:translate,rotate,opacity;
 }
 @media(prefers-reduced-motion:reduce){
-  .logo-card.has-concert .concert-poster{animation:none!important}
+  .logo-card.has-concert .concert-poster{
+    animation:none!important;
+  }
 }
 
 </style>

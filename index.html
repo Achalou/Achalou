@@ -156,6 +156,10 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     min-width:360px;
     height:auto;
     overflow:visible;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:stretch;
     border-right:0;
     outline:0;
     box-shadow:none;
@@ -191,57 +195,58 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   will-change:translate,rotate,opacity;
 }
 
-/* Mobile portrait : même proportion de l'illustration que sur ordinateur,
-   et date / heure / lieu répartis sur toute la hauteur. */
-@media(max-width:600px) and (orientation:portrait){
-  .logo-card.has-concert{padding:6px!important}
-  .logo-card.has-concert .concert-poster{
-    display:grid!important;
+/* MOBILE : aucune recomposition du panneau.
+   On construit exactement le panneau desktop, puis on réduit l'ensemble
+   uniformément à la toute fin pour l'adapter à l'écran. */
+@media(max-width:760px){
+  .logo-card.has-concert{
     width:100%!important;
     max-width:100%!important;
-    height:auto!important;
-    aspect-ratio:2/1!important;
-    grid-template-columns:minmax(0,58%) minmax(0,42%)!important;
-    align-items:stretch!important;
+    padding:6px!important;
+    overflow:visible!important;
   }
+
+  .logo-card.has-concert .concert-poster{
+    display:flex!important;
+    width:520px!important;
+    max-width:none!important;
+    height:205px!important;
+    aspect-ratio:auto!important;
+    grid-template-columns:none!important;
+    align-items:stretch!important;
+    transform-origin:top left!important;
+    zoom:min(1, calc((100vw - 44px) / 520))!important;
+  }
+
   .logo-card.has-concert .poster-copy{
-    width:auto!important;
-    min-width:0!important;
-    height:100%!important;
-    padding:9px 7px!important;
+    flex:0 0 360px!important;
+    width:360px!important;
+    min-width:360px!important;
+    height:205px!important;
+    padding:18px 20px!important;
     overflow:hidden!important;
     display:flex!important;
     flex-direction:column!important;
     justify-content:space-between!important;
     align-items:stretch!important;
   }
+
   .logo-card.has-concert .poster-badge{
-    width:100%!important;
-    height:100%!important;
+    flex:0 0 160px!important;
+    width:160px!important;
+    min-width:160px!important;
+    height:205px!important;
     aspect-ratio:auto!important;
     padding:0!important;
-    overflow:hidden!important;
   }
+
   .logo-card.has-concert .poster-badge img{
     width:100%!important;
     height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
     object-fit:contain!important;
-    object-position:center!important;
-  }
-  .logo-card.has-concert .poster-date{
-    font-size:clamp(.68rem,3.1vw,1rem)!important;
-    line-height:1.02!important;
-    margin:0!important;
-  }
-  .logo-card.has-concert .poster-time{
-    font-size:clamp(.58rem,2.65vw,.86rem)!important;
-    line-height:1.04!important;
-    margin:0!important;
-  }
-  .logo-card.has-concert .poster-place{
-    font-size:clamp(.50rem,2.25vw,.76rem)!important;
-    line-height:1.03!important;
-    margin:0!important;
+    object-position:center center!important;
   }
 }
 
@@ -396,7 +401,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
   function sizeConcertPoster(){
     const poster=document.getElementById('concertPoster');
-    if(!poster || poster.hidden || innerWidth<=760) return;
+    if(!poster || poster.hidden) return;
 
     const copy=poster.querySelector('.poster-copy');
     const badge=poster.querySelector('.poster-badge');

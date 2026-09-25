@@ -209,17 +209,72 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 /* MOBILE : mêmes proportions internes que sur ordinateur.
    Aucun élément interne n'est redimensionné séparément. */
 @media(max-width:760px){
+  /* On reprend réellement la structure ordinateur AVANT la réduction globale. */
+  .logo-card{overflow:visible!important}
+
+  .logo-card .concert-poster{
+    display:none;
+    width:auto;
+    max-width:none;
+    height:auto;
+    aspect-ratio:auto;
+    grid-template-columns:none;
+    align-items:stretch;
+    transform-origin:top left;
+  }
   .logo-card.has-concert{
     width:100%!important;
     max-width:100%!important;
+    height:max-content;
+    justify-self:center;
     padding:6px!important;
     overflow:visible!important;
+    perspective:1100px;
+  }
+  .logo-card.has-concert .concert-poster{
+    display:flex;
   }
 
-  /* Le groupe de texte reste aéré mais visuellement centré dans la hauteur. */
   .logo-card.has-concert .poster-copy{
+    flex:0 0 360px;
+    width:360px;
+    min-width:360px;
+    height:auto;
+    overflow:visible;
+    display:flex;
+    flex-direction:column;
     justify-content:center!important;
     gap:18px!important;
+    align-items:stretch;
+    border-right:0;
+    outline:0;
+    box-shadow:none;
+  }
+
+  .logo-card.has-concert .poster-badge{
+    flex:0 0 auto;
+    width:0;
+    height:auto;
+    min-width:0;
+    aspect-ratio:auto;
+    padding:0;
+    background:var(--blue);
+    overflow:hidden;
+    border:0;
+    outline:0;
+    box-shadow:none;
+    border-radius:0 16px 16px 0;
+  }
+
+  .logo-card.has-concert .poster-badge img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    border-radius:0!important;
   }
 }
 

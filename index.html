@@ -404,53 +404,13 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
-
-/* SANS CONCERT = exactement le panneau concert, sans texte */
-.logo-card.no-concert{
-  animation:none!important;
-}
-.logo-card.no-concert .poster-copy{
-  background:#fff!important;
-  border-right:0!important;
-}
-.logo-card.no-concert .poster-badge{
-  padding:0!important;
-  border:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  border-radius:0 16px 16px 0!important;
-}
-.logo-card.no-concert .poster-badge img{
-  width:100%!important;
-  height:100%!important;
-  object-fit:contain!important;
-  object-position:center center!important;
-}
-
-/* En portrait : reprendre exactement le gabarit mobile du concert,
-   avec la moitié blanche vide et la moitié bleue pour les personnages. */
-@media(max-width:600px) and (orientation:portrait){
-  .logo-card.no-concert .concert-poster{
-    width:100%!important;
-    max-width:100%!important;
-    height:auto!important;
-    aspect-ratio:2/1!important;
-    grid-template-columns:50% 50%!important;
-  }
-  .logo-card.no-concert .poster-copy,
-  .logo-card.no-concert .poster-badge{
-    width:100%!important;
-    height:100%!important;
-  }
-}
-
 </style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#photos">Photos</a><a href="#contact">Contact</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card" id="heroPanel"><img src="acha-lou-logo.png" alt="A’Cha Lou, duo de musique traditionnelle : accordéoniste et violoniste chanteur"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
 
 <section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
@@ -569,44 +529,12 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
       fitHeroConcert();
       sizeConcertPoster();
     });
-  } else if(panel && poster){
-    /* Aucun concert : exactement le même panneau, mais zone blanche vide. */
-    panel.classList.add('has-concert','no-concert');
-    poster.hidden=false;
-    poster.innerHTML='<div class="poster-copy" aria-hidden="true"></div>'+
-      '<div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
-    requestAnimationFrame(sizeNoConcertPoster);
-  }
-
-  function sizeNoConcertPoster(){
-    const poster=document.getElementById('concertPoster');
-    const panel=document.getElementById('heroPanel');
-    if(!poster || !panel || !panel.classList.contains('no-concert') || innerWidth<=760) return;
-
-    const badge=poster.querySelector('.poster-badge');
-    const icon=badge && badge.querySelector('img');
-    if(!badge || !icon) return;
-
-    const h=205;
-    const ratio=(icon.naturalWidth && icon.naturalHeight)
-      ? icon.naturalWidth/icon.naturalHeight
-      : 1.5;
-    const rightW=Math.round(h*ratio);
-    const totalW=520;
-    const leftW=Math.max(1,totalW-rightW);
-
-    poster.style.zoom='1';
-    poster.style.height=h+'px';
-    poster.style.width=totalW+'px';
-    poster.style.gridTemplateColumns=leftW+'px '+rightW+'px';
-    badge.style.width=rightW+'px';
-    panel.style.minHeight='0px';
   }
 
 
   function sizeConcertPoster(){
     const poster=document.getElementById('concertPoster');
-    if(!poster || poster.hidden || innerWidth<=760 || poster.closest('.no-concert')) return;
+    if(!poster || poster.hidden || innerWidth<=760) return;
 
     const copy=poster.querySelector('.poster-copy');
     const badge=poster.querySelector('.poster-badge');
@@ -672,7 +600,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   let fitTimer;
   addEventListener('resize',()=>{
     clearTimeout(fitTimer);
-    fitTimer=setTimeout(()=>{fitHeroConcert();sizeConcertPoster();sizeNoConcertPoster();},100);
+    fitTimer=setTimeout(()=>{fitHeroConcert();sizeConcertPoster();},100);
   });
 
   function esc(s){

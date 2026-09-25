@@ -102,6 +102,37 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .concert-poster .poster-time{font-weight:850;color:var(--blue);line-height:1.25}
 .concert-poster .poster-place{font-weight:850;color:var(--blue);line-height:1.25;white-space:normal;overflow-wrap:anywhere}
 
+
+/* Panneau concert : il conserve toujours les mêmes proportions.
+   Si le contenu exige plus de hauteur, toute la carte grandit aussi en largeur. */
+.logo-card .concert-poster{
+  width:100%;
+  height:auto;
+  aspect-ratio:1944/767;
+  grid-template-columns:66% 34%;
+  align-items:stretch;
+}
+.poster-copy{
+  min-width:0;
+  height:100%;
+  overflow:hidden;
+}
+.poster-badge{
+  min-width:0;
+  height:100%;
+  aspect-ratio:auto;
+}
+.poster-badge img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  border-radius:0!important;
+  animation:none!important;
+}
+
 </style>
 </head>
 <body>

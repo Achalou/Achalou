@@ -133,6 +133,49 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   animation:none!important;
 }
 
+
+/* Géométrie proportionnelle du panneau concert.
+   La largeur gauche reste stable. Si son texte augmente la hauteur,
+   la zone bleue prend cette même hauteur et sa largeur suit son ratio d'origine. */
+.logo-card .concert-poster{
+  width:max-content;
+  max-width:none;
+  height:auto;
+  aspect-ratio:auto;
+  grid-template-columns:clamp(280px,30vw,360px) auto;
+  align-items:stretch;
+}
+.poster-copy{
+  width:clamp(280px,30vw,360px);
+  min-width:0;
+  height:auto;
+  overflow:visible;
+}
+.poster-badge{
+  width:auto;
+  height:100%;
+  aspect-ratio:709/558;
+  min-width:0;
+  background:var(--blue);
+  overflow:hidden;
+  padding:0;
+}
+.poster-badge img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  border-radius:0!important;
+  animation:none!important;
+}
+@media(max-width:760px){
+  .logo-card .concert-poster{width:100%;max-width:100%;grid-template-columns:66% 34%}
+  .poster-copy{width:auto}
+  .poster-badge{width:100%;height:auto;aspect-ratio:709/558}
+}
+
 </style>
 </head>
 <body>

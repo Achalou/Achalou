@@ -528,6 +528,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   <button type="button" class="organizer-open" id="organizerOpen">Programmer A’Cha Lou ?</button>
   <form id="organizerForm" class="organizer-form" hidden>
     <label>Nom / organisme<input name="nom" type="text" maxlength="80" autocomplete="organization" required></label>
+    <label>Téléphone<input name="telephone" type="tel" maxlength="30" autocomplete="tel" placeholder="Téléphone ou e-mail requis"></label>
+    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" placeholder="Téléphone ou e-mail requis"></label>
     <label>Ville ou lieu<input name="lieu" type="text" maxlength="100" autocomplete="address-level2" required></label>
     <label>Message<textarea name="message" maxlength="1200" rows="5" required></textarea></label>
     <label class="message-trap" aria-hidden="true">Site<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
@@ -1016,18 +1018,28 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const button=form.querySelector('button[type="submit"]');
     const fd=new FormData(form);
     const nom=String(fd.get("nom")||"").trim();
+    const telephone=String(fd.get("telephone")||"").trim();
+    const email=String(fd.get("email")||"").trim();
     const lieu=String(fd.get("lieu")||"").trim();
     const message=String(fd.get("message")||"").trim();
+    status.className="message-status";
+    if(!telephone && !email){
+      status.className="message-status err";
+      status.textContent="Indiquez au moins un téléphone ou une adresse e-mail.";
+      return;
+    }
     const payload={
-      prenom:nom.slice(0,60),
-      message:("DEMANDE DE PROGRAMMATION\nLieu : "+lieu+"\n\n"+message).slice(0,1200),
+      nom:nom.slice(0,80),
+      telephone:telephone.slice(0,30),
+      email:email.slice(0,254),
+      lieu:lieu.slice(0,100),
+      message:message.slice(0,1200),
       website:String(fd.get("website")||"").trim()
     };
-    status.className="message-status";
     status.textContent="Envoi…";
     button.disabled=true;
     try{
-      const res=await fetch("https://achalou-admin.achalou24.workers.dev/message-public",{
+      const res=await fetch("https://achalou-admin.achalou24.workers.dev/organisateur-public",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(payload)

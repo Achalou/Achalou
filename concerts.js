@@ -12,13 +12,13 @@ window.ACHALOU_CONCERTS = [
     "raisonEtat": "il pleut comme ane qui pleure",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "21:00",
-    "nouveauLieu": "gazette de mes..",
+    "nouveauLieu": "",
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
     "publicationProgrammee": "",
     "supprimeLe": "",
-    "nouvelleVille": "lezignan",
+    "nouvelleVille": "",
     "complet": true
   }
 ];

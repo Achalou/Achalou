@@ -517,6 +517,19 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .contact-programmer{font:inherit;cursor:pointer;border:0}
 
 .contact-programmer{font-weight:800!important}
+
+#contact .organizer-form{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  width:100%!important;
+  max-width:590px!important;
+  margin:18px auto 0!important;
+  z-index:auto!important;
+}
 </style>
 </head>
 <body>
@@ -1063,9 +1076,34 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   const heroButton=document.getElementById("organizerOpen");
   const form=document.getElementById("organizerForm");
   if(!contactButton||!heroButton||!form) return;
+  const heroHome=form.parentNode;
+  const heroNext=form.nextSibling;
+  const contactHome=contactButton.parentNode;
+
+  function moveFormAfter(button){
+    button.insertAdjacentElement("afterend",form);
+    form.hidden=false;
+    heroButton.textContent="Fermer";
+  }
+
   contactButton.addEventListener("click",()=>{
-    if(form.hidden) heroButton.click();
-    document.getElementById("organizerInvite")?.scrollIntoView({behavior:"smooth",block:"center"});
+    if(!form.hidden && form.previousElementSibling===contactButton){
+      form.hidden=true;
+      heroButton.textContent="Programmer A’Cha Lou ?";
+      return;
+    }
+    moveFormAfter(contactButton);
+    form.scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+
+  heroButton.addEventListener("click",()=>{
+    if(form.parentNode!==heroHome){
+      if(heroNext) heroHome.insertBefore(form,heroNext);
+      else heroHome.appendChild(form);
+      form.hidden=false;
+      heroButton.textContent="Fermer";
+      form.scrollIntoView({behavior:"smooth",block:"nearest"});
+    }
   });
 })();
 </script>

@@ -1086,49 +1086,35 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   const heroButton=document.getElementById("organizerOpen");
   const form=document.getElementById("organizerForm");
   if(!contactButton||!heroButton||!form) return;
-
   const heroHome=form.parentNode;
   const heroNext=form.nextSibling;
-  const openLabel="Programmer A’Cha Lou ?";
-  const closeLabel="Fermer";
+  const contactHome=contactButton.parentNode;
 
-  function restoreFormToHero(){
-    if(form.parentNode!==heroHome){
-      if(heroNext) heroHome.insertBefore(form,heroNext);
-      else heroHome.appendChild(form);
-    }
+  function moveFormAfter(button){
+    button.insertAdjacentElement("afterend",form);
+    form.hidden=false;
+    contactButton.textContent="Fermer";
   }
 
   contactButton.addEventListener("click",()=>{
-    const openedHere=!form.hidden && form.previousElementSibling===contactButton;
-
-    if(openedHere){
+    if(!form.hidden && form.previousElementSibling===contactButton){
       form.hidden=true;
-      contactButton.textContent=openLabel;
+      contactButton.textContent="Programmer A’Cha Lou ?";
       return;
     }
-
-    contactButton.insertAdjacentElement("afterend",form);
-    form.hidden=false;
-    contactButton.textContent=closeLabel;
-    heroButton.textContent=openLabel;
+    moveFormAfter(contactButton);
     form.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
 
   heroButton.addEventListener("click",()=>{
-    /* Si le formulaire était ouvert dans Contact, on le remet d'abord en haut. */
     if(form.parentNode!==heroHome){
-      restoreFormToHero();
-      contactButton.textContent=openLabel;
+      if(heroNext) heroHome.insertBefore(form,heroNext);
+      else heroHome.appendChild(form);
       form.hidden=false;
-      heroButton.textContent=closeLabel;
+      contactButton.textContent="Programmer A’Cha Lou ?";
+      heroButton.textContent="Fermer";
       form.scrollIntoView({behavior:"smooth",block:"nearest"});
-      return;
     }
-
-    /* Le gestionnaire d'origine du bouton du haut s'occupe déjà
-       de son ouverture/fermeture quand le formulaire est à sa place. */
-    contactButton.textContent=openLabel;
   });
 })();
 </script>

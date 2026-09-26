@@ -410,20 +410,25 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 
-/* Tampon raison : 5 s lisible sur masque blanc, 5 s en vrai tampon transparent */
+/* Raison : le tampon reste visible, mais son fond alterne entre blanc 100 % opaque et transparent.
+   Important : opacity reste à 1 pour que le blanc masque réellement le texte situé dessous. */
 .card .concert-reason,
 .poster-copy .concert-reason{
-  animation:reasonMaskAlternate 10s steps(1,end) infinite!important;
+  opacity:1!important;
+  color:rgba(45,45,45,.68)!important;
+  border-color:rgba(45,45,45,.68)!important;
+  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px rgba(45,45,45,.68)!important;
+  animation:reasonTrueMask 10s steps(1,end) infinite!important;
 }
-@keyframes reasonMaskAlternate{
-  0%,49.999%{background:#fff}
-  50%,100%{background:transparent}
+@keyframes reasonTrueMask{
+  0%,49.999%{background-color:#fff}
+  50%,100%{background-color:transparent}
 }
 @media(prefers-reduced-motion:reduce){
   .card .concert-reason,
   .poster-copy .concert-reason{
     animation:none!important;
-    background:#fff
+    background-color:#fff!important;
   }
 }
 

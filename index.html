@@ -1031,6 +1031,8 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   if(!open||!form||!status) return;
 
   open.addEventListener("click",()=>{
+    const heroHome=document.getElementById("organizerInvite");
+    if(form.parentNode!==heroHome) return;
     form.hidden=!form.hidden;
     open.textContent=form.hidden ? "Programmer A’Cha Lou ?" : "Fermer";
     if(!form.hidden) form.querySelector('input[name="nom"]')?.focus();
@@ -1085,34 +1087,45 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   const contactButton=document.getElementById("contactProgrammer");
   const heroButton=document.getElementById("organizerOpen");
   const form=document.getElementById("organizerForm");
-  if(!contactButton||!heroButton||!form) return;
-  const heroHome=form.parentNode;
-  const heroNext=form.nextSibling;
-  const contactHome=contactButton.parentNode;
+  const heroHome=document.getElementById("organizerInvite");
+  const socials=contactButton?.closest(".socials");
+  if(!contactButton||!heroButton||!form||!heroHome||!socials) return;
 
-  function moveFormAfter(button){
-    button.insertAdjacentElement("afterend",form);
-    form.hidden=false;
-    contactButton.textContent="Fermer";
+  const openLabel="Programmer A’Cha Lou ?";
+  const closeLabel="Fermer";
+
+  function putBackInHero(){
+    heroButton.insertAdjacentElement("afterend",form);
   }
 
   contactButton.addEventListener("click",()=>{
-    if(!form.hidden && form.previousElementSibling===contactButton){
+    const isOpenInContact = form.parentNode===socials.parentNode &&
+                            form.previousElementSibling===socials &&
+                            !form.hidden;
+
+    if(isOpenInContact){
       form.hidden=true;
-      contactButton.textContent="Programmer A’Cha Lou ?";
+      contactButton.textContent=openLabel;
       return;
     }
-    moveFormAfter(contactButton);
+
+    /* Le formulaire est placé sous toute la rangée Facebook / Instagram / Programmer,
+       et non à l'intérieur de cette rangée. */
+    socials.insertAdjacentElement("afterend",form);
+    form.hidden=false;
+    contactButton.textContent=closeLabel;
+    heroButton.textContent=openLabel;
+    form.querySelector('input[name="nom"]')?.focus();
     form.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
 
   heroButton.addEventListener("click",()=>{
     if(form.parentNode!==heroHome){
-      if(heroNext) heroHome.insertBefore(form,heroNext);
-      else heroHome.appendChild(form);
+      putBackInHero();
       form.hidden=false;
-      contactButton.textContent="Programmer A’Cha Lou ?";
-      heroButton.textContent="Fermer";
+      contactButton.textContent=openLabel;
+      heroButton.textContent=closeLabel;
+      form.querySelector('input[name="nom"]')?.focus();
       form.scrollIntoView({behavior:"smooth",block:"nearest"});
     }
   });

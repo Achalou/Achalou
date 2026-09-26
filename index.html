@@ -410,99 +410,29 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 
-/* Raison : le tampon reste visible, mais son fond alterne entre blanc 100 % opaque et transparent.
-   Important : opacity reste à 1 pour que le blanc masque réellement le texte situé dessous. */
+/* Tampon raison :
+   5 s prioritaire = fond pastel opaque + texte/contour lisibles
+   5 s discret     = fond transparent + texte/contour très pastel
+   Le tampon reste toujours présent. */
 .card .concert-reason,
 .poster-copy .concert-reason{
   opacity:1!important;
-  color:rgba(45,45,45,.68)!important;
-  border-color:rgba(45,45,45,.68)!important;
-  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px rgba(45,45,45,.68)!important;
-  animation:reasonTrueMask 10s steps(1,end) infinite!important;
+  visibility:visible!important;
+  animation:reasonPriorityCycle 10s steps(1,end) infinite!important;
 }
-@keyframes reasonTrueMask{
-  0%,49.999%{background-color:#fff}
-  50%,100%{background-color:transparent}
-}
-@media(prefers-reduced-motion:reduce){
-  .card .concert-reason,
-  .poster-copy .concert-reason{
-    animation:none!important;
-    background-color:#fff!important;
+
+@keyframes reasonPriorityCycle{
+  0%,49.999%{
+    background-color:#fff4dc;
+    color:#756b5d;
+    border-color:#756b5d;
+    box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #756b5d;
   }
-}
-
-
-/* Tampon raison : 5 s fond pastel très clair et opaque / 5 s transparent */
-.card .concert-reason,
-.poster-copy .concert-reason{
-  animation:reasonPastelMask 10s steps(1,end) infinite!important;
-}
-@keyframes reasonPastelMask{
-  0%,49.999%{background-color:#fff4dc}
-  50%,100%{background-color:transparent}
-}
-@media(prefers-reduced-motion:reduce){
-  .card .concert-reason,
-  .poster-copy .concert-reason{
-    animation:none!important;
-    background-color:#fff4dc!important;
-  }
-}
-
-
-/* Tampon raison : écriture + contour très pastel.
-   Le fond continue d'alterner 5 s pastel opaque / 5 s transparent. */
-.card .concert-reason,
-.poster-copy .concert-reason{
-  color:#b9aa92!important;
-  border-color:#b9aa92!important;
-  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
-}
-
-
-/* Correction définitive du tampon raison :
-   5 s visible / 5 s entièrement invisible */
-.card .concert-reason,
-.poster-copy .concert-reason{
-  background:#fff4dc!important;
-  color:#b9aa92!important;
-  border-color:#b9aa92!important;
-  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
-  animation:reasonWholeStamp 10s steps(1,end) infinite!important;
-}
-.card .concert-reason::before,
-.card .concert-reason::after,
-.poster-copy .concert-reason::before,
-.poster-copy .concert-reason::after{
-  display:none!important;
-}
-@keyframes reasonWholeStamp{
-  0%,49.999%{opacity:1}
-  50%,100%{opacity:0}
-}
-@media(prefers-reduced-motion:reduce){
-  .card .concert-reason,
-  .poster-copy .concert-reason{
-    animation:none!important;
-    opacity:1!important;
-  }
-}
-
-
-/* Alternance forcée du tampon raison : 5 s visible / 5 s invisible */
-.card .concert-reason,
-.poster-copy .concert-reason{
-  animation-name:reasonWholeStamp!important;
-  animation-duration:10s!important;
-  animation-timing-function:steps(1,end)!important;
-  animation-iteration-count:infinite!important;
-  animation-play-state:running!important;
-}
-@media(prefers-reduced-motion:reduce){
-  .card .concert-reason,
-  .poster-copy .concert-reason{
-    animation:reasonWholeStamp 10s steps(1,end) infinite!important;
+  50%,100%{
+    background-color:transparent;
+    color:rgba(185,170,146,.28);
+    border-color:rgba(185,170,146,.28);
+    box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px rgba(185,170,146,.28);
   }
 }
 

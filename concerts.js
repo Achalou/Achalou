@@ -8,11 +8,12 @@ window.ACHALOU_CONCERTS = [
     "lieu": "gaz · montp",
     "heure": "20:00",
     "info": "oui",
-    "etat": "normal",
-    "raisonEtat": "",
+    "etat": "annule",
+    "raisonEtat": "il pleut comme vache qui pisse",
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": ""
   }
 ];

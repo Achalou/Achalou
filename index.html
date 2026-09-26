@@ -461,35 +461,31 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 
-/* Tampon raison :
-   5 s visible : fond pastel opaque + texte/contour pastel
-   5 s transparent : fond + texte + contour transparents */
+/* Correction définitive du tampon raison :
+   5 s visible / 5 s entièrement invisible */
 .card .concert-reason,
 .poster-copy .concert-reason{
-  animation:reasonAllAlternate 10s steps(1,end) infinite!important;
+  background:#fff4dc!important;
+  color:#b9aa92!important;
+  border-color:#b9aa92!important;
+  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
+  animation:reasonWholeStamp 10s steps(1,end) infinite!important;
 }
-@keyframes reasonAllAlternate{
-  0%,49.999%{
-    background-color:#fff4dc;
-    color:#b9aa92;
-    border-color:#b9aa92;
-    box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92;
-  }
-  50%,100%{
-    background-color:transparent;
-    color:transparent;
-    border-color:transparent;
-    box-shadow:none;
-  }
+.card .concert-reason::before,
+.card .concert-reason::after,
+.poster-copy .concert-reason::before,
+.poster-copy .concert-reason::after{
+  display:none!important;
+}
+@keyframes reasonWholeStamp{
+  0%,49.999%{opacity:1}
+  50%,100%{opacity:0}
 }
 @media(prefers-reduced-motion:reduce){
   .card .concert-reason,
   .poster-copy .concert-reason{
     animation:none!important;
-    background-color:#fff4dc!important;
-    color:#b9aa92!important;
-    border-color:#b9aa92!important;
-    box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
+    opacity:1!important;
   }
 }
 

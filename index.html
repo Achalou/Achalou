@@ -510,7 +510,10 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 </script>
 
 
-<script src="concerts.js"></script>
+<script>
+/* Charge toujours la version actuelle de concerts.js après une modification admin. */
+document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
+</script>
 
 <script>
 (function(){

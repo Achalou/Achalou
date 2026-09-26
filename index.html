@@ -460,6 +460,39 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
 }
 
+
+/* Tampon raison :
+   5 s visible : fond pastel opaque + texte/contour pastel
+   5 s transparent : fond + texte + contour transparents */
+.card .concert-reason,
+.poster-copy .concert-reason{
+  animation:reasonAllAlternate 10s steps(1,end) infinite!important;
+}
+@keyframes reasonAllAlternate{
+  0%,49.999%{
+    background-color:#fff4dc;
+    color:#b9aa92;
+    border-color:#b9aa92;
+    box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92;
+  }
+  50%,100%{
+    background-color:transparent;
+    color:transparent;
+    border-color:transparent;
+    box-shadow:none;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .card .concert-reason,
+  .poster-copy .concert-reason{
+    animation:none!important;
+    background-color:#fff4dc!important;
+    color:#b9aa92!important;
+    border-color:#b9aa92!important;
+    box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
+  }
+}
+
 </style>
 </head>
 <body>

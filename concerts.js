@@ -8,7 +8,7 @@ window.ACHALOU_CONCERTS = [
     "lieu": "gazette cafe aux bois d artichaud · saint jean de cuculles",
     "heure": "20:00",
     "info": "va voir ta gueule a la recre",
-    "etat": "complet",
+    "etat": "reporte",
     "raisonEtat": "",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "21:00",
@@ -18,6 +18,7 @@ window.ACHALOU_CONCERTS = [
     "statut": "publie",
     "publicationProgrammee": "",
     "supprimeLe": "",
-    "nouvelleVille": "lezignan"
+    "nouvelleVille": "lezignan",
+    "complet": true
   }
 ];

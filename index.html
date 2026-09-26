@@ -489,6 +489,23 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+
+/* Alternance forcée du tampon raison : 5 s visible / 5 s invisible */
+.card .concert-reason,
+.poster-copy .concert-reason{
+  animation-name:reasonWholeStamp!important;
+  animation-duration:10s!important;
+  animation-timing-function:steps(1,end)!important;
+  animation-iteration-count:infinite!important;
+  animation-play-state:running!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .card .concert-reason,
+  .poster-copy .concert-reason{
+    animation:reasonWholeStamp 10s steps(1,end) infinite!important;
+  }
+}
+
 </style>
 </head>
 <body>

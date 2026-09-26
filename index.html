@@ -357,6 +357,17 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .poster-change{font-size:.78rem;font-weight:800;line-height:1.15}.poster-change del{opacity:.55}
 .poster-copy .concert-stamp{animation:none}
 @media(prefers-reduced-motion:reduce){.concert-stamp{animation:none}}
+
+/* Référence exacte du panneau sans concert :
+   même cadrage des personnages à l'intérieur de la partie bleue. */
+.logo-card.has-concert .poster-badge{
+  background-color:var(--blue)!important;
+  background-image:url("acha-lou-sans-concert.png")!important;
+  background-repeat:no-repeat!important;
+  background-size:312.1528% 186.9658%!important;
+  background-position:91.4894% 48.8943%!important;
+}
+
 </style>
 </head>
 <body>
@@ -548,7 +559,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
       '<div class="poster-date">'+esc(date)+'</div>'+ 
       '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+ 
       '<div class="poster-place">'+esc(next.lieu)+'</div>'+heroStatus+heroOldTime+heroOldPlace+
-      '</div><div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
+      '</div><div class="poster-badge" aria-hidden="true"></div>';
     requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });
   }
 
@@ -557,17 +568,21 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     if(!poster || poster.hidden) return;
     const copy=poster.querySelector('.poster-copy');
     const badge=poster.querySelector('.poster-badge');
-    const icon=badge && badge.querySelector('img');
-    if(!copy || !badge || !icon) return;
+    if(!copy || !badge) return;
     poster.style.height='auto';
     poster.style.width='auto';
     badge.style.width='0px';
     requestAnimationFrame(()=>{
       const h=Math.ceil(copy.scrollHeight);
-      const ratio=(icon.naturalWidth && icon.naturalHeight) ? icon.naturalWidth/icon.naturalHeight : 1.5;
-      const leftW=Math.ceil(copy.getBoundingClientRect().width);
-      const imageW=Math.round(h*ratio);
-      const rightW=Math.min(imageW,Math.round(leftW*(36/64)));
+
+      /* Géométrie mesurée sur acha-lou-sans-concert.png :
+         zone blanche ≈ 1014 × 468 ; zone bleue ≈ 576 × 468.
+         On conserve donc exactement les mêmes rapports internes. */
+      const leftW=Math.round(h*(1014/468));
+      const rightW=Math.round(h*(576/468));
+      copy.style.flexBasis=leftW+'px';
+      copy.style.width=leftW+'px';
+      copy.style.minWidth=leftW+'px';
       const naturalW=leftW+rightW;
       poster.style.height=h+'px';
       badge.style.width=rightW+'px';

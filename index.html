@@ -454,6 +454,18 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 @media(max-width:760px){.music-item{padding:16px}.music-item-title{font-size:1.15rem}}
 
 .admin-shortcut{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-left:2px;border-radius:50%;text-decoration:none!important;font-size:17px;line-height:1;color:inherit;opacity:.55;transition:opacity .18s ease,background .18s ease}.admin-shortcut:hover,.admin-shortcut:focus-visible{opacity:1;background:rgba(7,100,149,.09)}
+
+.visitor-message{max-width:620px;margin:34px auto 0;padding:22px;background:rgba(255,255,255,.72);border:1px solid #00000010;border-radius:20px;box-shadow:0 8px 24px #0000000a}
+.visitor-message h3{margin:0 0 5px;font-family:Georgia,'Times New Roman',serif;font-size:1.35rem;color:var(--blue)}
+.visitor-message>p{margin:0 0 14px;opacity:.72}
+.visitor-message label{display:block;margin:12px 0;font-weight:700}
+.visitor-message input,.visitor-message textarea{display:block;width:100%;margin-top:6px;padding:11px 12px;border:1px solid #0003;border-radius:12px;background:#fff;color:var(--ink);font:inherit}
+.visitor-message textarea{resize:vertical;min-height:110px}
+.visitor-message button{border:0;border-radius:999px;padding:11px 18px;background:var(--blue);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.visitor-message button:disabled{opacity:.55;cursor:wait}
+.message-status{min-height:1.4em;margin-top:10px;font-size:.92rem;font-weight:700}
+.message-status.ok{color:#24633a}.message-status.err{color:#9d1717}
+.message-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
 </style>
 </head>
 <body>
@@ -470,7 +482,19 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 <section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
 
-<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div></section>
+<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div>
+<div class="visitor-message">
+  <h3>Laisser un message à A’Cha Lou</h3>
+  <p>Un petit mot ? Écrivez-nous ici.</p>
+  <form id="publicMessageForm">
+    <label>Prénom<input name="prenom" type="text" maxlength="60" autocomplete="given-name" required></label>
+    <label>Message<textarea name="message" maxlength="1200" rows="5" required></textarea></label>
+    <label class="message-trap" aria-hidden="true">Site<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+    <button type="submit">Envoyer le message</button>
+    <div id="publicMessageStatus" class="message-status" role="status" aria-live="polite"></div>
+  </form>
+</div>
+</section>
 </main>
 <footer class="foot"><div class="wrap"><strong>A’Cha Lou · Musique trad</strong><div class="tech">Site officiel · Montpellier / Occitanie · connexion HTTPS</div></div></footer>
 
@@ -824,4 +848,40 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"a0e391cce3c6f9c596f6af67d38ee65b"}'></script>
 <!-- End Cloudflare Web Analytics -->
+
+<script>
+(()=>{
+  const form=document.getElementById("publicMessageForm");
+  const status=document.getElementById("publicMessageStatus");
+  if(!form||!status) return;
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const button=form.querySelector('button[type="submit"]');
+    const fd=new FormData(form);
+    const payload={
+      prenom:String(fd.get("prenom")||"").trim(),
+      message:String(fd.get("message")||"").trim(),
+      website:String(fd.get("website")||"").trim()
+    };
+    status.className="message-status";
+    status.textContent="Envoi…";
+    button.disabled=true;
+    try{
+      const res=await fetch("https://achalou-admin.achalou24.workers.dev/message-public",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok||!data.ok) throw new Error(data.error||"Envoi impossible.");
+      form.reset();
+      status.className="message-status ok";
+      status.textContent="Merci, votre message a bien été envoyé.";
+    }catch(err){
+      status.className="message-status err";
+      status.textContent="Le message n’a pas pu être envoyé. Réessayez dans un instant.";
+    }finally{button.disabled=false;}
+  });
+})();
+</script>
 </body></html>

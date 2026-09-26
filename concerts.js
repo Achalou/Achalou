@@ -8,7 +8,8 @@ window.ACHALOU_CONCERTS = [
     "lieu": "gaz · montp",
     "heure": "20:00",
     "info": "test modifie",
-    "statut": "publie",
-    "publicationProgrammee": ""
+    "statut": "brouillon",
+    "publicationProgrammee": "2026-09-26T02:09",
+    "supprimeLe": ""
   }
 ];

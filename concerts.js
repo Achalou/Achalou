@@ -9,7 +9,6 @@ window.ACHALOU_CONCERTS = [
     "heure": "20:00",
     "info": "test modifie",
     "statut": "publie",
-    "publicationProgrammee": "",
-    "supprimeLe": "2026-09-25T23:47:30.090Z"
+    "publicationProgrammee": ""
   }
 ];

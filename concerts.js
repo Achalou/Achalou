@@ -9,7 +9,12 @@ window.ACHALOU_CONCERTS = [
     "heure": "20:00",
     "info": "pouet",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "etat": "annule",
+    "raisonEtat": "le ciel pleut",
+    "heureAvant": "",
+    "lieuAvant": "",
+    "supprimeLe": ""
   },
   {
     "date": "2026-12-12",

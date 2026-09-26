@@ -348,6 +348,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .poster-copy .concert-stamp .stamp-center{width:190px;padding:12px 3px;font-size:2.05rem}
 .poster-copy .concert-stamp:before{left:22px;font-size:18px}
 .poster-copy .concert-stamp:after{right:22px;font-size:18px}
+.poster-copy .concert-stamp.reporte{color:#efa36f}
 .poster-copy .poster-date,
 .poster-copy .poster-time,
 .poster-copy .poster-place,
@@ -471,9 +472,11 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 
   function concertTimes(c){
-    const base=new Date(c.date+'T12:00:00');
+    const effectiveDate=(String(c.etat||'normal')==='reporte' && c.nouvelleDate) ? c.nouvelleDate : c.date;
+    const effectiveTime=(String(c.etat||'normal')==='reporte' && c.nouvelleHeure) ? c.nouvelleHeure : c.heure;
+    const base=new Date(effectiveDate+'T12:00:00');
     if(isNaN(base)) return null;
-    const t=parseTime(c.heure);
+    const t=parseTime(effectiveTime);
     let start, end;
     if(t){
       start=new Date(base.getFullYear(),base.getMonth(),base.getDate(),t.h,t.min,0,0);
@@ -500,8 +503,20 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   const past=valid.filter(c=>c.end<now).sort((a,b)=>b.start-a.start);
   const next=upcoming[0];
 
-  const fmtDate=c=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'}).format(new Date(c.date+'T12:00:00'));
-  const fmtTime=c=>c.heure ? String(c.heure).replace(':','h') : '';
+  const formatDateValue=value=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'}).format(new Date(value+'T12:00:00'));
+  const fmtDate=c=>formatDateValue((String(c.etat||'normal')==='reporte' && c.nouvelleDate) ? c.nouvelleDate : c.date);
+  const fmtTime=c=>{
+    const value=(String(c.etat||'normal')==='reporte' && c.nouvelleHeure) ? c.nouvelleHeure : c.heure;
+    return value ? String(value).replace(':','h') : '';
+  };
+  const fmtPlace=c=>(String(c.etat||'normal')==='reporte' && c.nouveauLieu) ? c.nouveauLieu : c.lieu;
+  const initialInfo=c=>{
+    if(String(c.etat||'normal')!=='reporte' || !(c.nouvelleDate||c.nouvelleHeure||c.nouveauLieu)) return '';
+    const bits=[formatDateValue(c.date)];
+    if(c.heure) bits.push(String(c.heure).replace(':','h'));
+    if(c.lieu) bits.push(c.lieu);
+    return bits.join(' · ');
+  };
 
   function stateInfo(c){
     const e=String(c.etat||'normal');
@@ -515,10 +530,12 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const time=fmtTime(c), st=stateInfo(c);
     const state=st && !st.stamp ? '<div class="concert-state '+st.cls+'">'+esc(st.label)+'</div>' : '';
     const stamp=st && st.stamp ? '<div class="concert-stamp '+st.cls+'"><span class="stamp-center">'+esc(st.label)+'</span></div>' : '';
-    const oldTime=c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
-    const oldPlace=c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(c.lieu)+'</p>' : '';
+    const initial=initialInfo(c);
+    const reportChange=initial ? '<p class="concert-change">Initialement : <del>'+esc(initial)+'</del></p>' : '';
+    const legacyTime=!initial && c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
+    const legacyPlace=!initial && c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(fmtPlace(c))+'</p>' : '';
     const reason=c.raisonEtat ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
-    return '<article class="card">'+stamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(c.lieu)+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+oldTime+oldPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
+    return '<article class="card">'+stamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(fmtPlace(c))+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+reportChange+legacyTime+legacyPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
   }
 
   const futureHost=document.getElementById('concertsUpcoming');
@@ -553,12 +570,14 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const heroState=stateInfo(next);
     const heroStamp=heroState && heroState.stamp ? '<div class="concert-stamp '+heroState.cls+'"><span class="stamp-center">'+esc(heroState.label)+'</span></div>' : '';
     const heroStatus=heroState && !heroState.stamp ? '<div class="poster-state">'+esc(heroState.label)+'</div>' : '';
-    const heroOldTime=next.heureAvant ? '<div class="poster-change">Heure modifiée : <del>'+esc(String(next.heureAvant).replace(':','h'))+'</del> → '+esc(prettyTime||'à préciser')+'</div>' : '';
-    const heroOldPlace=next.lieuAvant ? '<div class="poster-change">Lieu modifié : <del>'+esc(next.lieuAvant)+'</del></div>' : '';
+    const heroInitial=initialInfo(next);
+    const heroReportChange=heroInitial ? '<div class="poster-change">Initialement : <del>'+esc(heroInitial)+'</del></div>' : '';
+    const heroOldTime=!heroInitial && next.heureAvant ? '<div class="poster-change">Heure modifiée : <del>'+esc(String(next.heureAvant).replace(':','h'))+'</del> → '+esc(prettyTime||'à préciser')+'</div>' : '';
+    const heroOldPlace=!heroInitial && next.lieuAvant ? '<div class="poster-change">Lieu modifié : <del>'+esc(next.lieuAvant)+'</del></div>' : '';
     poster.innerHTML='<div class="poster-copy">'+heroStamp+
       '<div class="poster-date">'+esc(date)+'</div>'+ 
       '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+ 
-      '<div class="poster-place">'+esc(next.lieu)+'</div>'+heroStatus+heroOldTime+heroOldPlace+
+      '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+heroReportChange+heroOldTime+heroOldPlace+
       '</div><div class="poster-badge" aria-hidden="true"></div>';
     requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });
   }

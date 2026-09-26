@@ -10,12 +10,13 @@ window.ACHALOU_CONCERTS = [
     "info": "va voir ta gueule a la recre",
     "etat": "normal",
     "raisonEtat": "",
-    "nouvelleDate": "",
-    "nouvelleHeure": "",
-    "nouveauLieu": "",
+    "nouvelleDate": "2026-12-13",
+    "nouvelleHeure": "21:00",
+    "nouveauLieu": "ta gueule",
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": ""
   }
 ];

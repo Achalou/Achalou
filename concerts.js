@@ -14,7 +14,7 @@ window.ACHALOU_CONCERTS = [
     "lieuAvant": "",
     "statut": "publie",
     "publicationProgrammee": "",
-    "supprimeLe": "",
+    "supprimeLe": "2026-09-26T14:05:04.911Z",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "21:00",
     "nouveauLieu": "palavas"

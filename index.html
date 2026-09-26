@@ -429,6 +429,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+.photo-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.photo-item{margin:0;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px #00000012}.photo-item img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.photo-item figcaption{padding:12px 15px;font-weight:750}.photo-gallery .placeholder{grid-column:1/-1}@media(max-width:760px){.photo-gallery{grid-template-columns:1fr 1fr}}@media(max-width:480px){.photo-gallery{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -443,7 +444,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 <section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div class="placeholder"><strong>Les premiers extraits arriveront ici.</strong></div></div></section>
 
-<section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div></div></section>
+<section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
 
 <section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div></section>
 </main>
@@ -736,6 +737,33 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     d.textContent=String(s || '');
     return d.innerHTML;
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  const host=document.getElementById('photoGallery');
+  if(!host) return;
+  const esc=s=>{const d=document.createElement('div');d.textContent=String(s||'');return d.innerHTML};
+  fetch('photos/photos.json?v='+Date.now(),{cache:'no-store'})
+    .then(r=>{if(!r.ok) throw new Error('Galerie indisponible');return r.json()})
+    .then(photos=>{
+      if(!Array.isArray(photos)||!photos.length){
+        host.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';
+        return;
+      }
+      host.innerHTML=photos.map(p=>{
+        const file=String(p.fichier||'');
+        if(!/^[A-Za-z0-9._-]+\.(?:jpe?g|png|webp)$/i.test(file)) return '';
+        const title=String(p.titre||'').trim();
+        return '<figure class="photo-item"><img src="photos/'+encodeURIComponent(file)+'" alt="'+esc(title||'Photo d’A’Cha Lou')+'" loading="lazy">'+(title?'<figcaption>'+esc(title)+'</figcaption>':'')+'</figure>';
+      }).join('');
+      if(!host.innerHTML.trim()) throw new Error('Aucune photo valide');
+    })
+    .catch(()=>{
+      host.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';
+    });
 })();
 </script>
 

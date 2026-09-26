@@ -18,6 +18,7 @@ window.ACHALOU_CONCERTS = [
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": ""
   }
 ];

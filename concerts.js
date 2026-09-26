@@ -14,7 +14,7 @@ window.ACHALOU_CONCERTS = [
     "raisonEtat": "le ciel pleut comme vache qui pisse",
     "heureAvant": "",
     "lieuAvant": "",
-    "supprimeLe": ""
+    "supprimeLe": "2026-09-26T01:51:39.227Z"
   },
   {
     "date": "2026-12-12",

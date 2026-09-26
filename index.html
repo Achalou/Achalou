@@ -324,6 +324,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
  text-align:center;font:950 1.1rem/1 Impact,"Arial Black",system-ui,sans-serif;letter-spacing:.025em;text-transform:uppercase
 }
 .concert-stamp.reporte{color:#efa36f}
+.concert-stamp.complet{color:#076495}
 @keyframes stampImpact{0%{opacity:0;transform:scale(1.65) rotate(-2deg)}68%{opacity:.52;transform:scale(.94) rotate(-10deg)}100%{opacity:.48;transform:scale(1) rotate(-9deg)}}
 
 /* Raison : second petit tampon flottant, lui aussi hors du flux */
@@ -349,6 +350,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .poster-copy .concert-stamp:before{left:22px;font-size:18px}
 .poster-copy .concert-stamp:after{right:22px;font-size:18px}
 .poster-copy .concert-stamp.reporte{color:#efa36f}
+.poster-copy .concert-stamp.complet{color:#076495}
 .poster-copy .poster-date,
 .poster-copy .poster-time,
 .poster-copy .poster-place,
@@ -369,6 +371,9 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   background-position:91.4894% 48.8943%!important;
 }
 
+
+.concert-stamp-second{top:auto!important;bottom:10px!important;right:10px!important;transform:rotate(7deg)!important}
+.poster-copy .concert-stamp-second{left:auto!important;top:auto!important;right:4%!important;bottom:5%!important;transform:rotate(7deg)!important}
 </style>
 </head>
 <body>
@@ -527,11 +532,13 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     return bits.join(' · ');
   };
 
+  const isFull=c=>Boolean(c&&c.complet)||String(c&&c.etat||'')==='complet';
+
   function stateInfo(c){
     const e=String(c.etat||'normal');
     if(e==='annule') return {label:'Annulé',cls:'annule',stamp:'CONCERT ANNULÉ'};
     if(e==='reporte') return {label:'Reporté',cls:'reporte',stamp:'CONCERT REPORTÉ'};
-    if(e==='complet') return {label:'Complet',cls:'complet',stamp:''};
+    if(e==='complet') return {label:'Complet',cls:'complet',stamp:'COMPLET'};
     return null;
   }
 
@@ -539,12 +546,13 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const time=fmtTime(c), st=stateInfo(c);
     const state=st && !st.stamp ? '<div class="concert-state '+st.cls+'">'+esc(st.label)+'</div>' : '';
     const stamp=st && st.stamp ? '<div class="concert-stamp '+st.cls+'"><span class="stamp-center">'+esc(st.label)+'</span></div>' : '';
+    const fullStamp=isFull(c) && String(c.etat||'')!=='complet' ? '<div class="concert-stamp complet concert-stamp-second"><span class="stamp-center">COMPLET</span></div>' : '';
     const initial=initialInfo(c);
     const reportChange=initial ? '<p class="concert-change">Initialement : <del>'+esc(initial)+'</del></p>' : '';
     const legacyTime=!initial && c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
     const legacyPlace=!initial && c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(fmtPlace(c))+'</p>' : '';
     const reason=c.raisonEtat ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
-    return '<article class="card">'+stamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(fmtPlace(c))+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+reportChange+legacyTime+legacyPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
+    return '<article class="card">'+stamp+fullStamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(fmtPlace(c))+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+reportChange+legacyTime+legacyPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
   }
 
   const futureHost=document.getElementById('concertsUpcoming');
@@ -578,12 +586,13 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const prettyTime=fmtTime(next);
     const heroState=stateInfo(next);
     const heroStamp=heroState && heroState.stamp ? '<div class="concert-stamp '+heroState.cls+'"><span class="stamp-center">'+esc(heroState.label)+'</span></div>' : '';
+    const heroFullStamp=isFull(next) && String(next.etat||'')!=='complet' ? '<div class="concert-stamp complet concert-stamp-second"><span class="stamp-center">COMPLET</span></div>' : '';
     const heroStatus=heroState && !heroState.stamp ? '<div class="poster-state">'+esc(heroState.label)+'</div>' : '';
     const heroInitial=initialInfo(next);
     const heroReportChange=heroInitial ? '<div class="poster-change">Initialement : <del>'+esc(heroInitial)+'</del></div>' : '';
     const heroOldTime=!heroInitial && next.heureAvant ? '<div class="poster-change">Heure modifiée : <del>'+esc(String(next.heureAvant).replace(':','h'))+'</del> → '+esc(prettyTime||'à préciser')+'</div>' : '';
     const heroOldPlace=!heroInitial && next.lieuAvant ? '<div class="poster-change">Lieu modifié : <del>'+esc(next.lieuAvant)+'</del></div>' : '';
-    poster.innerHTML='<div class="poster-copy">'+heroStamp+
+    poster.innerHTML='<div class="poster-copy">'+heroStamp+heroFullStamp+
       '<div class="poster-date">'+esc(date)+'</div>'+ 
       '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+ 
       '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+heroReportChange+heroOldTime+heroOldPlace+

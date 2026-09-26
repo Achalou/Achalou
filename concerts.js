@@ -8,7 +8,7 @@ window.ACHALOU_CONCERTS = [
     "lieu": "gazette cafe aux bois d artichaud · saint jean de cuculles",
     "heure": "20:00",
     "info": "va voir ta gueule a la recre",
-    "etat": "reporte",
+    "etat": "complet",
     "raisonEtat": "",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "21:00",

@@ -432,6 +432,34 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+
+/* Tampon raison : 5 s fond pastel très clair et opaque / 5 s transparent */
+.card .concert-reason,
+.poster-copy .concert-reason{
+  animation:reasonPastelMask 10s steps(1,end) infinite!important;
+}
+@keyframes reasonPastelMask{
+  0%,49.999%{background-color:#fff4dc}
+  50%,100%{background-color:transparent}
+}
+@media(prefers-reduced-motion:reduce){
+  .card .concert-reason,
+  .poster-copy .concert-reason{
+    animation:none!important;
+    background-color:#fff4dc!important;
+  }
+}
+
+
+/* Tampon raison : écriture + contour très pastel.
+   Le fond continue d'alterner 5 s pastel opaque / 5 s transparent. */
+.card .concert-reason,
+.poster-copy .concert-reason{
+  color:#b9aa92!important;
+  border-color:#b9aa92!important;
+  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #b9aa92!important;
+}
+
 </style>
 </head>
 <body>

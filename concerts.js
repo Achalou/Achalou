@@ -9,7 +9,7 @@ window.ACHALOU_CONCERTS = [
     "heure": "20:00",
     "info": "va voir ta gueule a la recre",
     "etat": "reporte",
-    "raisonEtat": "",
+    "raisonEtat": "il pleut comme ane qui pleure",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "21:00",
     "nouveauLieu": "gazette de mes..",

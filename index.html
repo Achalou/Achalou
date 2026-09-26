@@ -304,7 +304,75 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 /* Modification 1 — Étape 3 : états des concerts */
-.card{position:relative;overflow:hidden}.card.has-stamp{padding-top:92px}.card.has-stamp .concert-stamp{top:48px}.card.has-stamp .concert-reason{position:relative;z-index:4;background:#fff;margin-top:14px;padding:8px 10px;border-radius:10px}.concert-state{display:inline-block;margin:0 0 10px;padding:5px 10px;border-radius:999px;font-weight:950;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}.concert-state.annule{background:#ffe5e5;color:#9d1717}.concert-state.reporte{background:#fff1cf;color:#765000}.concert-state.complet{background:#e9e4f7;color:#4e3977}.concert-change{font-size:.9rem;font-weight:750;margin:.35em 0}.concert-change del{opacity:.58}.concert-reason{font-weight:750}.concert-stamp{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-7deg);border:4px double #a91f1f;color:#a91f1f;background:rgba(255,255,255,.82);padding:9px 17px 8px;font-family:Georgia,serif;font-weight:900;font-size:clamp(1.08rem,2.7vw,1.85rem);line-height:.95;letter-spacing:.045em;text-transform:uppercase;white-space:nowrap;border-radius:8px 11px 7px 10px;box-shadow:inset 0 0 0 1px rgba(169,31,31,.42),0 1px 0 rgba(169,31,31,.28);text-shadow:.4px .3px 0 currentColor;opacity:.94;filter:contrast(1.08);animation:stampImpact .46s cubic-bezier(.18,1.55,.35,1) both}.concert-stamp:after{content:"";position:absolute;inset:3px;border:1px dashed currentColor;border-radius:5px 8px 4px 7px;opacity:.42;pointer-events:none}.concert-stamp.reporte{border-color:#916000;color:#916000;box-shadow:inset 0 0 0 1px rgba(145,96,0,.4),0 1px 0 rgba(145,96,0,.25)}@keyframes stampImpact{0%{opacity:0;transform:translate(-50%,-50%) scale(1.7) rotate(-2deg)}62%{opacity:.98;transform:translate(-50%,-50%) scale(.94) rotate(-8deg)}82%{transform:translate(-50%,-50%) scale(1.035) rotate(-6.5deg)}100%{opacity:.94;transform:translate(-50%,-50%) scale(1) rotate(-7deg)}}.poster-copy{position:relative}.poster-copy .concert-stamp{font-size:1.25rem}.poster-state{font-weight:950;text-transform:uppercase;letter-spacing:.08em}.poster-change{font-size:.78rem;font-weight:800;line-height:1.15}.poster-change del{opacity:.55}@media(prefers-reduced-motion:reduce){.concert-stamp{animation:none}}
+.card{position:relative;overflow:visible}
+.card.has-stamp{padding-top:88px}
+.concert-state{display:inline-block;margin:0 0 10px;padding:5px 10px;border-radius:999px;font-weight:950;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.concert-state.annule{background:#ffe5e5;color:#9d1717}
+.concert-state.reporte{background:#fff1cf;color:#765000}
+.concert-state.complet{background:#e9e4f7;color:#4e3977}
+.concert-change{font-size:.9rem;font-weight:750;margin:.35em 0}
+.concert-change del{opacity:.58}
+
+/* Tampon principal : encre sans cartouche blanc, double empreinte */
+.concert-stamp{
+  position:absolute;z-index:3;left:50%;top:43px;
+  transform:translate(-50%,-50%) rotate(-5deg);
+  color:#b51f24;background:transparent;
+  border:3px solid currentColor;
+  border-radius:6px 9px 5px 8px;
+  padding:8px 16px 7px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:900;font-size:clamp(1.08rem,2.6vw,1.72rem);
+  line-height:1;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap;
+  box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 4px currentColor;
+  text-shadow:.6px .2px 0 currentColor;
+  opacity:.94;
+  animation:stampImpact .5s cubic-bezier(.18,1.55,.32,1) both
+}
+.concert-stamp:before{
+  content:"";position:absolute;inset:-6px -5px -5px -6px;
+  border:1.5px solid currentColor;border-radius:9px 5px 10px 6px;
+  opacity:.52;transform:rotate(-.7deg);pointer-events:none
+}
+.concert-stamp:after{
+  content:"";position:absolute;left:7%;right:4%;bottom:3px;height:1px;
+  background:currentColor;opacity:.35;transform:rotate(.6deg);pointer-events:none
+}
+.concert-stamp.reporte{color:#946100}
+@keyframes stampImpact{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(1.85) rotate(1deg)}
+  65%{opacity:.96;transform:translate(-50%,-50%) scale(.93) rotate(-6deg)}
+  84%{transform:translate(-50%,-50%) scale(1.025) rotate(-4.5deg)}
+  100%{opacity:.94;transform:translate(-50%,-50%) scale(1) rotate(-5deg)}
+}
+
+/* La raison devient elle aussi un petit tampon distinct */
+.concert-reason{
+  display:inline-block;position:relative;
+  margin:16px 0 7px 10px;padding:8px 13px 7px;
+  max-width:calc(100% - 14px);
+  color:#8f3030;background:transparent;
+  border:2px solid currentColor;border-radius:5px 7px 4px 6px;
+  font-family:Georgia,"Times New Roman",serif;font-weight:800;
+  line-height:1.25;transform:rotate(1.2deg);
+  overflow-wrap:anywhere
+}
+.concert-reason:before{
+  content:"RAISON : ";font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  font-size:.67rem;font-weight:950;letter-spacing:.09em
+}
+.concert-reason:after{
+  content:"";position:absolute;inset:3px;border:1px dashed currentColor;
+  border-radius:3px;opacity:.38;pointer-events:none
+}
+.concert-reason.reporte{color:#7b5b16}
+
+.poster-copy{position:relative}
+.poster-copy .concert-stamp{font-size:1.15rem;top:42px}
+.poster-state{font-weight:950;text-transform:uppercase;letter-spacing:.08em}
+.poster-change{font-size:.78rem;font-weight:800;line-height:1.15}
+.poster-change del{opacity:.55}
+@media(prefers-reduced-motion:reduce){.concert-stamp{animation:none}}
 </style>
 </head>
 <body>
@@ -454,7 +522,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const stamp=st && st.stamp ? '<div class="concert-stamp '+st.cls+'">'+esc(st.stamp)+'</div>' : '';
     const oldTime=c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
     const oldPlace=c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(c.lieu)+'</p>' : '';
-    const reason=c.raisonEtat ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
+    const reason=c.raisonEtat ? '<p class="concert-reason '+(st?st.cls:'')+'">'+esc(c.raisonEtat)+'</p>' : '';
     return '<article class="card'+(stamp?' has-stamp':'')+'">'+stamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(c.lieu)+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+oldTime+oldPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
   }
 

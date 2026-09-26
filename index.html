@@ -500,6 +500,21 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .hero .organizer-open{background:#fff!important;color:var(--blue)!important}
 .hero .organizer-form{position:absolute!important;z-index:30!important;top:calc(100% + 12px)!important;left:50%!important;transform:translateX(-50%)!important;width:min(620px,calc(100vw - 32px))!important;margin:0!important}
 @media(max-width:760px){.hero .organizer-invite{margin:10px 0 0 8px!important}.hero .organizer-form{left:auto!important;right:-8px!important;transform:none!important}}
+
+/* Calage du formulaire de programmation : marge gauche/droite régulière */
+.hero .organizer-form{
+  width:min(590px,calc(100vw - 48px))!important;
+}
+@media(max-width:760px){
+  .hero .organizer-form{
+    width:calc(100vw - 32px)!important;
+    right:auto!important;
+    left:50%!important;
+    transform:translateX(-50%)!important;
+  }
+}
+
+.contact-programmer{font:inherit;cursor:pointer;border:0}
 </style>
 </head>
 <body>
@@ -527,7 +542,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 <section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
 
-<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div>
+<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
+<button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div></div>
 
 
 
@@ -1023,6 +1039,19 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       status.className="message-status err";
       status.textContent="La demande n’a pas pu être envoyée. Réessayez dans un instant.";
     }finally{button.disabled=false;}
+  });
+})();
+</script>
+
+<script>
+(()=>{
+  const contactButton=document.getElementById("contactProgrammer");
+  const heroButton=document.getElementById("organizerOpen");
+  const form=document.getElementById("organizerForm");
+  if(!contactButton||!heroButton||!form) return;
+  contactButton.addEventListener("click",()=>{
+    if(form.hidden) heroButton.click();
+    document.getElementById("organizerInvite")?.scrollIntoView({behavior:"smooth",block:"center"});
   });
 })();
 </script>

@@ -165,9 +165,9 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 
   .poster-copy{
-    flex:0 0 360px;
-    width:360px;
-    min-width:360px;
+    flex:0 0 390px;
+    width:390px;
+    min-width:390px;
     height:auto;
     overflow:visible;
     display:flex;
@@ -239,9 +239,9 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 
   .logo-card.has-concert .poster-copy{
-    flex:0 0 360px;
-    width:360px;
-    min-width:360px;
+    flex:0 0 390px;
+    width:390px;
+    min-width:390px;
     height:auto;
     overflow:visible;
     display:flex;
@@ -565,8 +565,9 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     requestAnimationFrame(()=>{
       const h=Math.ceil(copy.scrollHeight);
       const ratio=(icon.naturalWidth && icon.naturalHeight) ? icon.naturalWidth/icon.naturalHeight : 1.5;
-      const rightW=Math.round(h*ratio);
       const leftW=Math.ceil(copy.getBoundingClientRect().width);
+      const imageW=Math.round(h*ratio);
+      const rightW=Math.min(imageW,Math.round(leftW*(36/64)));
       const naturalW=leftW+rightW;
       poster.style.height=h+'px';
       badge.style.width=rightW+'px';
@@ -599,9 +600,9 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
     /* Les textes courts restent grands.
        Chaque ligne diminue séparément uniquement si sa longueur l'exige. */
-    fitText(dateEl,40,18);
-    fitText(timeEl,30,17);
-    fitText(placeEl,28,16);
+    fitText(dateEl,46,20);
+    fitText(timeEl,34,18);
+    fitText(placeEl,27,16);
   }
 
   fitHeroConcert();

@@ -302,6 +302,9 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   .logo-card.has-concert .concert-poster{animation:none!important}
 }
 
+
+/* Modification 1 — Étape 3 : états des concerts */
+.card{position:relative;overflow:hidden}.concert-state{display:inline-block;margin:0 0 10px;padding:5px 10px;border-radius:999px;font-weight:950;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}.concert-state.annule{background:#ffe5e5;color:#9d1717}.concert-state.reporte{background:#fff1cf;color:#765000}.concert-state.complet{background:#e9e4f7;color:#4e3977}.concert-change{font-size:.9rem;font-weight:750;margin:.35em 0}.concert-change del{opacity:.58}.concert-reason{font-weight:750}.concert-stamp{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-13deg);border:5px solid #b11d1d;color:#b11d1d;background:#fff9;padding:8px 15px;font-weight:1000;font-size:clamp(1.15rem,3vw,2rem);line-height:1;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 0 0 2px #b11d1d inset;animation:stampImpact .52s cubic-bezier(.2,1.5,.4,1) both}.concert-stamp.reporte{border-color:#9a6400;color:#9a6400;box-shadow:0 0 0 2px #9a6400 inset}@keyframes stampImpact{0%{opacity:0;transform:translate(-50%,-50%) scale(2.2) rotate(-4deg)}68%{opacity:1;transform:translate(-50%,-50%) scale(.92) rotate(-15deg)}100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-13deg)}}.poster-copy{position:relative}.poster-copy .concert-stamp{font-size:1.25rem}.poster-state{font-weight:950;text-transform:uppercase;letter-spacing:.08em}.poster-change{font-size:.78rem;font-weight:800;line-height:1.15}.poster-change del{opacity:.55}@media(prefers-reduced-motion:reduce){.concert-stamp{animation:none}}
 </style>
 </head>
 <body>
@@ -437,9 +440,22 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   const fmtDate=c=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'}).format(new Date(c.date+'T12:00:00'));
   const fmtTime=c=>c.heure ? String(c.heure).replace(':','h') : '';
 
+  function stateInfo(c){
+    const e=String(c.etat||'normal');
+    if(e==='annule') return {label:'Annulé',cls:'annule',stamp:'CONCERT ANNULÉ'};
+    if(e==='reporte') return {label:'Reporté',cls:'reporte',stamp:'CONCERT REPORTÉ'};
+    if(e==='complet') return {label:'Complet',cls:'complet',stamp:''};
+    return null;
+  }
+
   function concertCard(c,label){
-    const time=fmtTime(c);
-    return '<article class="card"><div class="date">'+esc(label)+'</div><h3>'+esc(c.lieu)+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
+    const time=fmtTime(c), st=stateInfo(c);
+    const state=st ? '<div class="concert-state '+st.cls+'">'+esc(st.label)+'</div>' : '';
+    const stamp=st && st.stamp ? '<div class="concert-stamp '+st.cls+'">'+esc(st.stamp)+'</div>' : '';
+    const oldTime=c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
+    const oldPlace=c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(c.lieu)+'</p>' : '';
+    const reason=c.raisonEtat ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
+    return '<article class="card">'+stamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(c.lieu)+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+oldTime+oldPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
   }
 
   const futureHost=document.getElementById('concertsUpcoming');
@@ -471,10 +487,15 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     panel.classList.add('has-concert');
     poster.hidden=false;
     const prettyTime=fmtTime(next);
-    poster.innerHTML='<div class="poster-copy">'+
+    const heroState=stateInfo(next);
+    const heroStamp=heroState && heroState.stamp ? '<div class="concert-stamp '+heroState.cls+'">'+esc(heroState.stamp)+'</div>' : '';
+    const heroStatus=heroState && !heroState.stamp ? '<div class="poster-state">'+esc(heroState.label)+'</div>' : '';
+    const heroOldTime=next.heureAvant ? '<div class="poster-change">Heure modifiée : <del>'+esc(String(next.heureAvant).replace(':','h'))+'</del> → '+esc(prettyTime||'à préciser')+'</div>' : '';
+    const heroOldPlace=next.lieuAvant ? '<div class="poster-change">Lieu modifié : <del>'+esc(next.lieuAvant)+'</del></div>' : '';
+    poster.innerHTML='<div class="poster-copy">'+heroStamp+
       '<div class="poster-date">'+esc(date)+'</div>'+ 
       '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+ 
-      '<div class="poster-place">'+esc(next.lieu)+'</div>'+ 
+      '<div class="poster-place">'+esc(next.lieu)+'</div>'+heroStatus+heroOldTime+heroOldPlace+
       '</div><div class="poster-badge"><img src="acha-lou-icon.png" alt="" aria-hidden="true"></div>';
     requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });
   }

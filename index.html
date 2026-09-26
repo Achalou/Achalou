@@ -75,7 +75,6 @@ section{padding:82px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4
   .cta:hover,.social:hover,.card:hover,.placeholder:hover{transform:none!important;box-shadow:none!important}
 }
 
-
 /* Finitions discrètes */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.seen{opacity:1;transform:none}
@@ -84,7 +83,6 @@ section{padding:82px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4
 .float-btn:hover{transform:translateY(-2px)}#topBtn{opacity:0;pointer-events:none}#topBtn.show{opacity:1;pointer-events:auto}
 @media(min-width:761px){#shareBtn{display:none}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.float-btn{transition:none}}
-
 
 /* Navigation vivante, sans nouvel élément visuel */
 .links a{transition:opacity .22s ease,color .22s ease}
@@ -100,7 +98,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   section.nav-focus{animation:none}
   .links a{transition:none}
 }
-
 
 /* Prochain concert automatique dans l'accueil */
 .hero-concert{margin:.15em 0 18px;max-width:680px}
@@ -302,7 +299,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   .logo-card.has-concert .concert-poster{animation:none!important}
 }
 
-
 /* Modification 1 — Étape 3 : états des concerts */
 .card{position:relative;overflow:hidden}
 .concert-state{display:inline-block;margin:0 0 10px;padding:5px 10px;border-radius:999px;font-weight:950;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
@@ -371,7 +367,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   background-position:91.4894% 48.8943%!important;
 }
 
-
 .concert-stamp-second{top:auto!important;bottom:12px!important;right:12px!important;transform:rotate(7deg)!important}
 .poster-copy .concert-stamp-second{
   left:auto!important;
@@ -397,7 +392,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   top:auto!important; left:10px!important; right:auto!important; bottom:10px!important;
 }
 
-
 .poster-copy .concert-stamp.complet.concert-stamp-second .stamp-center{
   width:auto!important;
   max-width:110px!important;
@@ -408,7 +402,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   white-space:nowrap!important;
   box-sizing:border-box!important;
 }
-
 
 /* Tampon raison :
    5 s prioritaire = fond pastel opaque + texte/contour lisibles
@@ -477,7 +470,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 })();
 </script>
 
-
 <script>
 (function(){
   const navLinks=[...document.querySelectorAll('.links a[href^="#"]')];
@@ -509,7 +501,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 })();
 </script>
 
-
 <script>
 /* Charge toujours la version actuelle de concerts.js après une modification admin. */
 document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
@@ -523,13 +514,14 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   // Modification 1 — Étape 2 : seuls les concerts publiés sont visibles.
   // Un brouillon programmé devient automatiquement visible à la date prévue.
   // Les éléments placés dans la corbeille restent invisibles pendant leur conservation de 30 jours.
+  const parisParts=new Intl.DateTimeFormat('fr-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now);
+  const parisValues=Object.fromEntries(parisParts.map(p=>[p.type,p.value]));
+  const parisNow=`${parisValues.year}-${parisValues.month}-${parisValues.day}T${parisValues.hour}:${parisValues.minute}`;
+
   const data = allData.filter(c=>{
     if(!c || c.supprimeLe) return false;
     if(c.statut !== 'brouillon') return true; // compatibilité avec les anciens concerts
     if(!c.publicationProgrammee) return false;
-    const parts=new Intl.DateTimeFormat('fr-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now);
-    const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));
-    const parisNow=`${v.year}-${v.month}-${v.day}T${v.hour}:${v.minute}`;
     return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(c.publicationProgrammee) && c.publicationProgrammee <= parisNow;
   });
 
@@ -668,8 +660,8 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const heroOldTime=!heroInitial && next.heureAvant ? '<div class="poster-change">Heure modifiée : <del>'+esc(String(next.heureAvant).replace(':','h'))+'</del> → '+esc(prettyTime||'à préciser')+'</div>' : '';
     const heroOldPlace=!heroInitial && next.lieuAvant ? '<div class="poster-change">Lieu modifié : <del>'+esc(next.lieuAvant)+'</del></div>' : '';
     poster.innerHTML='<div class="poster-copy">'+heroStamp+heroFullStamp+
-      '<div class="poster-date">'+esc(date)+'</div>'+ 
-      '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+ 
+      '<div class="poster-date">'+esc(date)+'</div>'+
+      '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
       '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+heroReportChange+heroOldTime+heroOldPlace+
       '</div><div class="poster-badge" aria-hidden="true"></div>';
     requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });

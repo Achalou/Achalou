@@ -380,9 +380,23 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   bottom:auto!important;
   width:150px!important;
   height:150px!important;
-  font-size:24px!important;
+  font-size:18px!important;
+  line-height:1!important;
+  letter-spacing:1px!important;
   transform:rotate(7deg)!important;
 }
+
+/* Prochaines dates : trois zones indépendantes */
+.card .concert-stamp:not(.concert-stamp-second){
+  top:10px!important; right:10px!important; bottom:auto!important; left:auto!important;
+}
+.card .concert-stamp-second{
+  top:auto!important; right:10px!important; bottom:10px!important; left:auto!important;
+}
+.card .concert-reason{
+  top:auto!important; left:10px!important; right:auto!important; bottom:10px!important;
+}
+
 </style>
 </head>
 <body>

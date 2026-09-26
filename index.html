@@ -429,7 +429,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
-.photo-gallery{display:flex;flex-wrap:wrap;align-items:flex-start;gap:18px}.photo-item{flex:0 0 auto;margin:0;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px #00000012;max-width:100%}.photo-item img{display:block;width:auto;height:auto;max-width:520px;max-height:520px;object-fit:contain}.photo-item figcaption{padding:12px 15px;font-weight:750}.photo-gallery .placeholder{width:100%}@media(max-width:760px){.photo-item{max-width:100%}.photo-item img{width:auto;max-width:100%;height:auto;max-height:none}}
+.photo-gallery{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px}.photo-item{display:inline-block;flex:0 0 auto;margin:0;background:transparent!important;border-radius:0!important;overflow:visible!important;box-shadow:none!important;max-width:100%}.photo-item img{display:block;width:auto;height:auto;max-width:520px;max-height:520px;object-fit:contain;border-radius:18px;box-shadow:0 10px 30px #00000018}.photo-item figcaption{padding:9px 4px 0;font-weight:750}.photo-gallery .placeholder{width:100%}@media(max-width:760px){.photo-item{max-width:100%}.photo-item img{width:auto;max-width:100%;height:auto;max-height:none}}
 </style>
 </head>
 <body>
@@ -760,19 +760,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         return '<figure class="photo-item"><img src="photos/'+encodeURIComponent(file)+'" alt="'+esc(title||'Photo d’A’Cha Lou')+'" loading="lazy">'+(title?'<figcaption>'+esc(title)+'</figcaption>':'')+'</figure>';
       }).join('');
       if(!host.innerHTML.trim()) throw new Error('Aucune photo valide');
-
-      host.querySelectorAll('.photo-item img').forEach(img=>{
-        const fitCard=()=>{
-          const card=img.closest('.photo-item');
-          if(!card) return;
-          requestAnimationFrame(()=>{
-            const width=Math.ceil(img.getBoundingClientRect().width);
-            if(width>0) card.style.width=width+'px';
-          });
-        };
-        if(img.complete) fitCard();
-        else img.addEventListener('load',fitCard,{once:true});
-      });
     })
     .catch(()=>{
       host.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';

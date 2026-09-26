@@ -12,11 +12,12 @@ window.ACHALOU_CONCERTS = [
     "raisonEtat": "",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "21:00",
-    "nouveauLieu": "ta gueule",
+    "nouveauLieu": "gazette de mes..",
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
     "publicationProgrammee": "",
-    "supprimeLe": ""
+    "supprimeLe": "",
+    "nouvelleVille": "lezignan"
   }
 ];

@@ -1093,13 +1093,14 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   function moveFormAfter(button){
     button.insertAdjacentElement("afterend",form);
     form.hidden=false;
-    heroButton.textContent="Fermer";
+    contactButton.textContent="Fermer";
+    heroButton.textContent="Programmer A’Cha Lou ?";
   }
 
   contactButton.addEventListener("click",()=>{
     if(!form.hidden && form.previousElementSibling===contactButton){
       form.hidden=true;
-      heroButton.textContent="Programmer A’Cha Lou ?";
+      contactButton.textContent="Programmer A’Cha Lou ?";
       return;
     }
     moveFormAfter(contactButton);
@@ -1111,6 +1112,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       if(heroNext) heroHome.insertBefore(form,heroNext);
       else heroHome.appendChild(form);
       form.hidden=false;
+      contactButton.textContent="Programmer A’Cha Lou ?";
       heroButton.textContent="Fermer";
       form.scrollIntoView({behavior:"smooth",block:"nearest"});
     }

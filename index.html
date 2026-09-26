@@ -487,32 +487,28 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .organizer-form textarea{resize:vertical;min-height:110px}
 .organizer-form button:disabled{opacity:.55;cursor:wait}
 @media(max-width:760px){.organizer-invite{padding:21px 17px}.organizer-invite h3{font-size:1.35rem}}
+
+/* Programmation : bouton seul, formulaire dépliable */
+.organizer-invite{max-width:760px!important;margin:26px auto 34px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;text-align:center}
+.organizer-open{display:inline-flex!important;align-items:center;justify-content:center;border:0!important;border-radius:999px!important;padding:13px 24px!important;background:#fff!important;color:var(--blue)!important;font:inherit!important;font-weight:850!important;box-shadow:0 5px 16px #00000012!important;cursor:pointer}
+.organizer-open:hover,.organizer-open:focus-visible{transform:translateY(-1px);box-shadow:0 7px 20px #00000018!important}
+.organizer-form{margin:18px auto 0!important;max-width:620px!important;padding:22px!important;background:rgba(255,255,255,.78)!important;border:1px solid #00000010!important;border-radius:20px!important;box-shadow:0 8px 24px #0000000a!important;text-align:left!important}
+.organizer-form[hidden]{display:none!important}
+
+/* Programmation près du bouton Voir les concerts */
+.hero .organizer-invite{display:inline-block!important;vertical-align:middle!important;max-width:none!important;margin:0 0 0 10px!important;padding:0!important;position:relative!important}
+.hero .organizer-open{background:#fff!important;color:var(--blue)!important}
+.hero .organizer-form{position:absolute!important;z-index:30!important;top:calc(100% + 12px)!important;left:50%!important;transform:translateX(-50%)!important;width:min(620px,calc(100vw - 32px))!important;margin:0!important}
+@media(max-width:760px){.hero .organizer-invite{margin:10px 0 0 8px!important}.hero .organizer-form{left:auto!important;right:-8px!important;transform:none!important}}
 </style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#photos">Photos</a><a href="#contact">Contact</a><a class="admin-shortcut" href="https://achalou-admin.achalou24.workers.dev/?utm_source=chatgpt.com" aria-label="Administration" title="Administration">⚙︎</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
-
-<section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
-
-<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div id="concertsUpcoming"></div><div id="concertsPast"></div><div class="cards"><article class="card"><div class="date">Programmation</div><h3>Inviter A’Cha Lou</h3><p>Pour proposer une date, contactez le duo via Facebook ou Instagram.</p></article></div></div></section>
-
-<section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
-
-<section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
-
-<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div>
-
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a>
 <div class="organizer-invite" id="organizerInvite">
-  <div class="organizer-copy">
-    <span class="organizer-kicker">PROGRAMMATION</span>
-    <h3>Vous souhaitez programmer A’Cha Lou ?</h3>
-    <p>Festival, bal, fête, mairie, association, restaurant ou événement privé…</p>
-  </div>
-  <button type="button" class="organizer-open" id="organizerOpen">Inviter A’Cha Lou</button>
-
+  <button type="button" class="organizer-open" id="organizerOpen">Programmer A’Cha Lou ?</button>
   <form id="organizerForm" class="organizer-form" hidden>
     <label>Nom / organisme<input name="nom" type="text" maxlength="80" autocomplete="organization" required></label>
     <label>Ville ou lieu<input name="lieu" type="text" maxlength="100" autocomplete="address-level2" required></label>
@@ -521,7 +517,19 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     <button type="submit">Envoyer la demande</button>
     <div id="organizerStatus" class="message-status" role="status" aria-live="polite"></div>
   </form>
-</div>
+</div></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
+
+<section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
+
+<section class="reveal" id="concerts"></div></section>
+
+<section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
+
+<section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
+
+<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a></div></div>
+
+
 
 <div class="newsletter-box" hidden>
   <h3>Recevoir les prochaines dates</h3>
@@ -981,7 +989,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
   open.addEventListener("click",()=>{
     form.hidden=!form.hidden;
-    open.textContent=form.hidden ? "Inviter A’Cha Lou" : "Fermer";
+    open.textContent=form.hidden ? "Programmer A’Cha Lou ?" : "Fermer";
     if(!form.hidden) form.querySelector('input[name="nom"]')?.focus();
   });
 

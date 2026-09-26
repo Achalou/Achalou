@@ -7,7 +7,7 @@
 <meta name="description" content="Site officiel d’A’Cha Lou, duo de musique traditionnelle à Montpellier : accordéon piano, violon et chant. Concerts, musique, photos et contact.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com https://achalou-admin.achalou24.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com https://achalou-admin.achalou24.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://www.youtube-nocookie.com; frame-ancestors 'none'; upgrade-insecure-requests">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta name="theme-color" content="#076495">
 <link rel="canonical" href="https://achalou.github.io/Achalou/">
@@ -453,6 +453,14 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .music-item audio{display:block;width:100%;height:40px}
 @media(max-width:760px){.music-item{padding:16px}.music-item-title{font-size:1.15rem}}
 
+.video-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.video-item{margin:0;background:rgba(255,255,255,.78);border:1px solid #00000010;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px #0000000a}
+.video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.video-frame iframe{display:block;width:100%;height:100%;border:0}
+.video-item figcaption{padding:14px 18px 16px;font-family:Georgia,'Times New Roman',serif;font-size:1.08rem;font-weight:700;color:var(--ink)}
+@media(max-width:760px){.video-gallery{grid-template-columns:1fr}.video-item figcaption{font-size:1rem}}
+
+
 .admin-shortcut{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-left:2px;border-radius:50%;text-decoration:none!important;font-size:17px;line-height:1;color:inherit;opacity:.55;transition:opacity .18s ease,background .18s ease}.admin-shortcut:hover,.admin-shortcut:focus-visible{opacity:1;background:rgba(7,100,149,.09)}
 
 .visitor-message{max-width:620px;margin:34px auto 0;padding:22px;background:rgba(255,255,255,.72);border:1px solid #00000010;border-radius:20px;box-shadow:0 8px 24px #0000000a}
@@ -534,7 +542,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
-<nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#photos">Photos</a><a href="#contact">Contact</a><a class="admin-shortcut" href="https://achalou-admin.achalou24.workers.dev/?utm_source=chatgpt.com" aria-label="Administration" title="Administration">⚙︎</a></div></div></nav>
+<nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#videos">Vidéos</a><a href="#photos">Photos</a><a href="#contact">Contact</a><a class="admin-shortcut" href="https://achalou-admin.achalou24.workers.dev/?utm_source=chatgpt.com" aria-label="Administration" title="Administration">⚙︎</a></div></div></nav>
 <main>
 <section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a>
 <div class="organizer-invite" id="organizerInvite">
@@ -556,6 +564,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 <section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div id="concertsUpcoming"></div><div id="concertsPast"></div></div></section>
 
 <section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
+
+<section class="reveal" id="videos"><div class="wrap"><h2>Vidéos</h2><div id="videoGallery" class="video-gallery"><div class="placeholder"><strong>Chargement des vidéos…</strong></div></div></div></section>
 
 <section class="reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
 
@@ -1107,4 +1117,31 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   });
 })();
 </script>
+
+<script>
+(function(){
+  const host=document.getElementById('videoGallery');
+  if(!host) return;
+  const esc=value=>{const d=document.createElement('div');d.textContent=String(value||'');return d.innerHTML};
+  fetch('videos/videos.json?v='+Date.now(),{cache:'no-store'})
+    .then(r=>{if(!r.ok) throw new Error('Vidéos indisponibles');return r.json()})
+    .then(videos=>{
+      if(!Array.isArray(videos)||!videos.length){
+        host.innerHTML='<div class="placeholder"><strong>Les premières vidéos d’A’Cha Lou arriveront ici.</strong></div>';
+        return;
+      }
+      host.innerHTML=videos.map(v=>{
+        const id=String(v.youtubeId||'').trim();
+        if(!/^[A-Za-z0-9_-]{11}$/.test(id)) return '';
+        const title=String(v.titre||'Vidéo A’Cha Lou').trim();
+        return '<figure class="video-item"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'" title="'+esc(title)+'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><figcaption>'+esc(title)+'</figcaption></figure>';
+      }).join('');
+      if(!host.innerHTML.trim()) throw new Error('Aucune vidéo valide');
+    })
+    .catch(()=>{
+      host.innerHTML='<div class="placeholder"><strong>Les premières vidéos d’A’Cha Lou arriveront ici.</strong></div>';
+    });
+})();
+</script>
+
 </body></html>

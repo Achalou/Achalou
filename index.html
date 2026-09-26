@@ -397,6 +397,18 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   top:auto!important; left:10px!important; right:auto!important; bottom:10px!important;
 }
 
+
+.poster-copy .concert-stamp.complet.concert-stamp-second .stamp-center{
+  width:auto!important;
+  max-width:110px!important;
+  padding:6px!important;
+  font-size:1.05rem!important;
+  line-height:1!important;
+  letter-spacing:.5px!important;
+  white-space:nowrap!important;
+  box-sizing:border-box!important;
+}
+
 </style>
 </head>
 <body>
@@ -548,10 +560,20 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     return ville ? lieu+' · '+ville : lieu;
   };
   const initialInfo=c=>{
-    if(String(c.etat||'normal')!=='reporte' || !(c.nouvelleDate||c.nouvelleHeure||c.nouveauLieu||c.nouvelleVille)) return '';
-    const bits=[formatDateValue(c.date)];
-    if(c.heure) bits.push(String(c.heure).replace(':','h'));
-    if(c.lieu) bits.push(c.lieu);
+    if(String(c.etat||'normal')!=='reporte') return '';
+    const bits=[];
+    if(c.nouvelleDate && c.nouvelleDate!==c.date) bits.push(formatDateValue(c.date));
+    if(c.nouvelleHeure && c.nouvelleHeure!==c.heure && c.heure) bits.push(String(c.heure).replace(':','h'));
+    if(c.nouveauLieu || c.nouvelleVille){
+      const original=String(c.lieu||'');
+      const parts=original.split(' · ');
+      const oldLieu=parts[0]||'';
+      const oldVille=parts.slice(1).join(' · ');
+      const placeBits=[];
+      if(c.nouveauLieu && c.nouveauLieu!==oldLieu && oldLieu) placeBits.push(oldLieu);
+      if(c.nouvelleVille && c.nouvelleVille!==oldVille && oldVille) placeBits.push(oldVille);
+      if(placeBits.length) bits.push(placeBits.join(' · '));
+    }
     return bits.join(' · ');
   };
 

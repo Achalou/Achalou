@@ -509,9 +509,18 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     const value=(String(c.etat||'normal')==='reporte' && c.nouvelleHeure) ? c.nouvelleHeure : c.heure;
     return value ? String(value).replace(':','h') : '';
   };
-  const fmtPlace=c=>(String(c.etat||'normal')==='reporte' && c.nouveauLieu) ? c.nouveauLieu : c.lieu;
+  const fmtPlace=c=>{
+    if(String(c.etat||'normal')!=='reporte' || !(c.nouveauLieu||c.nouvelleVille)) return c.lieu;
+    const original=String(c.lieu||'');
+    const parts=original.split(' · ');
+    const oldLieu=parts[0]||'';
+    const oldVille=parts.slice(1).join(' · ');
+    const lieu=String(c.nouveauLieu||oldLieu).trim();
+    const ville=String(c.nouvelleVille||oldVille).trim();
+    return ville ? lieu+' · '+ville : lieu;
+  };
   const initialInfo=c=>{
-    if(String(c.etat||'normal')!=='reporte' || !(c.nouvelleDate||c.nouvelleHeure||c.nouveauLieu)) return '';
+    if(String(c.etat||'normal')!=='reporte' || !(c.nouvelleDate||c.nouvelleHeure||c.nouveauLieu||c.nouvelleVille)) return '';
     const bits=[formatDateValue(c.date)];
     if(c.heure) bits.push(String(c.heure).replace(':','h'));
     if(c.lieu) bits.push(c.lieu);

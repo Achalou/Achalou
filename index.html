@@ -1406,13 +1406,23 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
       /* Mesure chaque ligne de lieu + ville indépendamment. scrollWidth n'est
          pas fiable ici quand le bloc est sur deux lignes avec overflow:hidden. */
-      const placeMaxLineWidth=()=>{
+      const placeLineWidths=()=>{
         const cs=getComputedStyle(placeEl);
-        const canvas=placeMaxLineWidth.canvas || (placeMaxLineWidth.canvas=document.createElement('canvas'));
+        const canvas=placeLineWidths.canvas || (placeLineWidths.canvas=document.createElement('canvas'));
         const ctx=canvas.getContext('2d');
         ctx.font=cs.font;
         const lines=(placeEl.innerText || placeEl.textContent || '').split(/\n+/).map(x=>x.trim()).filter(Boolean);
-        return Math.max(0,...lines.map(line=>ctx.measureText(line).width));
+        return lines.map(line=>ctx.measureText(line).width);
+      };
+
+      const placeMaxLineWidth=()=>Math.max(0,...placeLineWidths());
+
+      /* Contrôle ciblé de la PREMIÈRE ligne du lieu + ville.
+         clientWidth est déjà la largeur blanche après les marges CSS ; on garde
+         en plus 2 px de sécurité pour éviter que la ligne touche la limite. */
+      const firstPlaceLineFits=()=>{
+        const widths=placeLineWidths();
+        return (widths[0]||0)<=Math.max(0,placeEl.clientWidth-2);
       };
 
       const fits=()=>{
@@ -1483,7 +1493,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
           naturalOk=chooseWidth();
           // Une coupure naturelle n'est conservée que si les deux lignes
           // tiennent réellement avec les marges prévues.
-          naturalOk=naturalOk && placeEl.scrollWidth<=placeEl.clientWidth+1;
+          naturalOk=naturalOk && firstPlaceLineFits() && placeMaxLineWidth()<=placeEl.clientWidth-2;
         }
 
         if(!naturalOk){
@@ -1503,7 +1513,8 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
             probe.remove();
             const maxLine=Math.max(...widths,0);
             const balance=Math.abs((widths[0]||0)-(widths[1]||0));
-            const overflow=Math.max(0,maxLine-placeEl.clientWidth);
+            const safePlaceWidth=Math.max(0,placeEl.clientWidth-2);
+            const overflow=Math.max(0,maxLine-safePlaceWidth);
             const score=overflow*1000+maxLine+balance*.18;
             if(score<bestScore){bestScore=score;best=candidate;}
           }

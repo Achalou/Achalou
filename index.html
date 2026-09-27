@@ -1157,18 +1157,19 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       return candidates;
     };
 
-    const placeSplitCandidates=(txt)=>{
+    const placeSplitCandidates=(txt,isPortrait=false)=>{
       const candidates=[];
       const natural=naturalPlaceSplit(txt);
-      if(natural) candidates.push(natural);
+      if(natural && !isPortrait) candidates.push(natural);
       candidates.push(...balancedPlaceSplits(txt));
+      if(natural && isPortrait) candidates.push(natural);
       return candidates;
     };
 
     const bestPlaceSplit=(txt)=>{
       let best=null;
       let bestScore=Infinity;
-      for(const candidate of placeSplitCandidates(txt)){
+      for(const candidate of placeSplitCandidates(txt,isPortraitMobile)){
         setPlaceLines(candidate);
         void poster.offsetHeight;
         const widths=placeLineWidths();
@@ -1272,7 +1273,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         const dateW=dateEl.scrollWidth;
         const timeW=timeEl.scrollWidth;
         const placeW=placeMaxLineWidth();
-        const horizontalLimit=isPortraitMobile ? Math.max(0,innerW-2) : safePlaceWidth();
+        const horizontalLimit=safePlaceWidth();
         return dateW<=horizontalLimit+0.5 &&
                timeW<=horizontalLimit+0.5 &&
                placeW<=horizontalLimit+0.5 &&
@@ -1323,11 +1324,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       if(!ok || placeEl.scrollWidth>placeEl.clientWidth*.88){
         const natural=naturalPlaceSplit(originalPlace);
         let naturalOk=false;
-        if(natural){
+        if(natural && !isPortraitMobile){
           setPlaceLines(natural);
           naturalOk=chooseWidth();
-          // Une coupure naturelle n'est conservée que si les deux lignes
-          // tiennent réellement avec les marges prévues.
+          // Sur ordinateur, on conserve la coupure naturelle seulement si
+          // les deux lignes respectent réellement les marges.
           naturalOk=naturalOk && firstPlaceLineFits() && placeMaxLineWidth()<=safePlaceWidth();
         }
 
@@ -1337,18 +1338,14 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
           for(const candidate of balancedPlaceSplits(originalPlace)){
             setPlaceLines(candidate);
             setPanelWidth(maxW);
-            const lineNodes=[...placeEl.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE);
-            const probe=document.createElement('span');
-            const cs=getComputedStyle(placeEl);
-            probe.style.cssText='position:absolute;visibility:hidden;white-space:nowrap;font:'+cs.font+';';
-            document.body.appendChild(probe);
-            const widths=lineNodes.map(n=>{probe.textContent=n.textContent;return probe.getBoundingClientRect().width;});
-            probe.remove();
-            const maxLine=Math.max(...widths,0);
-            const balance=Math.abs((widths[0]||0)-(widths[1]||0));
+            const widths=placeLineWidths();
             const safeW=safePlaceWidth();
-            const overflow=Math.max(0,maxLine-safeW);
-            const score=overflow*1000+maxLine+balance*.18;
+            const overflow=widths.reduce((sum,w)=>sum+Math.max(0,w-safeW),0);
+            const maxLine=Math.max(0,...widths);
+            const balance=Math.abs((widths[0]||0)-(widths[1]||0));
+            // Un dépassement d'une seule ligne est très fortement pénalisé.
+            // À dépassement égal, on préfère les deux lignes les plus équilibrées.
+            const score=overflow*10000+maxLine+balance*.35;
             if(score<bestScore){bestScore=score;best=candidate;}
           }
           if(best){
@@ -1406,9 +1403,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
            est responsable du débordement, il diminue très progressivement ;
            si c'est la hauteur totale/date/heure, l'ensemble diminue ensuite. */
         for(let step=0;step<100 && !fits();step++){
-          const cs=getComputedStyle(copy);
-          const innerW=Math.max(0,copy.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)-2);
-          const placeTooWide=placeMaxLineWidth()>innerW+0.5;
+          const placeTooWide=placeMaxLineWidth()>safePlaceWidth()+0.5;
           if(placeTooWide && l>6){
             l=Math.max(6,l-0.1);
             placeEl.style.fontSize=l+'px';

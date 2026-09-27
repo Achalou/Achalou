@@ -836,6 +836,55 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   #heroPanel.has-concert{max-width:92vw!important;}
 }
 </style>
+
+<style>
+/* ===== CORRECTION FINALE DU PANNEAU DYNAMIQUE =====
+   La hauteur vient UNIQUEMENT de l'image réelle. */
+#heroPanel.has-concert{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+#heroPanel.has-concert #concertPoster{
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  grid-template-columns:none!important;
+  overflow:visible!important;
+  background:none!important;
+}
+#heroPanel.has-concert #concertPoster > .poster-bg{
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:0!important;
+  animation:none!important;
+  transform:none!important;
+}
+#heroPanel.has-concert #concertPoster > .poster-copy{
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  width:69.33%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  box-sizing:border-box!important;
+  padding:6% 5.5%!important;
+  overflow:hidden!important;
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1140,82 +1189,81 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const poster=document.getElementById('concertPoster');
     if(!panel || !poster || poster.hidden) return;
 
+    const bg=poster.querySelector('.poster-bg');
     const copy=poster.querySelector('.poster-copy');
     const dateEl=poster.querySelector('.poster-date');
     const timeEl=poster.querySelector('.poster-time');
     const placeEl=poster.querySelector('.poster-place');
-    if(!copy || !dateEl || !timeEl || !placeEl) return;
+    if(!bg || !copy || !dateEl || !timeEl || !placeEl) return;
 
-    /* Taille intelligente du panneau à partir du contenu du concert.
-       L'image entière est agrandie : blanc, bleu et personnages gardent
-       donc exactement les mêmes proportions. */
-    const available=Math.max(280, Math.min(760, window.innerWidth - 32));
-    const minW=Math.min(430, available);
-    const maxW=Math.min(700, available);
+    const run=()=>{
+      /* L'image réelle impose toujours la hauteur :
+         aucune hauteur ni aucun ratio n'est calculé ici. */
+      poster.style.height='auto';
+      poster.style.aspectRatio='auto';
 
-    // On mesure d'abord les textes à une taille de référence lisible.
-    const probe=document.createElement('canvas').getContext('2d');
-    const bodyStyle=getComputedStyle(document.body);
-    const sans=bodyStyle.fontFamily || 'Arial, sans-serif';
+      const available=Math.max(280, Math.min(720, window.innerWidth-32));
+      const minW=Math.min(400,available);
+      const maxW=available;
 
-    probe.font='700 30px Georgia, serif';
-    const dateNeed=probe.measureText(dateEl.textContent.trim()).width;
+      // Lisibilité minimale souhaitée.
+      const minDate=18, minTime=16, minPlace=12;
+      const idealDate=25, idealTime=20, idealPlace=15;
 
-    probe.font='850 24px '+sans;
-    const timeNeed=probe.measureText(timeEl.textContent.trim()).width;
-
-    probe.font='850 17px '+sans;
-    const placeNeed=probe.measureText(placeEl.textContent.trim()).width;
-
-    // 69,33 % du panneau est blanc ; on conserve une marge intérieure.
-    const whiteUsable=.6933 * .88;
-    const textNeed=Math.max(dateNeed, timeNeed, placeNeed);
-
-    // Un texte plus long agrandit le panneau, dans des limites raisonnables.
-    let targetW=Math.ceil(textNeed / whiteUs);
-    targetW=Math.max(minW, Math.min(maxW, targetW));
-
-    panel.style.width=targetW+'px';
-    panel.style.maxWidth='100%';
-    poster.style.width='100%';
-
-    requestAnimationFrame(()=>{
-      const pw=poster.clientWidth || targetW;
-      const scale=Math.max(.72, Math.min(1.22, pw/520));
-
-      let dateSize=30*scale;
-      let timeSize=24*scale;
-      let placeSize=17*scale;
-
-      const apply=()=>{
-        dateEl.style.fontSize=dateSize+'px';
-        timeEl.style.fontSize=timeSize+'px';
-        placeEl.style.fontSize=placeSize+'px';
+      const applySizes=(d,t,l)=>{
+        dateEl.style.fontSize=d+'px';
+        timeEl.style.fontSize=t+'px';
+        placeEl.style.fontSize=l+'px';
       };
-      apply();
 
-      // Ajustement fin : on réduit seulement si le texte dépasse encore.
-      const shrinkWidth=(el,get,set,min)=>{
-        let n=get(), guard=100;
-        while(guard-- && n>min*scale && el.scrollWidth>el.clientWidth+1){
-          n-=.5;
-          set(n);
-          el.style.fontSize=n+'px';
-        }
+      const fits=()=>{
+        const horizontal =
+          dateEl.scrollWidth <= dateEl.clientWidth+1 &&
+          timeEl.scrollWidth <= timeEl.clientWidth+1 &&
+          placeEl.scrollWidth <= placeEl.clientWidth+1;
+        const vertical = copy.scrollHeight <= copy.clientHeight+1;
+        return horizontal && vertical;
       };
-      shrinkWidth(dateEl,()=>dateSize,n=>dateSize=n,17);
-      shrinkWidth(timeEl,()=>timeSize,n=>timeSize=n,15);
-      shrinkWidth(placeEl,()=>placeSize,n=>placeSize=n,11);
 
-      let guard=100;
-      while(guard-- && copy.scrollHeight>copy.clientHeight+1 &&
-            (dateSize>15*scale || timeSize>14*scale || placeSize>10*scale)){
-        dateSize=Math.max(15*scale,dateSize-.5);
-        timeSize=Math.max(14*scale,timeSize-.5);
-        placeSize=Math.max(10*scale,placeSize-.5);
-        apply();
+      // Cherche d'abord la plus petite taille de panneau permettant
+      // de conserver des textes lisibles.
+      let chosen=maxW;
+      applySizes(minDate,minTime,minPlace);
+      for(let w=minW; w<=maxW; w+=10){
+        panel.style.width=w+'px';
+        poster.style.width='100%';
+        // force le navigateur à recalculer les dimensions
+        void poster.offsetHeight;
+        if(fits()){ chosen=w; break; }
       }
-    });
+
+      panel.style.width=chosen+'px';
+      poster.style.width='100%';
+      void poster.offsetHeight;
+
+      // Une fois le panneau choisi, agrandit harmonieusement les trois textes
+      // ensemble jusqu'à la plus grande taille qui tient réellement.
+      let factor=1;
+      let best=1;
+      for(factor=1; factor<=1.5; factor+=0.025){
+        const d=Math.min(idealDate, minDate*factor);
+        const t=Math.min(idealTime, minTime*factor);
+        const l=Math.min(idealPlace, minPlace*factor);
+        applySizes(d,t,l);
+        void copy.offsetHeight;
+        if(fits()) best=factor;
+        else break;
+      }
+
+      applySizes(
+        Math.min(idealDate,minDate*best),
+        Math.min(idealTime,minTime*best),
+        Math.min(idealPlace,minPlace*best)
+      );
+    };
+
+    if(bg.complete && bg.naturalWidth) run();
+    else bg.addEventListener('load',run,{once:true});
   }
 
   fitHeroConcert();

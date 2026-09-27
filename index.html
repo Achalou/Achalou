@@ -558,6 +558,24 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 </style>
 
+
+<style>
+#visitorMessageBox[hidden]{display:none!important}
+#contact #visitorMessageBox{
+  background:#fff!important;
+  color:var(--ink)!important;
+  width:100%;
+  max-width:590px;
+  margin:18px auto 0;
+  box-sizing:border-box;
+}
+@media(max-width:760px){
+  #contact #visitorMessageBox{
+    max-width:100%;
+  }
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -589,6 +607,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 <section class="intro reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
 
 <section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
+<button type="button" class="social contact-programmer" id="contactMessageOpen">Envoyer un message</button>
 <button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div></div>
 
 
@@ -605,7 +624,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   <small class="newsletter-note">Votre adresse sert uniquement à vous envoyer les nouvelles d’A’Cha Lou.</small>
 </div>
 
-<div class="visitor-message">
+<div class="visitor-message" id="visitorMessageBox" hidden>
   <h3>Laisser un message à A’Cha Lou</h3>
   <p>Un petit mot ? Écrivez-nous ici.</p>
   <form id="publicMessageForm">
@@ -1195,6 +1214,31 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     .catch(()=>{
       host.innerHTML='<div class="placeholder"><strong>Les premières vidéos d’A’Cha Lou arriveront ici.</strong></div>';
     });
+})();
+</script>
+
+
+<script>
+(()=>{
+  const button=document.getElementById("contactMessageOpen");
+  const box=document.getElementById("visitorMessageBox");
+  const form=document.getElementById("publicMessageForm");
+  if(!button||!box) return;
+
+  const openLabel="Envoyer un message";
+  const closeLabel="Fermer";
+
+  button.addEventListener("click",()=>{
+    box.hidden=!box.hidden;
+    button.textContent=box.hidden ? openLabel : closeLabel;
+
+    if(!box.hidden){
+      box.scrollIntoView({behavior:"smooth",block:"nearest"});
+      if(window.matchMedia("(min-width: 761px)").matches){
+        form?.querySelector('input[name="prenom"]')?.focus();
+      }
+    }
+  });
 })();
 </script>
 

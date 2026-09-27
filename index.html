@@ -578,31 +578,39 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Titres de rubriques sur le panneau A'Cha Lou :
-   proportions naturelles, sans écrasement, et alignement sur la marge du contenu. */
+/* Panneaux de rubriques : proportions naturelles et titre contenu dans la zone blanche. */
 main section:not(.hero) > .wrap > h2{
   width:350px;
   max-width:100%;
   aspect-ratio:1728 / 485;
   margin:0 0 26px 0;
-  padding:0 39% 0 5.5%;
   box-sizing:border-box;
   display:flex;
   align-items:center;
   justify-content:flex-start;
+
   background-image:url("acha-lou-sans-concert.png");
   background-position:center;
   background-size:contain;
   background-repeat:no-repeat;
+
   color:var(--ink);
   font-family:Georgia,serif;
-  font-size:clamp(1.55rem,2.8vw,2.25rem);
+  font-size:clamp(1.45rem,2.5vw,2.05rem);
   line-height:1;
-  text-align:left;
   white-space:nowrap;
+
+  /* Le texte occupe uniquement la partie blanche du panneau. */
+  padding:0 39% 0 0;
+  text-align:center;
 }
 
-/* Contact garde exactement la même marge gauche que le contenu de sa .wrap. */
+/* Un pseudo-conteneur permet de centrer le texte dans les 61 % blancs
+   tout en gardant le h2 à la place exacte de l'ancien titre. */
+main section:not(.hero) > .wrap > h2{
+  justify-content:center;
+}
+
 #contact > .wrap > h2{
   background-color:transparent!important;
 }
@@ -612,9 +620,8 @@ main section:not(.hero) > .wrap > h2{
     width:min(86vw,330px);
     max-width:100%;
     margin:0 0 22px 0;
-    padding-left:5.5%;
     padding-right:39%;
-    font-size:clamp(1.35rem,6vw,1.95rem);
+    font-size:clamp(1.25rem,5.5vw,1.8rem);
     white-space:nowrap;
   }
 }

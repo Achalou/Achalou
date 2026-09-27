@@ -43,7 +43,7 @@ window.ACHALOU_CONCERTS = [
     "date": "2027-04-02",
     "lieu": "cafe · albi",
     "heure": "20:00",
-    "info": "tout qu il va bien",
+    "info": "https://fr.yahoo.com/",
     "etat": "normal",
     "complet": false,
     "raisonEtat": "",
@@ -54,6 +54,7 @@ window.ACHALOU_CONCERTS = [
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": ""
   }
 ];

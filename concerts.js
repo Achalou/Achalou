@@ -27,7 +27,7 @@ window.ACHALOU_CONCERTS = [
     "heure": "20:00",
     "info": "ta gueule",
     "etat": "reporte",
-    "complet": true,
+    "complet": false,
     "raisonEtat": "ta mere en slip",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "",

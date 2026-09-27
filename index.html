@@ -863,25 +863,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   text-align:center;
   overflow:hidden;
 }
-#heroPanel .report-old-poster .poster-date{
-  color:var(--ink);
-  font:700 clamp(16px,3.4vw,25px)/1.05 Georgia,serif;
-  white-space:nowrap;
-}
-#heroPanel .report-old-poster .poster-time{
-  color:var(--blue);
-  font:850 clamp(13px,2.7vw,20px)/1.05 system-ui,sans-serif;
-  white-space:nowrap;
-}
-#heroPanel .report-old-poster .poster-place{
-  width:100%;
-  color:var(--blue);
-  font:850 clamp(10px,2vw,15px)/1.08 system-ui,sans-serif;
-  text-align:center;
-  overflow-wrap:normal;
-  word-break:normal;
-  text-wrap:balance;
-}
 #heroPanel .report-arrow{
   position:relative;
   height:46px;
@@ -946,6 +927,52 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 #heroPanel .report-new-poster .poster-date,
 #heroPanel .report-new-poster .poster-time,
 #heroPanel .report-new-poster .poster-place{width:100%;margin:0;padding:0;text-align:center;}
+</style>
+
+
+<style>
+/* Transition entre ancien et nouveau concert */
+#heroPanel .report-transition{
+  position:relative;
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#heroPanel .report-transition .report-arrow{
+  height:46px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+}
+#heroPanel .report-reason-stamp{
+  position:absolute;
+  left:calc(50% + 32px);
+  top:50%;
+  transform:translateY(-50%) rotate(-3deg);
+  max-width:42%;
+  padding:5px 9px;
+  border:2px solid #171717;
+  border-radius:3px;
+  color:#171717;
+  background:rgba(255,255,255,.94);
+  box-shadow:inset 0 0 0 2px rgba(23,23,23,.12);
+  font:900 clamp(9px,1.6vw,12px)/1.05 system-ui,sans-serif;
+  letter-spacing:.025em;
+  text-align:center;
+  text-transform:uppercase;
+  z-index:8;
+}
+@media (max-width:760px) and (orientation:portrait){
+  #heroPanel .report-transition{min-height:48px;}
+  #heroPanel .report-transition .report-arrow{height:38px;}
+  #heroPanel .report-reason-stamp{
+    left:calc(50% + 25px);
+    max-width:44%;
+    padding:4px 7px;
+    font-size:9px;
+  }
+}
 </style>
 
 </head>
@@ -1231,18 +1258,21 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       ? '<div class="concert-stamp complet concert-stamp-second"><span class="stamp-center">COMPLET</span></div>'
       : '';
     const oldPoster=isPostponed
-      ? '<div class="report-old-poster">'+
+      ? '<div class="report-old-poster concert-state-panel">'+
           '<img class="poster-bg" src="acha-lou-sans-concert.png" alt="" aria-hidden="true">'+
           '<div class="poster-copy">'+oldReportStamp+oldFullStamp+
             '<div class="poster-date">'+esc(oldDate)+'</div>'+
             '<div class="poster-time">'+esc(oldTime)+'</div>'+
             '<div class="poster-place">'+esc(oldPlace)+'</div>'+
           '</div><div class="report-cross" aria-hidden="true"></div>'+
-        '</div><div class="report-arrow" aria-hidden="true"></div>'
+        '</div><div class="report-transition">'+
+          '<div class="report-arrow" aria-hidden="true"></div>'+
+          (next.raisonEtat ? '<div class="report-reason-stamp">'+esc(next.raisonEtat)+'</div>' : '')+
+        '</div>'
       : '';
     panel.classList.toggle('is-postponed',isPostponed);
     poster.innerHTML=oldPoster+
-      (isPostponed ? '<div class="report-new-poster">' : '')+
+      (isPostponed ? '<div class="report-new-poster concert-state-panel">' : '')+
       '<img class="poster-bg" src="acha-lou-sans-concert.png" alt="" aria-hidden="true">'+
       '<div class="poster-copy">'+heroStamp+heroFullStamp+
         '<div class="poster-date">'+esc(date)+'</div>'+
@@ -1259,11 +1289,13 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const poster=document.getElementById('concertPoster');
     if(!panel || !poster || poster.hidden) return;
 
-    const bg=poster.querySelector('.poster-bg');
-    const copy=poster.querySelector('.poster-copy');
-    const dateEl=poster.querySelector('.poster-date');
-    const timeEl=poster.querySelector('.poster-time');
-    const placeEl=poster.querySelector('.poster-place');
+    const statePanels=[...poster.querySelectorAll('.concert-state-panel')];
+    const activePanel=statePanels.length ? statePanels[statePanels.length-1] : poster;
+    const bg=activePanel.querySelector('.poster-bg');
+    const copy=activePanel.querySelector('.poster-copy');
+    const dateEl=activePanel.querySelector('.poster-date');
+    const timeEl=activePanel.querySelector('.poster-time');
+    const placeEl=activePanel.querySelector('.poster-place');
     if(!bg || !copy || !dateEl || !timeEl || !placeEl) return;
 
     const originalDate=(dateEl.dataset.fullDate || dateEl.textContent || '').trim();
@@ -1575,6 +1607,56 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
          on repart volontairement des tailles souhaitées. On garde ensuite la
          plus grande taille possible qui respecte réellement les quatre marges.
          Cela évite de conserver une petite taille issue d'un calcul précédent. */
+      const fitSiblingPanel=(host)=>{
+        const c=host.querySelector('.poster-copy');
+        const d=host.querySelector('.poster-date');
+        const t=host.querySelector('.poster-time');
+        const l=host.querySelector('.poster-place');
+        if(!c||!d||!t||!l) return;
+
+        d.style.fontSize=ideal.date+'px';
+        t.style.fontSize=ideal.time+'px';
+        l.style.fontSize=ideal.place+'px';
+
+        const lineWidths=()=>{
+          const cs=getComputedStyle(l);
+          const canvas=document.createElement('canvas');
+          const ctx=canvas.getContext('2d');
+          ctx.font=cs.font;
+          return (l.innerText||l.textContent||'').split(/\n+/)
+            .filter(Boolean).map(x=>ctx.measureText(x.trim()).width);
+        };
+        const siblingFits=()=>{
+          const gap=parseFloat(getComputedStyle(c).gap)||0;
+          const els=[d,t,l].filter(x=>x.textContent.trim());
+          const usedH=els.reduce((sum,x)=>sum+x.getBoundingClientRect().height,0)+
+                      Math.max(0,els.length-1)*gap;
+          const maxLine=Math.max(0,...lineWidths());
+          return d.scrollWidth<=c.clientWidth+.5 &&
+                 t.scrollWidth<=c.clientWidth+.5 &&
+                 maxLine<=c.clientWidth+.5 &&
+                 usedH<=c.clientHeight+.5;
+        };
+
+        let ds=ideal.date,ts=ideal.time,ls=ideal.place;
+        for(let step=0;step<180 && !siblingFits();step++){
+          ds=Math.max(minimum.date,ds-.1);
+          ts=Math.max(minimum.time,ts-.1);
+          ls=Math.max(minimum.place,ls-.1);
+          d.style.fontSize=ds+'px';
+          t.style.fontSize=ts+'px';
+          l.style.fontSize=ls+'px';
+          void c.offsetHeight;
+          if(ds<=minimum.date && ts<=minimum.time && ls<=minimum.place) break;
+        }
+      };
+
+      /* En mode reporté, l'ancien panneau suit exactement le même régime
+         portrait / paysage / ordinateur que le nouveau. */
+      if(statePanels.length>1){
+        statePanels.slice(0,-1).forEach(fitSiblingPanel);
+      }
+
       if(isLandscapeMobile){
         setPanelWidth(maxW);
         setSizes(ideal.date,ideal.time,ideal.place);

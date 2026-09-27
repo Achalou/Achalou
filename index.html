@@ -576,6 +576,49 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 </style>
 
+
+<style>
+/* Titres de rubriques présentés comme des petits panneaux,
+   tout en conservant les vrais <h2> pour le référencement et l'accessibilité. */
+main section:not(.hero) > .wrap > h2{
+  width:min(430px, 78%);
+  margin:0 auto 34px;
+  padding:18px 28px;
+  box-sizing:border-box;
+  background:#fff;
+  color:var(--ink);
+  border:1.5px solid rgba(31,42,51,.18);
+  border-radius:22px;
+  box-shadow:0 12px 34px rgba(0,0,0,.14);
+  text-align:center;
+  font-family:Georgia,serif;
+  font-size:clamp(2rem,4.5vw,3.35rem);
+  line-height:1.05;
+  position:relative;
+}
+main section:not(.hero) > .wrap > h2::after{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border:1px solid rgba(14,96,144,.20);
+  border-radius:15px;
+  pointer-events:none;
+}
+@media(max-width:760px){
+  main section:not(.hero) > .wrap > h2{
+    width:min(92%, 360px);
+    margin-bottom:28px;
+    padding:15px 18px;
+    border-radius:18px;
+    font-size:clamp(1.8rem,9vw,2.6rem);
+  }
+  main section:not(.hero) > .wrap > h2::after{
+    inset:6px;
+    border-radius:12px;
+  }
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>

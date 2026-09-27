@@ -964,6 +964,22 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 </style>
+
+<style>
+/* Mobile portrait : les marges verticales suivent la hauteur réelle du panneau,
+   les marges latérales suivent sa largeur. Paysage et ordinateur inchangés. */
+@media (max-width:760px) and (orientation:portrait){
+  #heroPanel.has-concert #concertPoster > .poster-copy{
+    padding:
+      clamp(6px, 5.5cqh, 10px)
+      clamp(10px, 5.5cqw, 16px)!important;
+    box-sizing:border-box!important;
+  }
+  #heroPanel.has-concert #concertPoster{
+    container-type:size;
+  }
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>

@@ -1086,6 +1086,24 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 </style>
 
+
+<style>
+/* Le duo — fenêtre portraits et biographies */
+.duo-launch-wrap{display:flex;justify-content:flex-start}
+.duo-launch{display:inline-flex;align-items:center;gap:14px;border:0;border-radius:999px;padding:10px 22px 10px 10px;background:var(--blue);color:#fff;font:700 clamp(1.35rem,3vw,2rem)/1 Georgia,serif;cursor:pointer;box-shadow:0 10px 28px #0002;transition:transform .2s ease,box-shadow .2s ease}
+.duo-launch:hover,.duo-launch:focus-visible{transform:translateY(-2px);box-shadow:0 14px 34px #0003}
+.duo-launch img{width:62px;height:62px;object-fit:cover;border-radius:50%;background:#fff}
+.duo-modal[hidden]{display:none}.duo-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:18px}.duo-backdrop{position:absolute;inset:0;background:#172027b8;backdrop-filter:blur(5px)}
+.duo-dialog{position:relative;z-index:1;width:min(900px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--paper);border-radius:26px;padding:clamp(22px,4vw,38px);box-shadow:0 24px 80px #0006}
+.duo-dialog>h2{margin:0 48px 8px 0;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--blue)}.duo-intro{margin:0 0 24px;max-width:720px}
+.duo-close{position:absolute;right:16px;top:14px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:var(--ink);font-size:2rem;line-height:1;cursor:pointer;box-shadow:0 5px 18px #0002}
+.duo-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.duo-person{border:0;background:#fff;border-radius:22px;padding:12px 12px 18px;cursor:pointer;box-shadow:0 10px 30px #00000012;transition:transform .2s ease,box-shadow .2s ease}.duo-person:hover,.duo-person:focus-visible{transform:translateY(-4px);box-shadow:0 16px 36px #0002}.duo-person img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:16px}.duo-person span{display:block;margin-top:13px;color:var(--blue);font:700 clamp(1.2rem,3vw,1.6rem)/1.2 Georgia,serif}
+.duo-bio{background:#fff;border-radius:20px;padding:clamp(20px,4vw,30px);box-shadow:0 10px 30px #00000010}.duo-bio h3{margin:8px 0 12px;color:var(--blue);font:700 clamp(1.7rem,4vw,2.4rem)/1.15 Georgia,serif}.duo-bio p{margin:0;white-space:pre-line;font-size:1.05rem}.duo-back{border:0;background:transparent;color:var(--blue);padding:0;font-weight:800;cursor:pointer}
+body.duo-modal-open{overflow:hidden}
+@media(max-width:620px){.duo-portraits{grid-template-columns:1fr;gap:16px}.duo-person img{aspect-ratio:4/3;object-position:center 32%}.duo-dialog{padding:22px 16px}.duo-launch-wrap{justify-content:center}}
+@media(prefers-reduced-motion:reduce){.duo-launch,.duo-person{transition:none}}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1106,7 +1124,31 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   </form>
 </div></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
 
-<section class="intro reveal" id="duo"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
+<section class="intro reveal" id="duo"><div class="wrap duo-launch-wrap"><button type="button" class="duo-launch" id="duoOpen" aria-haspopup="dialog" aria-controls="duoDialog"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></button></div></section>
+
+<div class="duo-modal" id="duoDialog" hidden>
+  <div class="duo-backdrop" data-duo-close></div>
+  <div class="duo-dialog" role="dialog" aria-modal="true" aria-labelledby="duoDialogTitle">
+    <button type="button" class="duo-close" data-duo-close aria-label="Fermer">×</button>
+    <h2 id="duoDialogTitle">Le duo</h2>
+    <p class="duo-intro">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Cliquez sur un portrait pour découvrir sa bio.</p>
+    <div class="duo-portraits" id="duoPortraits">
+      <button type="button" class="duo-person" data-duo-person="guillaume" aria-controls="duoBio">
+        <img src="guillaume-rigaud.png" alt="Guillaume Rigaud à l’accordéon">
+        <span>Guillaume Rigaud</span>
+      </button>
+      <button type="button" class="duo-person" data-duo-person="simon" aria-controls="duoBio">
+        <img src="simon-doue.png" alt="Simon Doué au violon">
+        <span>Simon Doué</span>
+      </button>
+    </div>
+    <article class="duo-bio" id="duoBio" hidden aria-live="polite">
+      <button type="button" class="duo-back" id="duoBack">← Les deux musiciens</button>
+      <h3 id="duoBioName"></h3>
+      <p id="duoBioText"></p>
+    </article>
+  </div>
+</div>
 
 <section class="reveal" id="concerts"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Concerts</span></h2><div id="concertsUpcoming"></div><div id="concertsPast"></div></div></section>
 
@@ -2183,5 +2225,31 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 </script>
 
 
+
+
+<script>
+(function(){
+  const open=document.getElementById('duoOpen');
+  const modal=document.getElementById('duoDialog');
+  const portraits=document.getElementById('duoPortraits');
+  const bio=document.getElementById('duoBio');
+  const bioName=document.getElementById('duoBioName');
+  const bioText=document.getElementById('duoBioText');
+  const back=document.getElementById('duoBack');
+  if(!open||!modal) return;
+  const bios={
+    guillaume:{name:'Guillaume Rigaud',text:`Guillaume Rigaud est un faiseur de sons quasi fauché. Il arrive dans le milieu musical dès ses 1 an et demi quand il entend un camion reculer près de son berceau. Dès lors, il médite pendant trente ans pour trouver un moyen de rivaliser avec les klaxons de voitures. Commençant par le clavecin et la musique baroque, il s'essaie à la planche à laver puis il s'inscrit au conservatoire de la rue et sympathise lâchement avec les flics que lui envoient les gentrifiés quand il joue de l'accordéon dans le centre ville de Montpellier - dès que la nuit tombe jusqu'à 2h du matin tous les jeudis soirs sur le kiosque de l'esplanade -`},
+    simon:{name:'Simon Doué',text:`De formation préhistorique, Simon Doué a cogné sur un piano au conservatoire de Montpellier de 1986 à 1992. Plus tard, en 2004, il apprend la guitare sommaire avec la formation Guitare Plus à Juvignac. Grand amateur de Georges Brassens, il a également travaillé la musique des Musclés et ses arrangements. C’est avec la dégustation des alcools traditionnels de France (Occitanie, Bretagne) et d’ailleurs (Irlande, Brésil, Balkans), que Simon s’est découvert une passion pour le violon indiou. Il a ainsi titubé de groupe en groupe en musique traditionnelle avec «Bal à Zimuts» à l'accordéon, en forró avec «Forrozuca», et saisissant le peu d'amour propre qu'il lui restait, il renoue avec la chanson française dans le groupe «Runnn». Il échoue inévitablement avec son violon dans A'cha Lou.`}
+  };
+  let lastFocus=null;
+  function showPortraits(){bio.hidden=true;portraits.hidden=false;document.getElementById('duoDialogTitle').textContent='Le duo'}
+  function closeModal(){modal.hidden=true;document.body.classList.remove('duo-modal-open');showPortraits();if(lastFocus)lastFocus.focus()}
+  open.addEventListener('click',()=>{lastFocus=document.activeElement;modal.hidden=false;document.body.classList.add('duo-modal-open');showPortraits();modal.querySelector('.duo-close').focus()});
+  modal.querySelectorAll('[data-duo-close]').forEach(el=>el.addEventListener('click',closeModal));
+  modal.querySelectorAll('[data-duo-person]').forEach(el=>el.addEventListener('click',()=>{const item=bios[el.dataset.duoPerson];if(!item)return;portraits.hidden=true;bio.hidden=false;bioName.textContent=item.name;bioText.textContent=item.text;document.getElementById('duoDialogTitle').textContent=item.name;back.focus()}));
+  back.addEventListener('click',()=>{showPortraits();modal.querySelector('[data-duo-person]').focus()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
+})();
+</script>
 
 </body></html>

@@ -637,170 +637,72 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Panneau dynamique — une seule image complète, jamais déformée.
-   Le texte occupe uniquement la partie blanche (1198 / 1728 = 69,3 %). */
-.logo-card.has-concert{
-  width:min(520px,100%)!important;
-  max-width:520px!important;
-  height:auto!important;
-  padding:0!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-  overflow:visible!important;
-}
-
-.logo-card.has-concert .concert-poster{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  max-width:520px!important;
-  height:auto!important;
-  aspect-ratio:1728 / 485!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-
-  background-color:transparent!important;
-  background-image:url("acha-lou-sans-concert.png")!important;
-  background-position:left top!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
-
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-  transform-origin:center center!important;
-}
-
-.logo-card.has-concert .poster-copy{
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  width:69.33%!important;
-  height:100%!important;
-  min-width:0!important;
-  padding:6% 4.5%!important;
-  margin:0!important;
-
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  align-items:center!important;
-  gap:5%!important;
-
-  text-align:center!important;
-  overflow:hidden!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-}
-
-.logo-card.has-concert .poster-badge{
-  display:none!important;
-}
-
-.logo-card.has-concert .poster-date,
-.logo-card.has-concert .poster-time,
-.logo-card.has-concert .poster-place{
-  width:100%!important;
-  max-width:100%!important;
-  margin:0!important;
-  padding:0!important;
-  text-align:center!important;
-  line-height:1.08!important;
-}
-
-.logo-card.has-concert .poster-date,
-.logo-card.has-concert .poster-time{
-  white-space:nowrap!important;
-}
-
-.logo-card.has-concert .poster-place{
-  white-space:normal!important;
-  overflow-wrap:anywhere!important;
-}
-
-@media(max-width:760px){
-  .logo-card.has-concert{
-    width:100%!important;
-    max-width:520px!important;
-  }
-  .logo-card.has-concert .concert-poster{
-    width:100%!important;
-    max-width:520px!important;
-    aspect-ratio:1728 / 485!important;
-  }
-  .logo-card.has-concert .poster-copy{
-    width:69.33%!important;
-    height:100%!important;
-    padding:5% 4%!important;
-    gap:4%!important;
-  }
-}
-</style>
-
-<style>
-/* ===== PANNEAU DYNAMIQUE : IMAGE RÉELLE, INDÉPENDANTE ===== */
+/* Panneau dynamique — règles de base uniques.
+   L’image complète garde son ratio naturel ; le texte reste dans les 69,33 % blancs. */
 #heroPanel.has-concert{
   width:min(520px,100%);
   max-width:100%!important;
   height:auto!important;
+  min-height:0!important;
   margin:0!important;
   padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+#heroPanel.has-concert > img{display:none!important;}
+#heroPanel.has-concert #concertPoster{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  aspect-ratio:auto!important;
   background:none!important;
   border:0!important;
   box-shadow:none!important;
   overflow:visible!important;
 }
-#heroPanel.has-concert > img{display:none!important;}
-
-#heroPanel.has-concert #concertPoster{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
-  margin:0!important;
-  padding:0!important;
-  background:none!important;
-  border:0!important;
-  box-shadow:none!important;
-  overflow:hidden!important;
-}
-
 #heroPanel.has-concert #concertPoster > .poster-bg{
   position:relative!important;
   display:block!important;
   width:100%!important;
-  height:auto!important;
   max-width:100%!important;
+  height:auto!important;
   margin:0!important;
   padding:0!important;
   object-fit:contain!important;
+  object-position:center!important;
+  border-radius:0!important;
+  animation:none!important;
+  transform:none!important;
 }
-
 #heroPanel.has-concert #concertPoster > .poster-copy{
   position:absolute!important;
   left:0!important;
   top:0!important;
   width:69.33%!important;
   height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
   box-sizing:border-box!important;
-  padding:7% 5.5%!important;
   margin:0!important;
   display:flex!important;
   flex-direction:column!important;
   align-items:center!important;
   justify-content:center!important;
   gap:3px!important;
+  text-align:center!important;
   overflow:hidden!important;
   background:transparent!important;
   border:0!important;
   box-shadow:none!important;
-  text-align:center!important;
 }
-
 #heroPanel.has-concert #concertPoster .poster-date,
 #heroPanel.has-concert #concertPoster .poster-time,
 #heroPanel.has-concert #concertPoster .poster-place{
@@ -831,117 +733,11 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   white-space:normal!important;
   overflow-wrap:normal!important;
   word-break:normal!important;
-}
-@media(max-width:760px){
-  #heroPanel.has-concert{max-width:92vw!important;}
-}
-</style>
-
-<style>
-/* ===== CORRECTION FINALE DU PANNEAU DYNAMIQUE =====
-   La hauteur vient UNIQUEMENT de l'image réelle. */
-#heroPanel.has-concert{
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow:visible!important;
-}
-#heroPanel.has-concert #concertPoster{
-  display:block!important;
-  position:relative!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  aspect-ratio:auto!important;
-  grid-template-columns:none!important;
-  overflow:visible!important;
-  background:none!important;
-}
-#heroPanel.has-concert #concertPoster > .poster-bg{
-  display:block!important;
-  position:relative!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  aspect-ratio:auto!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  border-radius:0!important;
-  animation:none!important;
-  transform:none!important;
-}
-#heroPanel.has-concert #concertPoster > .poster-copy{
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  width:69.33%!important;
-  height:100%!important;
-  min-height:0!important;
-  max-height:none!important;
-  box-sizing:border-box!important;
-  padding:6% 5.5%!important;
-  overflow:hidden!important;
-}
-</style>
-
-<style>
-/* Panneau dynamique : amélioration du texte uniquement.
-   La géométrie et l'image du panneau restent inchangées. */
-#heroPanel.has-concert #concertPoster .poster-place{
-  white-space:normal!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
   text-wrap:balance;
   line-height:1.08!important;
 }
+#heroPanel.has-concert .poster-badge{display:none!important;}
 </style>
-
-<style>
-/* Panneau dynamique : marges gauche/droite strictement symétriques
-   à l'intérieur de la partie blanche. */
-#heroPanel.has-concert #concertPoster > .poster-copy{
-  left:0!important;
-  width:69.33%!important;
-  padding-left:5.5%!important;
-  padding-right:5.5%!important;
-  box-sizing:border-box!important;
-}
-#heroPanel.has-concert #concertPoster .poster-date,
-#heroPanel.has-concert #concertPoster .poster-time,
-#heroPanel.has-concert #concertPoster .poster-place{
-  width:100%!important;
-  max-width:100%!important;
-  margin-left:0!important;
-  margin-right:0!important;
-  text-align:center!important;
-  box-sizing:border-box!important;
-}
-</style>
-
-<style>
-/* Panneau dynamique : zone de sécurité symétrique sur les 4 côtés. */
-#heroPanel.has-concert #concertPoster > .poster-copy{
-  left:0!important;
-  top:0!important;
-  width:69.33%!important;
-  height:100%!important;
-  box-sizing:border-box!important;
-  padding:5.5%!important;
-  overflow:hidden!important;
-}
-</style>
-
-<style>
-/* Panneau dynamique : vraie zone de respiration sur les 4 côtés. */
-#heroPanel.has-concert #concertPoster > .poster-copy{
-  padding:7%!important;
-}
-</style>
-
-
-
 
 <style>
 /* Mobile portrait — traitement autonome du panneau dynamique. */
@@ -1300,26 +1096,9 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
       '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+heroReportChange+heroOldTime+heroOldPlace+
       '</div>';
-    requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });
+    requestAnimationFrame(fitHeroConcert);
   }
 
-  function sizeConcertPoster(){
-    const poster=document.getElementById('concertPoster');
-    if(!poster || poster.hidden) return;
-    /* Le panneau garde maintenant le ratio naturel de l'image complète.
-       Aucune partie blanche ou bleue n'est redimensionnée séparément. */
-    requestAnimationFrame(()=>fitHeroConcert());
-  }
-
-  function fitText(el,maxPx,minPx){
-    if(!el) return;
-    let size=maxPx;
-    el.style.fontSize=size+'px';
-    while(size>minPx && el.scrollWidth>el.clientWidth){
-      size-=1;
-      el.style.fontSize=size+'px';
-    }
-  }
 
   function fitHeroConcert(){
     const panel=document.getElementById('heroPanel');
@@ -1376,6 +1155,35 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         candidates.push([words.slice(0,i).join(' '),words.slice(i).join(' ')]);
       }
       return candidates;
+    };
+
+    const placeSplitCandidates=(txt)=>{
+      const candidates=[];
+      const natural=naturalPlaceSplit(txt);
+      if(natural) candidates.push(natural);
+      candidates.push(...balancedPlaceSplits(txt));
+      return candidates;
+    };
+
+    const bestPlaceSplit=(txt)=>{
+      let best=null;
+      let bestScore=Infinity;
+      for(const candidate of placeSplitCandidates(txt)){
+        setPlaceLines(candidate);
+        void poster.offsetHeight;
+        const widths=placeLineWidths();
+        const safeW=safePlaceWidth();
+        const overflow=widths.reduce((sum,w)=>sum+Math.max(0,w-safeW),0);
+        const maxLine=Math.max(0,...widths);
+        const balance=Math.abs((widths[0]||0)-(widths[1]||0));
+        const linesPenalty=placeLines()>2 ? 100000 : 0;
+        const score=linesPenalty+overflow*1000+maxLine+balance*.18;
+        if(score<bestScore){
+          bestScore=score;
+          best=candidate;
+        }
+      }
+      return best;
     };
 
     const run=()=>{
@@ -1472,18 +1280,20 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
                usedH<=innerH+0.5;
       };
 
+      const setPanelWidth=(width)=>{
+        panel.style.width=width+'px';
+        panel.style.maxWidth='100%';
+        poster.style.width='100%';
+        void poster.offsetHeight;
+      };
+
       const chooseWidth=()=>{
         let chosen=maxW;
         for(let w=minW;w<=maxW;w+=5){
-          panel.style.width=w+'px';
-          panel.style.maxWidth='100%';
-          poster.style.width='100%';
-          void poster.offsetHeight;
+          setPanelWidth(w);
           if(fits()){chosen=w;break;}
         }
-        panel.style.width=chosen+'px';
-        poster.style.width='100%';
-        void poster.offsetHeight;
+        setPanelWidth(chosen);
         return fits();
       };
 
@@ -1496,9 +1306,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       // À la largeur maximale réellement disponible, la date complète doit
       // respecter la zone utile (donc les marges de sécurité). Sinon on
       // abrège immédiatement le mois à 3 lettres.
-      panel.style.width=maxW+'px';
-      poster.style.width='100%';
-      void poster.offsetHeight;
+      setPanelWidth(maxW);
       const fullDateFits=dateEl.scrollWidth<=dateEl.clientWidth+1;
 
       if(!fullDateFits || !ok){
@@ -1528,9 +1336,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
           let bestScore=Infinity;
           for(const candidate of balancedPlaceSplits(originalPlace)){
             setPlaceLines(candidate);
-            panel.style.width=maxW+'px';
-            poster.style.width='100%';
-            void poster.offsetHeight;
+            setPanelWidth(maxW);
             const lineNodes=[...placeEl.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE);
             const probe=document.createElement('span');
             const cs=getComputedStyle(placeEl);
@@ -1562,31 +1368,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
          On exploite donc d'abord toute la largeur de panneau disponible,
          puis on recalcule la meilleure coupure à cette largeur. */
       const recheckAfterPlaceSplit=()=>{
-        panel.style.width=maxW+'px';
-        poster.style.width='100%';
-        void poster.offsetHeight;
+        setPanelWidth(maxW);
 
         if(fits()) return true;
 
-        const candidates=[];
-        const natural=naturalPlaceSplit(originalPlace);
-        if(natural) candidates.push(natural);
-        candidates.push(...balancedPlaceSplits(originalPlace));
-
-        let best=null;
-        let bestScore=Infinity;
-        for(const candidate of candidates){
-          setPlaceLines(candidate);
-          void poster.offsetHeight;
-          const widths=placeLineWidths();
-          const safeW=safePlaceWidth();
-          const overflow=widths.reduce((sum,w)=>sum+Math.max(0,w-safeW),0);
-          const maxLine=Math.max(0,...widths);
-          const balance=Math.abs((widths[0]||0)-(widths[1]||0));
-          const linesPenalty=placeLines()>2 ? 100000 : 0;
-          const score=linesPenalty+overflow*1000+maxLine+balance*.18;
-          if(score<bestScore){bestScore=score;best=candidate;}
-        }
+        const best=bestPlaceSplit(originalPlace);
         if(best){
           setPlaceLines(best);
           void poster.offsetHeight;
@@ -1594,7 +1380,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         return fits();
       };
 
-      ok=recheckAfterPlaceSplit();
+      recheckAfterPlaceSplit();
 
       // 4. Filet de sécurité systématique : toutes les marges restent prioritaires.
       // Après la meilleure coupure du lieu + ville, on contrôle TOUJOURS la
@@ -1610,9 +1396,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
          hauteur de date, heure et des deux lignes lieu + ville avec les
          marges CSS 10 px haut/bas et 14 px gauche/droite intactes. */
       if(isPortraitMobile){
-        panel.style.width=maxW+'px';
-        poster.style.width='100%';
-        void poster.offsetHeight;
+        setPanelWidth(maxW);
 
         let d=parseFloat(getComputedStyle(dateEl).fontSize)||ideal.date;
         let t=parseFloat(getComputedStyle(timeEl).fontSize)||ideal.time;
@@ -1678,7 +1462,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   let fitTimer;
   addEventListener('resize',()=>{
     clearTimeout(fitTimer);
-    fitTimer=setTimeout(()=>{fitHeroConcert();sizeConcertPoster();},100);
+    fitTimer=setTimeout(fitHeroConcert,100);
   });
 
   function esc(s){

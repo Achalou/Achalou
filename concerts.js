@@ -28,7 +28,7 @@ window.ACHALOU_CONCERTS = [
     "info": "",
     "etat": "annule",
     "complet": false,
-    "raisonEtat": "ta mere en slip",
+    "raisonEtat": "",
     "nouvelleDate": "2026-12-13",
     "nouvelleHeure": "",
     "nouveauLieu": "la poste",

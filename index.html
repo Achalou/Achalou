@@ -1333,8 +1333,16 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       // 1. On agrandit d'abord le panneau avec les textes complets.
       let ok=chooseWidth();
 
-      // 2. Si nécessaire, on abrège uniquement le mois de la date.
-      if(!ok){
+      // 2. Date : règle stricte ordinateur + mobile.
+      // À la largeur maximale réellement disponible, la date complète doit
+      // respecter la zone utile (donc les marges de sécurité). Sinon on
+      // abrège immédiatement le mois à 3 lettres.
+      panel.style.width=maxW+'px';
+      poster.style.width='100%';
+      void poster.offsetHeight;
+      const fullDateFits=dateEl.scrollWidth<=dateEl.clientWidth+1;
+
+      if(!fullDateFits || !ok){
         const shortDate=abbreviateDate(originalDate);
         if(shortDate!==originalDate){
           dateEl.textContent=shortDate;

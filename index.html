@@ -1000,6 +1000,13 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 /* Bureau avec prochain concert : même organisation que le mobile.
    Le panneau est placé au-dessus de « Duo · musique traditionnelle ». */
 @media (min-width:761px){
+  /* Sur ordinateur, marges fixes dans la zone blanche.
+     Évite le padding vertical en %, qui grossissait avec la largeur du panneau
+     et faisait croire au calcul que le texte débordait en hauteur. */
+  #heroPanel.has-concert #concertPoster > .poster-copy{
+    padding:10px 14px!important;
+  }
+
   .hero-grid:has(#heroPanel.has-concert){
     grid-template-columns:1fr!important;
     gap:22px!important;

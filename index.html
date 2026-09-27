@@ -1102,6 +1102,52 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 body.duo-modal-open{overflow:hidden}
 @media(max-width:620px){.duo-portraits{grid-template-columns:1fr;gap:16px}.duo-person img{aspect-ratio:4/3;object-position:center 32%}.duo-dialog{padding:22px 16px}.duo-launch-wrap{justify-content:center}}
 @media(prefers-reduced-motion:reduce){.duo-launch,.duo-person{transition:none}}
+
+/* Le bouton « Le duo » reprend exactement le panneau graphique des autres rubriques. */
+.duo-launch.section-sign{
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  background:transparent;
+  border-radius:0;
+  box-shadow:none;
+  cursor:pointer;
+  gap:0;
+  transition:transform .2s ease,filter .2s ease;
+  text-align:inherit;
+}
+.duo-launch.section-sign:hover,.duo-launch.section-sign:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:none;
+  filter:drop-shadow(0 8px 12px #0002);
+}
+.duo-launch.section-sign > img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  object-fit:initial;
+  border-radius:0;
+  background:transparent;
+}
+.duo-launch.section-sign > span{
+  position:absolute;
+  left:0;top:0;
+  width:69.33%;height:100%;
+  box-sizing:border-box;
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink)!important;
+  font-family:Georgia,serif;
+  font-size:clamp(1.35rem,2.35vw,2rem);
+  font-weight:700;line-height:1!important;
+  text-align:center;white-space:nowrap;
+}
+@media(max-width:760px){
+  .duo-launch.section-sign > span{padding:0 4%;font-size:clamp(1.1rem,5vw,1.65rem)}
+}
 </style>
 
 </head>
@@ -1124,7 +1170,7 @@ body.duo-modal-open{overflow:hidden}
   </form>
 </div></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
 
-<section class="intro reveal" id="duo"><div class="wrap duo-launch-wrap"><button type="button" class="duo-launch" id="duoOpen" aria-haspopup="dialog" aria-controls="duoDialog"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></button></div></section>
+<section class="intro reveal" id="duo"><div class="wrap duo-launch-wrap"><button type="button" class="section-sign duo-launch" id="duoOpen" aria-haspopup="dialog" aria-controls="duoDialog"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></button></div></section>
 
 <div class="duo-modal" id="duoDialog" hidden>
   <div class="duo-backdrop" data-duo-close></div>

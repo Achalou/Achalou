@@ -832,109 +832,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 </style>
 
 <style>
-/* Concert reporté : ancien état -> nouvel état */
-#heroPanel.has-concert.is-postponed{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:stretch!important;
-  gap:0!important;
-}
-#heroPanel .report-old-poster{
-  position:relative;
-  width:100%;
-  overflow:visible;
-}
-#heroPanel .report-old-poster .poster-bg{
-  display:block;
-  width:100%;
-  height:auto;
-}
-#heroPanel .report-old-poster .poster-copy{
-  position:absolute;
-  left:0;
-  top:0;
-  width:69.33%;
-  height:100%;
-  box-sizing:border-box;
-  padding:10px 14px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:2px;
-  text-align:center;
-  overflow:hidden;
-}
-#heroPanel .report-arrow{
-  position:relative;
-  height:46px;
-  display:grid;
-  place-items:center;
-  color:var(--blue);
-  font:900 34px/1 system-ui,sans-serif;
-}
-#heroPanel .report-arrow::before{content:"↓";}
-#heroPanel .report-cross{
-  position:absolute;
-  inset:4% 1.5%;
-  z-index:7;
-  pointer-events:none;
-}
-#heroPanel .report-cross::before,
-#heroPanel .report-cross::after{
-  content:"";
-  position:absolute;
-  left:7%;
-  top:50%;
-  width:86%;
-  height:5px;
-  border-radius:999px;
-  background:rgba(217,79,90,.72);
-  transform-origin:center;
-  animation:reportCrossDraw .65s ease-out both;
-}
-#heroPanel .report-cross::before{transform:rotate(14deg) scaleX(0);}
-#heroPanel .report-cross::after{
-  transform:rotate(-14deg) scaleX(0);
-  animation-delay:.28s;
-}
-@keyframes reportCrossDraw{
-  to{transform:rotate(14deg) scaleX(1);}
-}
-#heroPanel .report-cross::after{
-  animation-name:reportCrossDrawBack;
-}
-@keyframes reportCrossDrawBack{
-  to{transform:rotate(-14deg) scaleX(1);}
-}
-@media (prefers-reduced-motion:reduce){
-  #heroPanel .report-cross::before{animation:none;transform:rotate(14deg) scaleX(1);}
-  #heroPanel .report-cross::after{animation:none;transform:rotate(-14deg) scaleX(1);}
-}
-@media (max-width:760px) and (orientation:portrait){
-  #heroPanel .report-arrow{height:38px;font-size:29px;}
-  #heroPanel .report-old-poster .poster-copy{padding:10px 14px;}
-}
-</style>
-
-
-<style>
-#heroPanel .report-new-poster{position:relative;width:100%;overflow:visible;}
-#heroPanel .report-new-poster > .poster-bg{display:block;width:100%;height:auto;}
-#heroPanel .report-new-poster > .poster-copy{
-  position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;
-  padding:10px 14px;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:3px;text-align:center;overflow:hidden;
-}
-#heroPanel .report-new-poster .poster-date,
-#heroPanel .report-new-poster .poster-time,
-#heroPanel .report-new-poster .poster-place{width:100%;margin:0;padding:0;text-align:center;}
-</style>
-
-
-
-
-<style>
 /* Entre les deux panneaux : réutilise le tampon raison déjà existant. */
 #heroPanel .report-transition{
   position:relative;
@@ -967,137 +864,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   #heroPanel .report-transition .report-arrow{height:38px;}
   #heroPanel .report-transition .concert-reason.report-transition-reason{
     left:calc(50% + 26px)!important;
-  }
-}
-</style>
-
-
-<style>
-/* Correctif responsive des deux panneaux d'un concert reporté.
-   Les règles historiques visaient les enfants directs de #concertPoster ;
-   depuis l'empilement ancien/nouveau, chaque état a son propre conteneur. */
-#heroPanel.has-concert.is-postponed #concertPoster{
-  width:100%!important;
-  max-width:100%!important;
-  height:auto!important;
-  overflow:visible!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  height:auto!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:visible!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel > .poster-bg{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  height:auto!important;
-  margin:0!important;
-  object-fit:contain!important;
-  object-position:center!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel > .poster-copy{
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  width:69.33%!important;
-  height:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  box-sizing:border-box!important;
-  margin:0!important;
-  padding:10px 14px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:3px!important;
-  text-align:center!important;
-  overflow:visible!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-time,
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  margin:0!important;
-  padding:0!important;
-  box-sizing:border-box!important;
-  text-align:center!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-time{
-  white-space:nowrap!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
-  white-space:normal!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
-}
-#heroPanel.has-concert.is-postponed .concert-state-panel .poster-place-line{
-  display:block!important;
-  width:max-content!important;
-  max-width:none!important;
-  margin:0 auto!important;
-  white-space:nowrap!important;
-}
-
-/* Portrait : même largeur disponible et mêmes marges que l'ancien panneau unique. */
-@media (max-width:760px) and (orientation:portrait){
-  #heroPanel.has-concert.is-postponed{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    margin:0!important;
-    padding:0!important;
-    overflow:visible!important;
-  }
-  #heroPanel.has-concert.is-postponed #concertPoster{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    margin:0!important;
-  }
-  #heroPanel.has-concert.is-postponed .concert-state-panel{
-    width:100%!important;
-    max-width:100%!important;
-  }
-  #heroPanel.has-concert.is-postponed .report-transition{
-    width:100%!important;
-    min-height:108px!important;
-  }
-  #heroPanel.has-concert.is-postponed .report-transition .concert-reason.report-transition-reason{
-    left:calc(50% + 24px)!important;
-    width:96px!important;
-    height:96px!important;
-    padding:15px 11px!important;
-    font-size:.72rem!important;
-  }
-}
-
-/* Paysage téléphone : ne pas reprendre les contraintes du portrait.
-   On garde toute la largeur disponible et les tailles paysage du moteur JS. */
-@media (max-height:760px) and (orientation:landscape){
-  #heroPanel.has-concert.is-postponed{
-    width:min(600px,100%)!important;
-    max-width:100%!important;
-    overflow:visible!important;
-  }
-  #heroPanel.has-concert.is-postponed #concertPoster,
-  #heroPanel.has-concert.is-postponed .concert-state-panel{
-    width:100%!important;
-    max-width:100%!important;
-  }
-  #heroPanel.has-concert.is-postponed .report-transition{
-    min-height:112px!important;
   }
 }
 </style>
@@ -1221,6 +987,102 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     margin:0 auto!important;
     white-space:nowrap!important;
   }
+}
+</style>
+
+
+<style>
+/* Concert reporté — structure commune */
+#heroPanel.has-concert.is-postponed{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:0!important;
+}
+#heroPanel.has-concert.is-postponed #concertPoster,
+#heroPanel.has-concert.is-postponed .concert-state-panel{
+  position:relative;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  overflow:visible;
+}
+#heroPanel.has-concert.is-postponed .concert-state-panel>.poster-bg{
+  position:relative;
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  margin:0;
+  object-fit:contain;
+}
+#heroPanel.has-concert.is-postponed .concert-state-panel>.poster-copy{
+  position:absolute;
+  left:0;
+  top:0;
+  width:69.33%;
+  height:100%;
+  box-sizing:border-box;
+  padding:10px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  text-align:center;
+  overflow:visible;
+}
+#heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
+#heroPanel.has-concert.is-postponed .concert-state-panel .poster-time,
+#heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
+  margin:0;
+  padding:0;
+  text-align:center;
+}
+#heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
+#heroPanel.has-concert.is-postponed .concert-state-panel .poster-time{
+  white-space:nowrap;
+}
+#heroPanel.has-concert.is-postponed .concert-state-panel .poster-place-line{
+  display:block;
+  width:max-content;
+  max-width:none;
+  margin:0 auto;
+  white-space:nowrap;
+}
+#heroPanel .report-cross{
+  position:absolute;
+  inset:4% 1.5%;
+  z-index:7;
+  pointer-events:none;
+}
+#heroPanel .report-cross::before,
+#heroPanel .report-cross::after{
+  content:"";
+  position:absolute;
+  left:7%;
+  top:50%;
+  width:86%;
+  height:5px;
+  border-radius:999px;
+  background:rgba(217,79,90,.72);
+  transform-origin:center;
+}
+#heroPanel .report-cross::before{
+  transform:rotate(14deg) scaleX(0);
+  animation:reportCrossDraw .65s ease-out both;
+}
+#heroPanel .report-cross::after{
+  transform:rotate(-14deg) scaleX(0);
+  animation:reportCrossDrawBack .65s .28s ease-out both;
+}
+@keyframes reportCrossDraw{to{transform:rotate(14deg) scaleX(1)}}
+@keyframes reportCrossDrawBack{to{transform:rotate(-14deg) scaleX(1)}}
+@media(prefers-reduced-motion:reduce){
+  #heroPanel .report-cross::before{animation:none;transform:rotate(14deg) scaleX(1)}
+  #heroPanel .report-cross::after{animation:none;transform:rotate(-14deg) scaleX(1)}
 }
 </style>
 

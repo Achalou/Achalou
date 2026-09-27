@@ -363,8 +363,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   background-color:var(--blue)!important;
   background-image:url("acha-lou-sans-concert.png")!important;
   background-repeat:no-repeat!important;
-  background-size:312.1528% 186.9658%!important;
-  background-position:91.4894% 48.8943%!important;
+  background-size:326.04% 100%!important;
+  background-position:100% 50%!important;
 }
 
 .concert-stamp-second{top:auto!important;bottom:12px!important;right:12px!important;transform:rotate(7deg)!important}
@@ -578,49 +578,58 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Panneaux de rubriques : proportions naturelles et titre contenu dans la zone blanche. */
-main section:not(.hero) > .wrap > h2{
+/* Titres de rubriques : panneau et texte totalement isolés du panneau concert. */
+:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
+  position:relative;
   width:350px;
   max-width:100%;
   aspect-ratio:1728 / 485;
   margin:0 0 26px 0;
+  margin-left:0!important; /* bord visible du panneau = bord gauche de la .wrap */
+  padding:0;
   box-sizing:border-box;
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-
-  background-image:url("acha-lou-sans-concert.png");
-  background-position:center;
-  background-size:contain;
-  background-repeat:no-repeat;
-
+  display:grid;
+  place-items:center;
+  background:none!important;
   color:var(--ink);
   font-family:Georgia,serif;
   font-size:clamp(1.45rem,2.5vw,2.05rem);
   line-height:1;
-  white-space:nowrap;
-
-  /* Le texte occupe uniquement la partie blanche du panneau. */
-  padding:0 39% 0 0;
   text-align:center;
+  white-space:nowrap;
+  isolation:isolate;
 }
 
-/* Un pseudo-conteneur permet de centrer le texte dans les 61 % blancs
-   tout en gardant le h2 à la place exacte de l'ancien titre. */
-main section:not(.hero) > .wrap > h2{
-  justify-content:center;
+/* Le panneau est dessiné derrière le titre sans modifier la boîte du h2. */
+:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:url("acha-lou-sans-concert.png") left center / contain no-repeat;
 }
 
-#contact > .wrap > h2{
-  background-color:transparent!important;
+/* Le titre est centré uniquement dans la partie blanche (~69,3 % du panneau). */
+:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:69.3%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+}
+:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
+  padding-right:30.7%;
 }
 
 @media(max-width:760px){
-  main section:not(.hero) > .wrap > h2{
+  :is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
     width:min(86vw,330px);
     max-width:100%;
     margin:0 0 22px 0;
-    padding-right:39%;
+    padding-right:30.7%;
     font-size:clamp(1.25rem,5.5vw,1.8rem);
     white-space:nowrap;
   }
@@ -920,11 +929,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     requestAnimationFrame(()=>{
       const h=Math.ceil(copy.scrollHeight);
 
-      /* Géométrie mesurée sur acha-lou-sans-concert.png :
-         zone blanche ≈ 1014 × 468 ; zone bleue ≈ 576 × 468.
-         On conserve donc exactement les mêmes rapports internes. */
-      const leftW=Math.round(h*(1014/468));
-      const rightW=Math.round(h*(576/468));
+      /* Géométrie du panneau actuel acha-lou-sans-concert.png :
+         image 1728 × 485 ; séparation blanc/bleu vers x=1198.
+         Le panneau dynamique reprend exactement ces proportions. */
+      const leftW=Math.round(h*(1198/485));
+      const rightW=Math.round(h*(530/485));
       copy.style.flexBasis=leftW+'px';
       copy.style.width=leftW+'px';
       copy.style.minWidth=leftW+'px';

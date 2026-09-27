@@ -578,31 +578,44 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Panneau de rubrique : remplace visuellement l'ancien titre, sans le recentrer. */
+/* Titres de rubriques sur le panneau A'Cha Lou.
+   Alignement conservé à la place des anciens titres. */
 main section:not(.hero) > .wrap > h2{
-  width:430px;
+  width:350px;
   max-width:100%;
-  aspect-ratio:500 / 249;
-  margin:0 0 28px 0;
-  padding:0 43% 0 6%;
+  aspect-ratio:1728 / 485;
+  margin:0 0 26px 0;
+  padding:0 39% 0 5.5%;
   box-sizing:border-box;
   display:flex;
   align-items:center;
   justify-content:flex-start;
-  background:url("acha-lou-sans-concert.png") center/100% 100% no-repeat;
+  background-image:url("acha-lou-sans-concert.png");
+  background-position:center;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
   color:var(--ink);
   font-family:Georgia,serif;
-  font-size:clamp(1.8rem,3.4vw,2.8rem);
+  font-size:clamp(1.55rem,2.8vw,2.25rem);
   line-height:1;
   text-align:left;
+  white-space:nowrap;
 }
+
+/* Aucun fond supplémentaire autour du panneau, notamment dans Contact. */
+#contact > .wrap > h2{
+  background-color:transparent!important;
+}
+
 @media(max-width:760px){
   main section:not(.hero) > .wrap > h2{
-    width:min(100%,430px);
-    margin:0 0 24px 0;
-    padding-left:6%;
-    padding-right:43%;
-    font-size:clamp(1.45rem,7vw,2.2rem);
+    width:min(86vw,330px);
+    max-width:100%;
+    margin:0 0 22px 0;
+    padding-left:5.5%;
+    padding-right:39%;
+    font-size:clamp(1.35rem,6vw,1.95rem);
+    white-space:nowrap;
   }
 }
 </style>

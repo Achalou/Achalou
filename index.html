@@ -578,48 +578,168 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Titres de rubriques :
-   le panneau garde toujours ses proportions naturelles ;
-   seul le texte s'adapte à la zone blanche. */
-:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
+/* Titres de rubriques : image réelle non déformée + texte dans la zone blanche. */
+.section-sign{
+  position:relative;
+  display:block;
   width:350px;
   max-width:100%;
-  aspect-ratio:1728 / 485;
+  height:auto;
   margin:0 0 26px 0!important;
-  padding:0 30.7% 0 0!important;
+  padding:0!important;
+  line-height:0!important;
+  overflow:visible;
+}
+
+.section-sign > img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  margin:0;
+  padding:0;
+}
+
+.section-sign > span{
+  position:absolute;
+  left:0;
+  top:0;
+  width:69.33%;
+  height:100%;
   box-sizing:border-box;
+  padding:0 5%;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  background-image:url("acha-lou-sans-concert.png")!important;
-  background-position:left center!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
-  background-color:transparent!important;
-
-  color:var(--ink);
+  color:var(--ink)!important;
   font-family:Georgia,serif;
   font-size:clamp(1.35rem,2.35vw,2rem);
-  line-height:1;
+  font-weight:700;
+  line-height:1!important;
   text-align:center;
   white-space:nowrap;
 }
 
 @media(max-width:760px){
-  :is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
+  .section-sign{
     width:min(86vw,330px);
     max-width:100%;
-    aspect-ratio:1728 / 485;
     margin:0 0 22px 0!important;
-    padding:0 30.7% 0 0!important;
-    font-size:clamp(1.15rem,5vw,1.7rem);
-    white-space:nowrap;
+  }
+  .section-sign > span{
+    padding:0 4%;
+    font-size:clamp(1.1rem,5vw,1.65rem);
   }
 }
 </style>
 
+
+<style>
+/* Panneau dynamique — une seule image complète, jamais déformée.
+   Le texte occupe uniquement la partie blanche (1198 / 1728 = 69,3 %). */
+.logo-card.has-concert{
+  width:min(520px,100%)!important;
+  max-width:520px!important;
+  height:auto!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+
+.logo-card.has-concert .concert-poster{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  max-width:520px!important;
+  height:auto!important;
+  aspect-ratio:1728 / 485!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+
+  background-color:transparent!important;
+  background-image:url("acha-lou-sans-concert.png")!important;
+  background-position:left top!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  transform-origin:center center!important;
+}
+
+.logo-card.has-concert .poster-copy{
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  width:69.33%!important;
+  height:100%!important;
+  min-width:0!important;
+  padding:6% 4.5%!important;
+  margin:0!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:5%!important;
+
+  text-align:center!important;
+  overflow:hidden!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+.logo-card.has-concert .poster-badge{
+  display:none!important;
+}
+
+.logo-card.has-concert .poster-date,
+.logo-card.has-concert .poster-time,
+.logo-card.has-concert .poster-place{
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:center!important;
+  line-height:1.08!important;
+}
+
+.logo-card.has-concert .poster-date,
+.logo-card.has-concert .poster-time{
+  white-space:nowrap!important;
+}
+
+.logo-card.has-concert .poster-place{
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+
+@media(max-width:760px){
+  .logo-card.has-concert{
+    width:100%!important;
+    max-width:520px!important;
+  }
+  .logo-card.has-concert .concert-poster{
+    width:100%!important;
+    max-width:520px!important;
+    aspect-ratio:1728 / 485!important;
+  }
+  .logo-card.has-concert .poster-copy{
+    width:69.33%!important;
+    height:100%!important;
+    padding:5% 4%!important;
+    gap:4%!important;
+  }
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -640,17 +760,17 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   </form>
 </div></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
 
-<section class="intro reveal" id="duo"><div class="wrap"><h2>Le duo</h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
+<section class="intro reveal" id="duo"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
-<section class="reveal" id="concerts"><div class="wrap"><h2>Concerts</h2><div id="concertsUpcoming"></div><div id="concertsPast"></div></div></section>
+<section class="reveal" id="concerts"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Concerts</span></h2><div id="concertsUpcoming"></div><div id="concertsPast"></div></div></section>
 
-<section class="intro reveal" id="musique"><div class="wrap"><h2>Musique</h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
+<section class="intro reveal" id="musique"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Musique</span></h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
 
-<section class="reveal" id="videos"><div class="wrap"><h2>Vidéos</h2><div id="videoGallery" class="video-gallery"><div class="placeholder"><strong>Chargement des vidéos…</strong></div></div></div></section>
+<section class="reveal" id="videos"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Vidéos</span></h2><div id="videoGallery" class="video-gallery"><div class="placeholder"><strong>Chargement des vidéos…</strong></div></div></div></section>
 
-<section class="intro reveal" id="photos"><div class="wrap"><h2>Photos</h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
+<section class="intro reveal" id="photos"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Photos</span></h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
 
-<section class="contact reveal" id="contact"><div class="wrap"><h2>Contact</h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
+<section class="contact reveal" id="contact"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Contact</span></h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
 <button type="button" class="social contact-programmer" id="contactMessageOpen">Envoyer un message</button>
 <button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div></div>
 
@@ -897,41 +1017,16 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       '<div class="poster-date">'+esc(date)+'</div>'+
       '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
       '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+heroReportChange+heroOldTime+heroOldPlace+
-      '</div><div class="poster-badge" aria-hidden="true"></div>';
+      '</div>';
     requestAnimationFrame(()=>{ fitHeroConcert(); sizeConcertPoster(); });
   }
 
   function sizeConcertPoster(){
     const poster=document.getElementById('concertPoster');
     if(!poster || poster.hidden) return;
-    const copy=poster.querySelector('.poster-copy');
-    const badge=poster.querySelector('.poster-badge');
-    if(!copy || !badge) return;
-    poster.style.height='auto';
-    poster.style.width='auto';
-    badge.style.width='0px';
-    requestAnimationFrame(()=>{
-      const h=Math.ceil(copy.scrollHeight);
-
-      /* Géométrie du panneau actuel acha-lou-sans-concert.png :
-         image 1728 × 485 ; séparation blanc/bleu vers x=1198.
-         Le panneau dynamique reprend exactement ces proportions. */
-      const leftW=Math.round(h*(1198/485));
-      const rightW=Math.round(h*(530/485));
-      copy.style.flexBasis=leftW+'px';
-      copy.style.width=leftW+'px';
-      copy.style.minWidth=leftW+'px';
-      const naturalW=leftW+rightW;
-      poster.style.height=h+'px';
-      badge.style.width=rightW+'px';
-      poster.style.width=naturalW+'px';
-      const refW=Math.min(520, poster.closest('.logo-card').clientWidth || 520);
-      const refH=205;
-      const scale=Math.min(1, refW/naturalW, refH/h);
-      poster.style.transform='none';
-      poster.style.zoom=String(scale);
-      poster.parentElement.style.minHeight='0px';
-    });
+    /* Le panneau garde maintenant le ratio naturel de l'image complète.
+       Aucune partie blanche ou bleue n'est redimensionnée séparément. */
+    requestAnimationFrame(()=>fitHeroConcert());
   }
 
   function fitText(el,maxPx,minPx){

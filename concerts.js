@@ -37,7 +37,7 @@ window.ACHALOU_CONCERTS = [
     "lieuAvant": "",
     "statut": "publie",
     "publicationProgrammee": "",
-    "supprimeLe": ""
+    "supprimeLe": "2026-09-27T13:36:18.696Z"
   },
   {
     "date": "2027-04-02",

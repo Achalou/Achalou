@@ -1394,11 +1394,30 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       };
 
       const fits=()=>{
-        return dateEl.scrollWidth<=dateEl.clientWidth+1 &&
+        // Mesure la zone réellement utilisable APRES les marges/paddings.
+        // On ne se fie pas seulement à scrollHeight : dans un conteneur flex
+        // avec overflow:hidden, un texte peut être visuellement rogné sans que
+        // scrollHeight signale correctement le débordement.
+        const cr=copy.getBoundingClientRect();
+        const cs=getComputedStyle(copy);
+        const padL=parseFloat(cs.paddingLeft)||0;
+        const padR=parseFloat(cs.paddingRight)||0;
+        const padT=parseFloat(cs.paddingTop)||0;
+        const padB=parseFloat(cs.paddingBottom)||0;
+        const left=cr.left+padL-0.5;
+        const right=cr.right-padR+0.5;
+        const top=cr.top+padT-0.5;
+        const bottom=cr.bottom-padB+0.5;
+        const els=[dateEl,timeEl,placeEl].filter(el=>el && el.textContent.trim());
+        const inside=els.every(el=>{
+          const r=el.getBoundingClientRect();
+          return r.left>=left && r.right<=right && r.top>=top && r.bottom<=bottom;
+        });
+        return inside &&
+               dateEl.scrollWidth<=dateEl.clientWidth+1 &&
                timeEl.scrollWidth<=timeEl.clientWidth+1 &&
                placeEl.scrollWidth<=placeEl.clientWidth+1 &&
-               placeLines()<=2 &&
-               copy.scrollHeight<=copy.clientHeight+1;
+               placeLines()<=2;
       };
 
       const chooseWidth=()=>{
@@ -1501,16 +1520,27 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
         // Réduction douce et proportionnelle. On remesure le DOM à chaque pas :
         // largeur utile, hauteur utile et les 2 lignes maximum du lieu + ville.
-        for(let step=0;step<80 && !fits();step++){
-          d=Math.max(emergencyMinimum.date,d*.97);
-          t=Math.max(emergencyMinimum.time,t*.97);
-          l=Math.max(emergencyMinimum.place,l*.97);
+        for(let step=0;step<120 && !fits();step++){
+          d=Math.max(emergencyMinimum.date,d-0.25);
+          t=Math.max(emergencyMinimum.time,t-0.25);
+          l=Math.max(emergencyMinimum.place,l-0.25);
           setSizes(d,t,l);
           void copy.offsetHeight;
 
           if(d<=emergencyMinimum.date &&
              t<=emergencyMinimum.time &&
              l<=emergencyMinimum.place) break;
+        }
+
+        // Dernier filet de sécurité pour un contenu exceptionnellement long :
+        // les marges ne sont jamais réduites. Seul le texte continue à diminuer.
+        for(let step=0;step<80 && !fits();step++){
+          d=Math.max(7,d-0.2);
+          t=Math.max(7,t-0.2);
+          l=Math.max(6,l-0.2);
+          setSizes(d,t,l);
+          void copy.offsetHeight;
+          if(d<=7 && t<=7 && l<=6) break;
         }
       }
     };

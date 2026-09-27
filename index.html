@@ -1000,7 +1000,11 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 /* Bureau : la colonne du panneau dynamique peut réellement grandir avant toute réduction du texte. */
 @media (min-width:761px){
   .hero-grid{grid-template-columns:minmax(0,1fr) minmax(420px,600px)!important;}
-  #heroPanel.has-concert{max-width:none!important;justify-self:start!important;}
+  #heroPanel.has-concert{
+    max-width:none!important;
+    justify-self:start!important;
+    transform:translateY(28px);
+  }
 }
 </style>
 </head>
@@ -1581,12 +1585,57 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         ? {date:9,time:8,place:7}
         : {date:12,time:10,place:8};
 
-      /* Portrait mobile : une fois le panneau à sa largeur maximale et la
-         meilleure coupure choisie, lieu + ville diminuent SEULS tant qu'une
-         ligne dépasse la largeur blanche disponible. Les marges restent fixes. */
-      if(isPortraitMobile && (placeMaxLineWidth()>safePlaceWidth()+1 || placeLines()>2)){
+      /* Portrait mobile : contrôle autonome et systématique de lieu + ville.
+         Après la coupure, on mesure CHAQUE ligne telle qu'elle est réellement
+         dessinée. Si une ligne dépasse la largeur intérieure disponible, seule
+         la police du lieu + ville diminue. Ce contrôle est volontairement
+         indépendant de fits() afin qu'un débordement horizontal ne puisse pas
+         passer inaperçu en portrait. */
+      if(isPortraitMobile){
+        panel.style.width=maxW+'px';
+        poster.style.width='100%';
+        void poster.offsetHeight;
+
+        const portraitPlaceFits=()=>{
+          const available=Math.max(0,placeEl.clientWidth-2); // 2 px de sécurité
+          const cs=getComputedStyle(placeEl);
+          const probe=document.createElement('span');
+          probe.style.position='fixed';
+          probe.style.left='-10000px';
+          probe.style.top='-10000px';
+          probe.style.visibility='hidden';
+          probe.style.whiteSpace='nowrap';
+          probe.style.fontFamily=cs.fontFamily;
+          probe.style.fontWeight=cs.fontWeight;
+          probe.style.fontStyle=cs.fontStyle;
+          probe.style.fontSize=cs.fontSize;
+          probe.style.letterSpacing=cs.letterSpacing;
+          document.body.appendChild(probe);
+
+          const lines=[];
+          let current='';
+          for(const node of placeEl.childNodes){
+            if(node.nodeName==='BR'){
+              if(current.trim()) lines.push(current.trim());
+              current='';
+            }else{
+              current+=node.textContent||'';
+            }
+          }
+          if(current.trim()) lines.push(current.trim());
+          if(!lines.length) lines.push((placeEl.textContent||'').trim());
+
+          let max=0;
+          for(const line of lines){
+            probe.textContent=line;
+            max=Math.max(max,probe.getBoundingClientRect().width);
+          }
+          probe.remove();
+          return lines.length<=2 && max<=available+.5;
+        };
+
         let l=parseFloat(getComputedStyle(placeEl).fontSize)||ideal.place;
-        for(let step=0;step<80 && (placeMaxLineWidth()>safePlaceWidth()+1 || placeLines()>2);step++){
+        for(let step=0;step<100 && !portraitPlaceFits();step++){
           l=Math.max(6,l-0.2);
           placeEl.style.fontSize=l+'px';
           void placeEl.offsetHeight;

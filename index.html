@@ -578,8 +578,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Titres de rubriques sur le panneau A'Cha Lou.
-   Alignement conservé à la place des anciens titres. */
+/* Titres de rubriques sur le panneau A'Cha Lou :
+   proportions naturelles, sans écrasement, et alignement sur la marge du contenu. */
 main section:not(.hero) > .wrap > h2{
   width:350px;
   max-width:100%;
@@ -592,7 +592,7 @@ main section:not(.hero) > .wrap > h2{
   justify-content:flex-start;
   background-image:url("acha-lou-sans-concert.png");
   background-position:center;
-  background-size:100% 100%;
+  background-size:contain;
   background-repeat:no-repeat;
   color:var(--ink);
   font-family:Georgia,serif;
@@ -602,7 +602,7 @@ main section:not(.hero) > .wrap > h2{
   white-space:nowrap;
 }
 
-/* Aucun fond supplémentaire autour du panneau, notamment dans Contact. */
+/* Contact garde exactement la même marge gauche que le contenu de sa .wrap. */
 #contact > .wrap > h2{
   background-color:transparent!important;
 }

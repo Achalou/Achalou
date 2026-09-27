@@ -995,6 +995,14 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 </style>
+
+<style>
+/* Bureau : la colonne du panneau dynamique peut réellement grandir avant toute réduction du texte. */
+@media (min-width:761px){
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(420px,600px)!important;}
+  #heroPanel.has-concert{max-width:none!important;justify-self:start!important;}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1363,10 +1371,13 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       // En portrait mobile, on réserve 16 px de respiration de chaque côté.
       // Le panneau entier est donc toujours contenu dans la largeur visible.
       const parentW=panel.parentElement ? panel.parentElement.clientWidth : viewportW;
+      /* La largeur maximale est la largeur REELLEMENT accordée au panneau par
+         la grille. Sur ordinateur cette colonne peut aller jusqu'à 600 px :
+         on l'utilise avant de réduire le texte. */
       const screenMax=isPortraitMobile
         ? Math.max(240,Math.min(parentW,viewportW-36))
-        : Math.max(280,viewportW-32);
-      const maxW=isPortraitMobile ? screenMax : Math.min(600,screenMax);
+        : Math.max(280,Math.min(600,parentW));
+      const maxW=screenMax;
       const minW=isPortraitMobile ? maxW : Math.min(420,maxW);
 
       dateEl.textContent=originalDate;
@@ -1393,6 +1404,17 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         return Math.ceil((placeEl.getBoundingClientRect().height-.5)/lh);
       };
 
+      /* Mesure chaque ligne de lieu + ville indépendamment. scrollWidth n'est
+         pas fiable ici quand le bloc est sur deux lignes avec overflow:hidden. */
+      const placeMaxLineWidth=()=>{
+        const cs=getComputedStyle(placeEl);
+        const canvas=placeMaxLineWidth.canvas || (placeMaxLineWidth.canvas=document.createElement('canvas'));
+        const ctx=canvas.getContext('2d');
+        ctx.font=cs.font;
+        const lines=(placeEl.innerText || placeEl.textContent || '').split(/\n+/).map(x=>x.trim()).filter(Boolean);
+        return Math.max(0,...lines.map(line=>ctx.measureText(line).width));
+      };
+
       const fits=()=>{
         /* Test simple et fiable : les dimensions clientWidth/clientHeight de
            .poster-copy représentent déjà la zone après padding. On contrôle
@@ -1408,7 +1430,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
                     Math.max(0,els.length-1)*gap;
         return dateEl.scrollWidth<=dateEl.clientWidth+1 &&
                timeEl.scrollWidth<=timeEl.clientWidth+1 &&
-               placeEl.scrollWidth<=placeEl.clientWidth+1 &&
+               placeMaxLineWidth()<=placeEl.clientWidth+1 &&
                placeLines()<=2 &&
                usedH<=innerH+1;
       };
@@ -1505,6 +1527,19 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       const emergencyMinimum=isPortraitMobile
         ? {date:9,time:8,place:7}
         : {date:12,time:10,place:8};
+
+      /* Portrait mobile : une fois le panneau à sa largeur maximale et la
+         meilleure coupure choisie, lieu + ville diminuent SEULS tant qu'une
+         ligne dépasse la largeur blanche disponible. Les marges restent fixes. */
+      if(isPortraitMobile && (placeMaxLineWidth()>placeEl.clientWidth+1 || placeLines()>2)){
+        let l=parseFloat(getComputedStyle(placeEl).fontSize)||ideal.place;
+        for(let step=0;step<80 && (placeMaxLineWidth()>placeEl.clientWidth+1 || placeLines()>2);step++){
+          l=Math.max(6,l-0.2);
+          placeEl.style.fontSize=l+'px';
+          void placeEl.offsetHeight;
+          if(l<=6) break;
+        }
+      }
 
       if(!fits()){
         let d=parseFloat(getComputedStyle(dateEl).fontSize)||ideal.date;

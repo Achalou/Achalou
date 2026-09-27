@@ -1003,7 +1003,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   #heroPanel.has-concert{
     max-width:none!important;
     justify-self:start!important;
-    transform:translateY(28px);
+    /* Bureau : panneau dans le prolongement visuel du grand titre A’Cha Lou. */
+    transform:translateY(-28px);
   }
 }
 </style>
@@ -1635,8 +1636,8 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         };
 
         let l=parseFloat(getComputedStyle(placeEl).fontSize)||ideal.place;
-        for(let step=0;step<100 && !portraitPlaceFits();step++){
-          l=Math.max(6,l-0.2);
+        for(let step=0;step<200 && !portraitPlaceFits();step++){
+          l=Math.max(6,l-0.1);
           placeEl.style.fontSize=l+'px';
           void placeEl.offsetHeight;
           if(l<=6) break;

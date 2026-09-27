@@ -740,6 +740,112 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 </style>
+
+<style>
+/* ===== PANNEAU DYNAMIQUE : COMPOSANT INDÉPENDANT =====
+   Ces règles ne concernent ni .section-sign ni les titres des rubriques. */
+#heroPanel.has-concert{
+  width:min(520px,100%)!important;
+  max-width:520px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  background:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+
+#heroPanel.has-concert > img{
+  display:none!important;
+}
+
+#heroPanel.has-concert #concertPoster{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:1728 / 485!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+
+  background:transparent url("acha-lou-sans-concert.png") left top / 100% 100% no-repeat!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+#heroPanel.has-concert #concertPoster > .poster-copy{
+  position:absolute!important;
+  inset:0 auto 0 0!important;
+  width:69.33%!important;
+  height:100%!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+  padding:5.5% 4.5%!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:3px!important;
+
+  overflow:hidden!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+  text-align:center!important;
+}
+
+#heroPanel.has-concert #concertPoster .poster-date,
+#heroPanel.has-concert #concertPoster .poster-time,
+#heroPanel.has-concert #concertPoster .poster-place{
+  position:static!important;
+  display:block!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  transform:none!important;
+  text-align:center!important;
+  line-height:1.05!important;
+}
+
+#heroPanel.has-concert #concertPoster .poster-date{
+  color:var(--ink)!important;
+  font-family:Georgia,serif!important;
+  font-weight:700!important;
+  white-space:nowrap!important;
+}
+
+#heroPanel.has-concert #concertPoster .poster-time{
+  color:var(--blue)!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
+}
+
+#heroPanel.has-concert #concertPoster .poster-place{
+  color:var(--blue)!important;
+  font-weight:850!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+@media(max-width:760px){
+  #heroPanel.has-concert{
+    width:min(92vw,520px)!important;
+  }
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1042,15 +1148,53 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   function fitHeroConcert(){
     const poster=document.getElementById('concertPoster');
     if(!poster || poster.hidden) return;
+
+    const copy=poster.querySelector('.poster-copy');
     const dateEl=poster.querySelector('.poster-date');
     const timeEl=poster.querySelector('.poster-time');
     const placeEl=poster.querySelector('.poster-place');
+    if(!copy) return;
 
-    /* Les textes courts restent grands.
-       Chaque ligne diminue séparément uniquement si sa longueur l'exige. */
-    fitText(dateEl,46,20);
-    fitText(timeEl,34,18);
-    fitText(placeEl,27,16);
+    /* Le panneau ne change jamais de proportions.
+       On adapte seulement les textes à la zone blanche. */
+    const pw=poster.clientWidth || 520;
+    const scale=Math.max(.55, Math.min(1, pw/520));
+
+    let dateSize=30*scale;
+    let timeSize=24*scale;
+    let placeSize=17*scale;
+
+    const apply=()=>{
+      if(dateEl) dateEl.style.fontSize=dateSize+'px';
+      if(timeEl) timeEl.style.fontSize=timeSize+'px';
+      if(placeEl) placeEl.style.fontSize=placeSize+'px';
+    };
+    apply();
+
+    /* Réduit chaque ligne si elle dépasse horizontalement. */
+    const shrinkWidth=(el,get,set,min)=>{
+      if(!el) return;
+      let n=get();
+      while(n>min*scale && el.scrollWidth>el.clientWidth+1){
+        n-=.5;
+        set(n);
+        el.style.fontSize=n+'px';
+      }
+    };
+    shrinkWidth(dateEl,()=>dateSize,n=>dateSize=n,16);
+    shrinkWidth(timeEl,()=>timeSize,n=>timeSize=n,15);
+    shrinkWidth(placeEl,()=>placeSize,n=>placeSize=n,11);
+
+    /* Puis réduit l'ensemble si date + heure + lieu sont trop hauts.
+       Rien ne peut sortir du panneau. */
+    let guard=80;
+    while(guard-- > 0 && copy.scrollHeight>copy.clientHeight+1 &&
+          (dateSize>14*scale || timeSize>13*scale || placeSize>10*scale)){
+      dateSize=Math.max(14*scale,dateSize-.5);
+      timeSize=Math.max(13*scale,timeSize-.5);
+      placeSize=Math.max(10*scale,placeSize-.5);
+      apply();
+    }
   }
 
   fitHeroConcert();

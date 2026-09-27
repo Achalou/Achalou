@@ -1485,23 +1485,33 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         }
       }
 
-      // 4. Réduction harmonieuse seulement en dernier recours.
-      if(!ok){
-        let best=.68;
-        for(let f=1;f>=.68;f-=.02){
-          setSizes(
-            Math.max(minimum.date,ideal.date*f),
-            Math.max(minimum.time,ideal.time*f),
-            Math.max(minimum.place,ideal.place*f)
-          );
+      // 4. Filet de sécurité systématique : toutes les marges restent prioritaires.
+      // Après la meilleure coupure du lieu + ville, on contrôle TOUJOURS la
+      // zone réellement disponible dans .poster-copy (donc après ses marges).
+      // Si date, heure ou lieu + ville débordent, on réduit progressivement
+      // l'ensemble des textes jusqu'à ce que tout tienne.
+      const emergencyMinimum=isPortraitMobile
+        ? {date:9,time:8,place:7}
+        : {date:12,time:10,place:8};
+
+      if(!fits()){
+        let d=parseFloat(getComputedStyle(dateEl).fontSize)||ideal.date;
+        let t=parseFloat(getComputedStyle(timeEl).fontSize)||ideal.time;
+        let l=parseFloat(getComputedStyle(placeEl).fontSize)||ideal.place;
+
+        // Réduction douce et proportionnelle. On remesure le DOM à chaque pas :
+        // largeur utile, hauteur utile et les 2 lignes maximum du lieu + ville.
+        for(let step=0;step<80 && !fits();step++){
+          d=Math.max(emergencyMinimum.date,d*.97);
+          t=Math.max(emergencyMinimum.time,t*.97);
+          l=Math.max(emergencyMinimum.place,l*.97);
+          setSizes(d,t,l);
           void copy.offsetHeight;
-          if(fits()){best=f;break;}
+
+          if(d<=emergencyMinimum.date &&
+             t<=emergencyMinimum.time &&
+             l<=emergencyMinimum.place) break;
         }
-        setSizes(
-          Math.max(minimum.date,ideal.date*best),
-          Math.max(minimum.time,ideal.time*best),
-          Math.max(minimum.place,ideal.place*best)
-        );
       }
     };
 

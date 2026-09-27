@@ -828,6 +828,126 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 </style>
+
+<style>
+/* Concert reporté : ancien état -> nouvel état */
+#heroPanel.has-concert.is-postponed{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:0!important;
+}
+#heroPanel .report-old-poster{
+  position:relative;
+  width:100%;
+  overflow:visible;
+}
+#heroPanel .report-old-poster .poster-bg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+#heroPanel .report-old-poster .poster-copy{
+  position:absolute;
+  left:0;
+  top:0;
+  width:69.33%;
+  height:100%;
+  box-sizing:border-box;
+  padding:10px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  text-align:center;
+  overflow:hidden;
+}
+#heroPanel .report-old-poster .poster-date{
+  color:var(--ink);
+  font:700 clamp(16px,3.4vw,25px)/1.05 Georgia,serif;
+  white-space:nowrap;
+}
+#heroPanel .report-old-poster .poster-time{
+  color:var(--blue);
+  font:850 clamp(13px,2.7vw,20px)/1.05 system-ui,sans-serif;
+  white-space:nowrap;
+}
+#heroPanel .report-old-poster .poster-place{
+  width:100%;
+  color:var(--blue);
+  font:850 clamp(10px,2vw,15px)/1.08 system-ui,sans-serif;
+  text-align:center;
+  overflow-wrap:normal;
+  word-break:normal;
+  text-wrap:balance;
+}
+#heroPanel .report-arrow{
+  position:relative;
+  height:46px;
+  display:grid;
+  place-items:center;
+  color:var(--blue);
+  font:900 34px/1 system-ui,sans-serif;
+}
+#heroPanel .report-arrow::before{content:"↓";}
+#heroPanel .report-cross{
+  position:absolute;
+  inset:4% 1.5%;
+  z-index:7;
+  pointer-events:none;
+}
+#heroPanel .report-cross::before,
+#heroPanel .report-cross::after{
+  content:"";
+  position:absolute;
+  left:7%;
+  top:50%;
+  width:86%;
+  height:5px;
+  border-radius:999px;
+  background:rgba(217,79,90,.72);
+  transform-origin:center;
+  animation:reportCrossDraw .65s ease-out both;
+}
+#heroPanel .report-cross::before{transform:rotate(14deg) scaleX(0);}
+#heroPanel .report-cross::after{
+  transform:rotate(-14deg) scaleX(0);
+  animation-delay:.28s;
+}
+@keyframes reportCrossDraw{
+  to{transform:rotate(14deg) scaleX(1);}
+}
+#heroPanel .report-cross::after{
+  animation-name:reportCrossDrawBack;
+}
+@keyframes reportCrossDrawBack{
+  to{transform:rotate(-14deg) scaleX(1);}
+}
+@media (prefers-reduced-motion:reduce){
+  #heroPanel .report-cross::before{animation:none;transform:rotate(14deg) scaleX(1);}
+  #heroPanel .report-cross::after{animation:none;transform:rotate(-14deg) scaleX(1);}
+}
+@media (max-width:760px) and (orientation:portrait){
+  #heroPanel .report-arrow{height:38px;font-size:29px;}
+  #heroPanel .report-old-poster .poster-copy{padding:10px 14px;}
+}
+</style>
+
+
+<style>
+#heroPanel .report-new-poster{position:relative;width:100%;overflow:visible;}
+#heroPanel .report-new-poster > .poster-bg{display:block;width:100%;height:auto;}
+#heroPanel .report-new-poster > .poster-copy{
+  position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;
+  padding:10px 14px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:3px;text-align:center;overflow:hidden;
+}
+#heroPanel .report-new-poster .poster-date,
+#heroPanel .report-new-poster .poster-time,
+#heroPanel .report-new-poster .poster-place{width:100%;margin:0;padding:0;text-align:center;}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1094,18 +1214,42 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     poster.hidden=false;
     const prettyTime=fmtTime(next);
     const heroState=stateInfo(next);
-    const heroStamp=heroState && heroState.stamp ? '<div class="concert-stamp '+heroState.cls+'"><span class="stamp-center">'+esc(heroState.label)+'</span></div>' : '';
-    const heroFullStamp=isFull(next) && String(next.etat||'')!=='complet' ? '<div class="concert-stamp complet concert-stamp-second"><span class="stamp-center">COMPLET</span></div>' : '';
+    const isPostponed=String(next.etat||'')==='reporte';
+    const heroStamp=!isPostponed && heroState && heroState.stamp
+      ? '<div class="concert-stamp '+heroState.cls+'"><span class="stamp-center">'+esc(heroState.label)+'</span></div>'
+      : '';
+    const heroFullStamp=isFull(next)
+      ? '<div class="concert-stamp complet concert-stamp-second"><span class="stamp-center">COMPLET</span></div>'
+      : '';
     const heroStatus=heroState && !heroState.stamp ? '<div class="poster-state">'+esc(heroState.label)+'</div>' : '';
-    const heroInitial=initialInfo(next);
-    const heroReportChange=heroInitial ? '<div class="poster-change">Initialement : <del>'+esc(heroInitial)+'</del></div>' : '';
-    const heroOldTime=!heroInitial && next.heureAvant ? '<div class="poster-change">Heure modifiée : <del>'+esc(String(next.heureAvant).replace(':','h'))+'</del> → '+esc(prettyTime||'à préciser')+'</div>' : '';
-    const heroOldPlace=!heroInitial && next.lieuAvant ? '<div class="poster-change">Lieu modifié : <del>'+esc(next.lieuAvant)+'</del></div>' : '';
-    poster.innerHTML='<img class="poster-bg" src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><div class="poster-copy">'+heroStamp+heroFullStamp+
-      '<div class="poster-date">'+esc(date)+'</div>'+
-      '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
-      '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+heroReportChange+heroOldTime+heroOldPlace+
-      '</div>';
+
+    const oldDate=formatDateValue(next.date);
+    const oldTime=next.heure ? String(next.heure).replace(':','h') : '';
+    const oldPlace=String(next.lieu||'');
+    const oldReportStamp='<div class="concert-stamp reporte"><span class="stamp-center">Reporté</span></div>';
+    const oldFullStamp=isFull(next)
+      ? '<div class="concert-stamp complet concert-stamp-second"><span class="stamp-center">COMPLET</span></div>'
+      : '';
+    const oldPoster=isPostponed
+      ? '<div class="report-old-poster">'+
+          '<img class="poster-bg" src="acha-lou-sans-concert.png" alt="" aria-hidden="true">'+
+          '<div class="poster-copy">'+oldReportStamp+oldFullStamp+
+            '<div class="poster-date">'+esc(oldDate)+'</div>'+
+            '<div class="poster-time">'+esc(oldTime)+'</div>'+
+            '<div class="poster-place">'+esc(oldPlace)+'</div>'+
+          '</div><div class="report-cross" aria-hidden="true"></div>'+
+        '</div><div class="report-arrow" aria-hidden="true"></div>'
+      : '';
+    panel.classList.toggle('is-postponed',isPostponed);
+    poster.innerHTML=oldPoster+
+      (isPostponed ? '<div class="report-new-poster">' : '')+
+      '<img class="poster-bg" src="acha-lou-sans-concert.png" alt="" aria-hidden="true">'+
+      '<div class="poster-copy">'+heroStamp+heroFullStamp+
+        '<div class="poster-date">'+esc(date)+'</div>'+
+        '<div class="poster-time">'+(prettyTime ? esc(prettyTime) : '')+'</div>'+
+        '<div class="poster-place">'+esc(fmtPlace(next))+'</div>'+heroStatus+
+      '</div>'+
+      (isPostponed ? '</div>' : '');
     requestAnimationFrame(fitHeroConcert);
   }
 

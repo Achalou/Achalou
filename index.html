@@ -1178,27 +1178,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       return candidates;
     };
 
-    const bestPlaceSplit=(txt)=>{
-      let best=null;
-      let bestScore=Infinity;
-      for(const candidate of placeSplitCandidates(txt,isPortraitMobile)){
-        setPlaceLines(candidate);
-        void poster.offsetHeight;
-        const widths=placeLineWidths();
-        const safeW=safePlaceWidth();
-        const overflow=widths.reduce((sum,w)=>sum+Math.max(0,w-safeW),0);
-        const maxLine=Math.max(0,...widths);
-        const balance=Math.abs((widths[0]||0)-(widths[1]||0));
-        const linesPenalty=placeLines()>2 ? 100000 : 0;
-        const score=linesPenalty+overflow*1000+maxLine+balance*.18;
-        if(score<bestScore){
-          bestScore=score;
-          best=candidate;
-        }
-      }
-      return best;
-    };
-
     const run=()=>{
       poster.style.height='auto';
       poster.style.aspectRatio='auto';
@@ -1261,15 +1240,35 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
       const placeMaxLineWidth=()=>Math.max(0,...placeLineWidths());
 
-      /* Contrôle ciblé de la PREMIÈRE ligne du lieu + ville.
-         clientWidth est déjà la largeur blanche après les marges CSS ; on garde
-         en plus 2 px de sécurité pour éviter que la ligne touche la limite. */
+      /* Contrôle ciblé de la première ligne du lieu + ville
+         dans la largeur réellement disponible. */
       const placeSafetyPx=isPortraitMobile ? 0 : 10;
       const safePlaceWidth=()=>Math.max(0,placeEl.clientWidth-(placeSafetyPx*2));
 
       const firstPlaceLineFits=()=>{
         const widths=placeLineWidths();
         return (widths[0]||0)<=safePlaceWidth();
+      };
+
+      const bestPlaceSplit=(txt)=>{
+        let best=null;
+        let bestScore=Infinity;
+        for(const candidate of placeSplitCandidates(txt,isPortraitMobile)){
+          setPlaceLines(candidate);
+          void poster.offsetHeight;
+          const widths=placeLineWidths();
+          const safeW=safePlaceWidth();
+          const overflow=widths.reduce((sum,w)=>sum+Math.max(0,w-safeW),0);
+          const maxLine=Math.max(0,...widths);
+          const balance=Math.abs((widths[0]||0)-(widths[1]||0));
+          const linesPenalty=placeLines()>2 ? 100000 : 0;
+          const score=linesPenalty+overflow*1000+maxLine+balance*.18;
+          if(score<bestScore){
+            bestScore=score;
+            best=candidate;
+          }
+        }
+        return best;
       };
 
       const fits=()=>{

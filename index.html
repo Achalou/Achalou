@@ -944,29 +944,54 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Mobile portrait — réglage indépendant du panneau dynamique.
-   Le panneau suit la largeur utile du .wrap (même marge gauche que les titres).
-   Le texte est volontairement plus petit afin de préserver de vraies marges haut/bas. */
+/* Mobile portrait — traitement autonome du panneau dynamique. */
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel.has-concert{
+    order:-1!important;
+    position:relative!important;
     width:100%!important;
     max-width:100%!important;
     min-width:0!important;
-    justify-self:start!important;
+    height:auto!important;
+    justify-self:stretch!important;
+    align-self:start!important;
     margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
   }
   #heroPanel.has-concert #concertPoster{
+    position:relative!important;
+    display:block!important;
     width:100%!important;
     max-width:100%!important;
     min-width:0!important;
-    container-type:normal!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  #heroPanel.has-concert #concertPoster > .poster-bg{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    margin:0!important;
   }
   #heroPanel.has-concert #concertPoster > .poster-copy{
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
     width:69.33%!important;
     height:100%!important;
-    padding:12px 14px!important;
-    gap:2px!important;
     box-sizing:border-box!important;
+    padding:10px 14px!important;
+    gap:2px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
   }
 }
 </style>
@@ -1317,11 +1342,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         window.innerWidth || 9999,
         document.documentElement.clientWidth || 9999
       );
-      // Portrait mobile : réglage indépendant. Le parent est le .wrap de l'accueil,
-      // donc sa largeur conserve exactement les mêmes marges latérales que les titres.
-      const portraitAvailable=Math.max(240,Math.floor(panel.parentElement?.clientWidth || (viewportW-36)));
+      // En portrait mobile, on réserve 16 px de respiration de chaque côté.
+      // Le panneau entier est donc toujours contenu dans la largeur visible.
+      const parentW=panel.parentElement ? panel.parentElement.clientWidth : viewportW;
       const screenMax=isPortraitMobile
-        ? portraitAvailable
+        ? Math.max(240,Math.min(parentW,viewportW-36))
         : Math.max(280,viewportW-32);
       const maxW=isPortraitMobile ? screenMax : Math.min(600,screenMax);
       const minW=isPortraitMobile ? maxW : Math.min(420,maxW);
@@ -1332,13 +1357,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       timeEl.style.whiteSpace='nowrap';
       placeEl.style.whiteSpace='normal';
 
-      // En portrait, les caractères démarrent plus petits : on privilégie
-      // d'abord les marges haut/bas, puis la lisibilité maximale dans cet espace.
       const ideal=isPortraitMobile
-        ? {date:15,time:12,place:10}
+        ? {date:17,time:14,place:11}
         : {date:25,time:20,place:15};
       const minimum=isPortraitMobile
-        ? {date:12,time:10,place:8.5}
+        ? {date:13,time:11,place:9}
         : {date:17,time:15,place:11};
 
       const setSizes=(d,t,l)=>{

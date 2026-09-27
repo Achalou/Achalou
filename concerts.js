@@ -19,5 +19,22 @@ window.ACHALOU_CONCERTS = [
     "lieuAvant": "",
     "statut": "publie",
     "publicationProgrammee": ""
+  },
+  {
+    "date": "2027-04-02",
+    "lieu": "cafe · albi",
+    "heure": "20:00",
+    "info": "tout qu il va bien",
+    "etat": "normal",
+    "complet": false,
+    "raisonEtat": "",
+    "nouvelleDate": "",
+    "nouvelleHeure": "",
+    "nouveauLieu": "",
+    "nouvelleVille": "",
+    "heureAvant": "",
+    "lieuAvant": "",
+    "statut": "publie",
+    "publicationProgrammee": ""
   }
 ];

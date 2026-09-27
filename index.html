@@ -1394,30 +1394,23 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       };
 
       const fits=()=>{
-        // Mesure la zone réellement utilisable APRES les marges/paddings.
-        // On ne se fie pas seulement à scrollHeight : dans un conteneur flex
-        // avec overflow:hidden, un texte peut être visuellement rogné sans que
-        // scrollHeight signale correctement le débordement.
-        const cr=copy.getBoundingClientRect();
+        /* Test simple et fiable : les dimensions clientWidth/clientHeight de
+           .poster-copy représentent déjà la zone après padding. On contrôle
+           donc la largeur de chaque texte et la hauteur totale réellement
+           occupée, sans comparer des coordonnées absolues. */
         const cs=getComputedStyle(copy);
-        const padL=parseFloat(cs.paddingLeft)||0;
-        const padR=parseFloat(cs.paddingRight)||0;
         const padT=parseFloat(cs.paddingTop)||0;
         const padB=parseFloat(cs.paddingBottom)||0;
-        const left=cr.left+padL-0.5;
-        const right=cr.right-padR+0.5;
-        const top=cr.top+padT-0.5;
-        const bottom=cr.bottom-padB+0.5;
+        const gap=parseFloat(cs.rowGap)||parseFloat(cs.gap)||0;
+        const innerH=Math.max(0,copy.clientHeight-padT-padB);
         const els=[dateEl,timeEl,placeEl].filter(el=>el && el.textContent.trim());
-        const inside=els.every(el=>{
-          const r=el.getBoundingClientRect();
-          return r.left>=left && r.right<=right && r.top>=top && r.bottom<=bottom;
-        });
-        return inside &&
-               dateEl.scrollWidth<=dateEl.clientWidth+1 &&
+        const usedH=els.reduce((sum,el)=>sum+el.getBoundingClientRect().height,0) +
+                    Math.max(0,els.length-1)*gap;
+        return dateEl.scrollWidth<=dateEl.clientWidth+1 &&
                timeEl.scrollWidth<=timeEl.clientWidth+1 &&
                placeEl.scrollWidth<=placeEl.clientWidth+1 &&
-               placeLines()<=2;
+               placeLines()<=2 &&
+               usedH<=innerH+1;
       };
 
       const chooseWidth=()=>{

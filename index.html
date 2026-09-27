@@ -578,58 +578,34 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Titres de rubriques : panneau et texte totalement isolés du panneau concert. */
+/* Titres de rubriques : le texte est placé directement dans la partie blanche du panneau. */
 :is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
-  position:relative;
   width:350px;
   max-width:100%;
   aspect-ratio:1728 / 485;
-  margin:0 0 26px 0;
-  margin-left:0!important; /* bord visible du panneau = bord gauche de la .wrap */
-  padding:0;
+  margin:0 0 26px 0!important;
+  padding:0 30.7% 0 0!important;
   box-sizing:border-box;
-  display:grid;
-  place-items:center;
-  background:none!important;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:url("acha-lou-sans-concert.png") left center / 100% 100% no-repeat!important;
+
   color:var(--ink);
   font-family:Georgia,serif;
   font-size:clamp(1.45rem,2.5vw,2.05rem);
   line-height:1;
   text-align:center;
   white-space:nowrap;
-  isolation:isolate;
-}
-
-/* Le panneau est dessiné derrière le titre sans modifier la boîte du h2. */
-:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background:url("acha-lou-sans-concert.png") left center / contain no-repeat;
-}
-
-/* Le titre est centré uniquement dans la partie blanche (~69,3 % du panneau). */
-:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2::after{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  width:69.3%;
-  height:100%;
-  z-index:-1;
-  pointer-events:none;
-}
-:is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
-  padding-right:30.7%;
 }
 
 @media(max-width:760px){
   :is(#duo,#concerts,#musique,#videos,#photos,#contact) > .wrap > h2{
     width:min(86vw,330px);
-    max-width:100%;
-    margin:0 0 22px 0;
-    padding-right:30.7%;
+    margin:0 0 22px 0!important;
+    padding:0 30.7% 0 0!important;
     font-size:clamp(1.25rem,5.5vw,1.8rem);
     white-space:nowrap;
   }

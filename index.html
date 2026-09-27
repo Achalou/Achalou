@@ -940,64 +940,33 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 </style>
 
-<style>
-@media (max-width:760px) and (orientation:portrait){
-  #heroPanel.has-concert{
-    width:calc(100vw - 32px)!important;
-    max-width:calc(100vw - 32px)!important;
-    min-width:0!important;
-    box-sizing:border-box!important;
-    justify-self:center!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-  }
-  #heroPanel.has-concert #concertPoster{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    box-sizing:border-box!important;
-  }
-  #heroPanel.has-concert #concertPoster > .poster-bg{
-    width:100%!important;
-    max-width:100%!important;
-    height:auto!important;
-  }
-}
-</style>
+
+
 
 <style>
-/* Mobile portrait : les marges verticales suivent la hauteur réelle du panneau,
-   les marges latérales suivent sa largeur. Paysage et ordinateur inchangés. */
-@media (max-width:760px) and (orientation:portrait){
-  #heroPanel.has-concert #concertPoster > .poster-copy{
-    padding:
-      clamp(6px, 5.5cqh, 10px)
-      clamp(10px, 5.5cqw, 16px)!important;
-    box-sizing:border-box!important;
-  }
-  #heroPanel.has-concert #concertPoster{
-    container-type:size;
-  }
-}
-</style>
-
-<style>
-/* Mobile portrait : même départ à gauche et même largeur maxi que les écriteaux
-   de titres. Marges haut/bas du texte renforcées séparément. */
+/* Mobile portrait — réglage indépendant du panneau dynamique.
+   Le panneau suit la largeur utile du .wrap (même marge gauche que les titres).
+   Le texte est volontairement plus petit afin de préserver de vraies marges haut/bas. */
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel.has-concert{
-    width:min(86vw,330px)!important;
-    max-width:min(86vw,330px)!important;
+    width:100%!important;
+    max-width:100%!important;
     min-width:0!important;
     justify-self:start!important;
-    margin-left:0!important;
-    margin-right:0!important;
+    margin:0!important;
+  }
+  #heroPanel.has-concert #concertPoster{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    container-type:normal!important;
   }
   #heroPanel.has-concert #concertPoster > .poster-copy{
-    padding-top:clamp(9px,6.5cqh,12px)!important;
-    padding-bottom:clamp(9px,6.5cqh,12px)!important;
-    padding-left:clamp(10px,5.5cqw,16px)!important;
-    padding-right:clamp(10px,5.5cqw,16px)!important;
+    width:69.33%!important;
+    height:100%!important;
+    padding:12px 14px!important;
+    gap:2px!important;
+    box-sizing:border-box!important;
   }
 }
 </style>
@@ -1348,10 +1317,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         window.innerWidth || 9999,
         document.documentElement.clientWidth || 9999
       );
-      // En portrait mobile, on réserve 16 px de respiration de chaque côté.
-      // Le panneau entier est donc toujours contenu dans la largeur visible.
+      // Portrait mobile : réglage indépendant. Le parent est le .wrap de l'accueil,
+      // donc sa largeur conserve exactement les mêmes marges latérales que les titres.
+      const portraitAvailable=Math.max(240,Math.floor(panel.parentElement?.clientWidth || (viewportW-36)));
       const screenMax=isPortraitMobile
-        ? Math.max(240,Math.min(viewportW*.86,330))
+        ? portraitAvailable
         : Math.max(280,viewportW-32);
       const maxW=isPortraitMobile ? screenMax : Math.min(600,screenMax);
       const minW=isPortraitMobile ? maxW : Math.min(420,maxW);
@@ -1362,8 +1332,14 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       timeEl.style.whiteSpace='nowrap';
       placeEl.style.whiteSpace='normal';
 
-      const ideal={date:25,time:20,place:15};
-      const minimum={date:17,time:15,place:11};
+      // En portrait, les caractères démarrent plus petits : on privilégie
+      // d'abord les marges haut/bas, puis la lisibilité maximale dans cet espace.
+      const ideal=isPortraitMobile
+        ? {date:15,time:12,place:10}
+        : {date:25,time:20,place:15};
+      const minimum=isPortraitMobile
+        ? {date:12,time:10,place:8.5}
+        : {date:17,time:15,place:11};
 
       const setSizes=(d,t,l)=>{
         dateEl.style.fontSize=d+'px';

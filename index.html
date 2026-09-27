@@ -500,7 +500,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .organizer-invite{max-width:760px!important;margin:26px auto 34px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;text-align:center}
 .organizer-open{display:inline-flex!important;align-items:center;justify-content:center;border:0!important;border-radius:999px!important;padding:13px 24px!important;background:#fff!important;color:var(--blue)!important;font:inherit!important;font-weight:850!important;box-shadow:0 5px 16px #00000012!important;cursor:pointer}
 .organizer-open:hover,.organizer-open:focus-visible{transform:translateY(-1px);box-shadow:0 7px 20px #00000018!important}
-.organizer-form{margin:18px auto 0!important;max-width:620px!important;padding:22px!important;background:rgba(255,255,255,.78)!important;border:1px solid #00000010!important;border-radius:20px!important;box-shadow:0 8px 24px #0000000a!important;text-align:left!important}
+.organizer-form{margin:18px auto 0!important;max-width:620px!important;padding:22px!important;background:#fff!important;border:1px solid #00000010!important;border-radius:20px!important;box-shadow:0 8px 24px #0000000a!important;text-align:left!important}
 .organizer-form[hidden]{display:none!important}
 
 /* Programmation près du bouton Voir les concerts */
@@ -513,12 +513,14 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .hero .organizer-form{
   width:min(590px,calc(100vw - 48px))!important;
 }
-@media(max-width:760px){
+@media(max-width:760px) and (orientation:portrait){
   .hero .organizer-form{
-    width:calc(100vw - 32px)!important;
+    width:calc(100vw - 20px)!important;
+    max-width:none!important;
     right:auto!important;
-    left:50%!important;
-    transform:translateX(-50%)!important;
+    left:var(--hero-form-mobile-left, 0px)!important;
+    transform:none!important;
+    box-sizing:border-box!important;
   }
 }
 
@@ -539,6 +541,22 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   z-index:auto!important;
 }
 </style>
+
+<style>
+@media(max-width:760px){
+  #contact .organizer-form{
+    width:calc(100% - 0px)!important;
+    max-width:100%!important;
+    margin:16px auto 0!important;
+    padding:18px 16px!important;
+    box-sizing:border-box!important;
+  }
+  #contact .contact-programmer{
+    white-space:nowrap;
+  }
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1030,12 +1048,31 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   const status=document.getElementById("organizerStatus");
   if(!open||!form||!status) return;
 
+  function positionHeroFormOnMobile(){
+    if(window.matchMedia("(max-width: 760px) and (orientation: portrait)").matches){
+      const invite=document.getElementById("organizerInvite");
+      if(invite){
+        const left=invite.getBoundingClientRect().left;
+        form.style.setProperty("--hero-form-mobile-left",(10-left)+"px");
+      }
+    }else{
+      form.style.removeProperty("--hero-form-mobile-left");
+    }
+  }
+
   open.addEventListener("click",()=>{
-    const heroHome=document.getElementById("organizerInvite");
-    if(form.parentNode!==heroHome) return;
     form.hidden=!form.hidden;
     open.textContent=form.hidden ? "Programmer A’Cha Lou ?" : "Fermer";
-    if(!form.hidden) form.querySelector('input[name="nom"]')?.focus();
+    if(!form.hidden){
+      positionHeroFormOnMobile();
+      form.querySelector('input[name="nom"]')?.focus();
+    }
+  });
+
+  window.addEventListener("resize",()=>{
+    if(!form.hidden && form.parentNode===document.getElementById("organizerInvite")){
+      positionHeroFormOnMobile();
+    }
   });
 
   form.addEventListener("submit",async e=>{
@@ -1088,44 +1125,46 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   const heroButton=document.getElementById("organizerOpen");
   const form=document.getElementById("organizerForm");
   const heroHome=document.getElementById("organizerInvite");
-  const socials=contactButton?.closest(".socials");
-  if(!contactButton||!heroButton||!form||!heroHome||!socials) return;
+  const contactSection=document.getElementById("contact");
+  const contactWrap=contactSection?.querySelector(".wrap");
+  const socials=contactSection?.querySelector(".socials");
+  if(!contactButton||!heroButton||!form||!heroHome||!contactWrap||!socials) return;
 
   const openLabel="Programmer A’Cha Lou ?";
   const closeLabel="Fermer";
 
-  function putBackInHero(){
-    heroButton.insertAdjacentElement("afterend",form);
+  function formIsInContact(){
+    return form.parentNode===contactWrap;
   }
 
   contactButton.addEventListener("click",()=>{
-    const isOpenInContact = form.parentNode===socials.parentNode &&
-                            form.previousElementSibling===socials &&
-                            !form.hidden;
-
-    if(isOpenInContact){
+    if(formIsInContact() && !form.hidden){
       form.hidden=true;
       contactButton.textContent=openLabel;
       return;
     }
 
-    /* Le formulaire est placé sous toute la rangée Facebook / Instagram / Programmer,
-       et non à l'intérieur de cette rangée. */
+    /* Desktop ET mobile :
+       le formulaire est placé sous la rangée des boutons du Contact.
+       Il profite ainsi de #contact .organizer-form (width:100%, max-width:590px)
+       et ne reste jamais coincé dans le flex .socials. */
     socials.insertAdjacentElement("afterend",form);
     form.hidden=false;
     contactButton.textContent=closeLabel;
     heroButton.textContent=openLabel;
-    form.querySelector('input[name="nom"]')?.focus();
+
+    const first=form.querySelector('input[name="nom"]');
+    if(first && window.matchMedia("(min-width: 761px)").matches) first.focus();
+
     form.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
 
   heroButton.addEventListener("click",()=>{
-    if(form.parentNode!==heroHome){
-      putBackInHero();
+    if(formIsInContact()){
+      heroButton.insertAdjacentElement("afterend",form);
       form.hidden=false;
       contactButton.textContent=openLabel;
       heroButton.textContent=closeLabel;
-      form.querySelector('input[name="nom"]')?.focus();
       form.scrollIntoView({behavior:"smooth",block:"nearest"});
     }
   });

@@ -1323,14 +1323,32 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       );
     };
 
-    /* Si le lieu contient le séparateur utilisé par les concerts enregistrés,
-       on donne priorité à la coupure lieu / ville. */
-    const splitPlace=(txt)=>{
+    /* Lieu long : on essaie d'abord la coupure naturelle lieu / ville.
+       Si elle n'est pas satisfaisante, on cherchera ensuite la coupure
+       entre mots qui utilise le mieux les deux lignes. */
+    const naturalPlaceSplit=(txt)=>{
       const parts=txt.split(/\s*[·•|]\s*/);
       if(parts.length>=2){
-        return parts[0].trim()+'<br>'+parts.slice(1).join(' · ').trim();
+        return [parts[0].trim(),parts.slice(1).join(' · ').trim()];
       }
-      return txt;
+      return null;
+    };
+
+    const setPlaceLines=(lines)=>{
+      placeEl.replaceChildren();
+      lines.forEach((line,i)=>{
+        if(i) placeEl.appendChild(document.createElement('br'));
+        placeEl.appendChild(document.createTextNode(line));
+      });
+    };
+
+    const balancedPlaceSplits=(txt)=>{
+      const words=txt.trim().split(/\s+/).filter(Boolean);
+      const candidates=[];
+      for(let i=1;i<words.length;i++){
+        candidates.push([words.slice(0,i).join(' '),words.slice(i).join(' ')]);
+      }
+      return candidates;
     };
 
     const run=()=>{
@@ -1420,22 +1438,50 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         }
       }
 
-      // 3. Si nécessaire, priorité à la coupure entre lieu et ville.
-      if(!ok){
-        const split=splitPlace(originalPlace);
-        if(split.includes('<br>')){
-          placeEl.innerHTML=split;
-          ok=chooseWidth();
-        }
-      }
-
-      // La coupure lieu/ville peut aussi être utilisée même si le texte tient,
-      // lorsqu'elle améliore les marges au panneau maximal.
+      // 3. Lieu long : priorité à la séparation naturelle lieu / ville.
+      // Si elle ne suffit pas, on choisit automatiquement la coupure entre
+      // mots qui donne les deux lignes les plus équilibrées et les plus courtes.
       if(!ok || placeEl.scrollWidth>placeEl.clientWidth*.88){
-        const split=splitPlace(originalPlace);
-        if(split.includes('<br>')){
-          placeEl.innerHTML=split;
-          ok=chooseWidth();
+        const natural=naturalPlaceSplit(originalPlace);
+        let naturalOk=false;
+        if(natural){
+          setPlaceLines(natural);
+          naturalOk=chooseWidth();
+          // Une coupure naturelle n'est conservée que si les deux lignes
+          // tiennent réellement avec les marges prévues.
+          naturalOk=naturalOk && placeEl.scrollWidth<=placeEl.clientWidth+1;
+        }
+
+        if(!naturalOk){
+          let best=null;
+          let bestScore=Infinity;
+          for(const candidate of balancedPlaceSplits(originalPlace)){
+            setPlaceLines(candidate);
+            panel.style.width=maxW+'px';
+            poster.style.width='100%';
+            void poster.offsetHeight;
+            const lineNodes=[...placeEl.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE);
+            const probe=document.createElement('span');
+            const cs=getComputedStyle(placeEl);
+            probe.style.cssText='position:absolute;visibility:hidden;white-space:nowrap;font:'+cs.font+';';
+            document.body.appendChild(probe);
+            const widths=lineNodes.map(n=>{probe.textContent=n.textContent;return probe.getBoundingClientRect().width;});
+            probe.remove();
+            const maxLine=Math.max(...widths,0);
+            const balance=Math.abs((widths[0]||0)-(widths[1]||0));
+            const overflow=Math.max(0,maxLine-placeEl.clientWidth);
+            const score=overflow*1000+maxLine+balance*.18;
+            if(score<bestScore){bestScore=score;best=candidate;}
+          }
+          if(best){
+            setPlaceLines(best);
+            ok=chooseWidth();
+          }else{
+            setPlaceLines([originalPlace]);
+            ok=chooseWidth();
+          }
+        }else{
+          ok=true;
         }
       }
 

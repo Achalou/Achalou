@@ -939,6 +939,31 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   padding:7%!important;
 }
 </style>
+
+<style>
+@media (max-width:760px) and (orientation:portrait){
+  #heroPanel.has-concert{
+    width:calc(100vw - 32px)!important;
+    max-width:calc(100vw - 32px)!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    justify-self:center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  #heroPanel.has-concert #concertPoster{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  #heroPanel.has-concert #concertPoster > .poster-bg{
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+  }
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1281,9 +1306,18 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       poster.style.height='auto';
       poster.style.aspectRatio='auto';
 
-      const screenMax=Math.max(280,window.innerWidth-32);
+      const isPortraitMobile=window.matchMedia('(max-width:760px) and (orientation:portrait)').matches;
+      const viewportW=Math.min(
+        window.innerWidth || 9999,
+        document.documentElement.clientWidth || 9999
+      );
+      // En portrait mobile, on réserve 16 px de respiration de chaque côté.
+      // Le panneau entier est donc toujours contenu dans la largeur visible.
+      const screenMax=isPortraitMobile
+        ? Math.max(240,viewportW-32)
+        : Math.max(280,viewportW-32);
       const maxW=Math.min(600,screenMax);
-      const minW=Math.min(420,maxW);
+      const minW=isPortraitMobile ? maxW : Math.min(420,maxW);
 
       dateEl.textContent=originalDate;
       placeEl.textContent=originalPlace;

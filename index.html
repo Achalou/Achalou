@@ -736,6 +736,16 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   text-wrap:balance;
   line-height:1.08!important;
 }
+#heroPanel.has-concert #concertPoster .poster-place-line{
+  display:block!important;
+  width:max-content!important;
+  max-width:none!important;
+  margin:0 auto!important;
+  padding:0!important;
+  white-space:nowrap!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
 #heroPanel.has-concert .poster-badge{display:none!important;}
 </style>
 
@@ -1142,14 +1152,16 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
     const setPlaceLines=(lines)=>{
       placeEl.replaceChildren();
-      lines.forEach((line,i)=>{
-        if(i) placeEl.appendChild(document.createElement('br'));
-        placeEl.appendChild(document.createTextNode(line));
+      lines.forEach(line=>{
+        const span=document.createElement('span');
+        span.className='poster-place-line';
+        span.textContent=line;
+        placeEl.appendChild(span);
       });
     };
 
     const balancedPlaceSplits=(txt)=>{
-      const words=txt.trim().split(/\s+/).filter(Boolean);
+      const words=txt.replace(/\s*[·•|]\s*/g,' ').trim().split(/\s+/).filter(Boolean);
       const candidates=[];
       for(let i=1;i<words.length;i++){
         candidates.push([words.slice(0,i).join(' '),words.slice(i).join(' ')]);
@@ -1192,6 +1204,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       poster.style.aspectRatio='auto';
 
       const isPortraitMobile=window.matchMedia('(max-width:760px) and (orientation:portrait)').matches;
+      const isLandscapeMobile=window.matchMedia('(max-height:760px) and (orientation:landscape)').matches;
       const viewportW=Math.min(
         window.innerWidth || 9999,
         document.documentElement.clientWidth || 9999
@@ -1216,10 +1229,14 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
       const ideal=isPortraitMobile
         ? {date:17,time:14,place:11}
-        : {date:25,time:20,place:15};
+        : isLandscapeMobile
+          ? {date:23,time:18,place:14}
+          : {date:25,time:20,place:15};
       const minimum=isPortraitMobile
         ? {date:13,time:11,place:9}
-        : {date:17,time:15,place:11};
+        : isLandscapeMobile
+          ? {date:16,time:13,place:10}
+          : {date:17,time:15,place:11};
 
       const setSizes=(d,t,l)=>{
         dateEl.style.fontSize=d+'px';
@@ -1235,12 +1252,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       /* Mesure chaque ligne de lieu + ville indépendamment. scrollWidth n'est
          pas fiable ici quand le bloc est sur deux lignes avec overflow:hidden. */
       const placeLineWidths=()=>{
-        const cs=getComputedStyle(placeEl);
-        const canvas=placeLineWidths.canvas || (placeLineWidths.canvas=document.createElement('canvas'));
-        const ctx=canvas.getContext('2d');
-        ctx.font=cs.font;
-        const lines=(placeEl.innerText || placeEl.textContent || '').split(/\n+/).map(x=>x.trim()).filter(Boolean);
-        return lines.map(line=>ctx.measureText(line).width);
+        const explicit=[...placeEl.querySelectorAll('.poster-place-line')];
+        if(explicit.length){
+          return explicit.map(line=>line.getBoundingClientRect().width);
+        }
+        return [placeEl.scrollWidth];
       };
 
       const placeMaxLineWidth=()=>Math.max(0,...placeLineWidths());
@@ -1248,7 +1264,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       /* Contrôle ciblé de la PREMIÈRE ligne du lieu + ville.
          clientWidth est déjà la largeur blanche après les marges CSS ; on garde
          en plus 2 px de sécurité pour éviter que la ligne touche la limite. */
-      const placeSafetyPx=isPortraitMobile ? 8 : 10;
+      const placeSafetyPx=isPortraitMobile ? 0 : 10;
       const safePlaceWidth=()=>Math.max(0,placeEl.clientWidth-(placeSafetyPx*2));
 
       const firstPlaceLineFits=()=>{
@@ -1414,6 +1430,28 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
             setSizes(d,t,l);
           }
           void copy.offsetHeight;
+        }
+      }
+
+      /* Mobile paysage : après toutes les décisions de largeur et de coupure,
+         on repart volontairement des tailles souhaitées. On garde ensuite la
+         plus grande taille possible qui respecte réellement les quatre marges.
+         Cela évite de conserver une petite taille issue d'un calcul précédent. */
+      if(isLandscapeMobile){
+        setPanelWidth(maxW);
+        setSizes(ideal.date,ideal.time,ideal.place);
+        void copy.offsetHeight;
+
+        let d=ideal.date;
+        let t=ideal.time;
+        let l=ideal.place;
+        for(let step=0;step<160 && !fits();step++){
+          d=Math.max(minimum.date,d-0.1);
+          t=Math.max(minimum.time,t-0.1);
+          l=Math.max(minimum.place,l-0.1);
+          setSizes(d,t,l);
+          void copy.offsetHeight;
+          if(d<=minimum.date && t<=minimum.time && l<=minimum.place) break;
         }
       }
 

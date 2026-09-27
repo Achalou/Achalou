@@ -932,6 +932,13 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   overflow:hidden!important;
 }
 </style>
+
+<style>
+/* Panneau dynamique : vraie zone de respiration sur les 4 côtés. */
+#heroPanel.has-concert #concertPoster > .poster-copy{
+  padding:7%!important;
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1243,23 +1250,47 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const placeEl=poster.querySelector('.poster-place');
     if(!bg || !copy || !dateEl || !timeEl || !placeEl) return;
 
+    const originalDate=(dateEl.dataset.fullDate || dateEl.textContent || '').trim();
+    const originalPlace=(placeEl.dataset.fullPlace || placeEl.textContent || '').trim();
+    dateEl.dataset.fullDate=originalDate;
+    placeEl.dataset.fullPlace=originalPlace;
+
+    const abbreviateDate=(txt)=>{
+      const months={
+        janvier:'jan', février:'fév', fevrier:'fév', mars:'mar', avril:'avr',
+        mai:'mai', juin:'jun', juillet:'jul', août:'aoû', aout:'aoû',
+        septembre:'sep', octobre:'oct', novembre:'nov', décembre:'déc', decembre:'déc'
+      };
+      return txt.replace(
+        /\b(janvier|février|fevrier|mars|avril|mai|juin|juillet|août|aout|septembre|octobre|novembre|décembre|decembre)\b/i,
+        m=>months[m.toLowerCase()] || m.slice(0,3)
+      );
+    };
+
+    /* Si le lieu contient le séparateur utilisé par les concerts enregistrés,
+       on donne priorité à la coupure lieu / ville. */
+    const splitPlace=(txt)=>{
+      const parts=txt.split(/\s*[·•|]\s*/);
+      if(parts.length>=2){
+        return parts[0].trim()+'<br>'+parts.slice(1).join(' · ').trim();
+      }
+      return txt;
+    };
+
     const run=()=>{
-      /* Le PNG reste souverain : aucune hauteur et aucun ratio forcés. */
       poster.style.height='auto';
       poster.style.aspectRatio='auto';
 
-      // Le panneau peut grandir, mais jamais au-delà de 600 px
-      // ni au-delà de l'espace réellement disponible à l'écran.
       const screenMax=Math.max(280,window.innerWidth-32);
       const maxW=Math.min(600,screenMax);
       const minW=Math.min(420,maxW);
 
+      dateEl.textContent=originalDate;
+      placeEl.textContent=originalPlace;
       dateEl.style.whiteSpace='nowrap';
       timeEl.style.whiteSpace='nowrap';
       placeEl.style.whiteSpace='normal';
 
-      // Tailles souhaitées : on essaie de les conserver en agrandissant
-      // d'abord le panneau.
       const ideal={date:25,time:20,place:15};
       const minimum={date:17,time:15,place:11};
 
@@ -1270,43 +1301,68 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       };
 
       const placeLines=()=>{
-        const cs=getComputedStyle(placeEl);
-        const lh=parseFloat(cs.lineHeight)||16;
+        const lh=parseFloat(getComputedStyle(placeEl).lineHeight)||16;
         return Math.ceil((placeEl.getBoundingClientRect().height-.5)/lh);
       };
 
       const fits=()=>{
-        // clientWidth/clientHeight correspondent à la zone utile après
-        // le padding symétrique de 5,5 % sur les quatre côtés.
-        const dateOK=dateEl.scrollWidth<=dateEl.clientWidth+1;
-        const timeOK=timeEl.scrollWidth<=timeEl.clientWidth+1;
-        const placeOK=placeEl.scrollWidth<=placeEl.clientWidth+1 && placeLines()<=2;
-        const verticalOK=copy.scrollHeight<=copy.clientHeight+1;
-        return dateOK && timeOK && placeOK && verticalOK;
+        return dateEl.scrollWidth<=dateEl.clientWidth+1 &&
+               timeEl.scrollWidth<=timeEl.clientWidth+1 &&
+               placeEl.scrollWidth<=placeEl.clientWidth+1 &&
+               placeLines()<=2 &&
+               copy.scrollHeight<=copy.clientHeight+1;
       };
 
-      // 1. On conserve les tailles idéales et on agrandit le panneau
-      // jusqu'à ce que les 4 marges de sécurité soient respectées.
-      setSizes(ideal.date,ideal.time,ideal.place);
-      let chosen=maxW;
-      for(let w=minW;w<=maxW;w+=5){
-        panel.style.width=w+'px';
-        panel.style.maxWidth='100%';
+      const chooseWidth=()=>{
+        let chosen=maxW;
+        for(let w=minW;w<=maxW;w+=5){
+          panel.style.width=w+'px';
+          panel.style.maxWidth='100%';
+          poster.style.width='100%';
+          void poster.offsetHeight;
+          if(fits()){chosen=w;break;}
+        }
+        panel.style.width=chosen+'px';
         poster.style.width='100%';
         void poster.offsetHeight;
-        if(fits()){
-          chosen=w;
-          break;
+        return fits();
+      };
+
+      setSizes(ideal.date,ideal.time,ideal.place);
+
+      // 1. On agrandit d'abord le panneau avec les textes complets.
+      let ok=chooseWidth();
+
+      // 2. Si nécessaire, on abrège uniquement le mois de la date.
+      if(!ok){
+        const shortDate=abbreviateDate(originalDate);
+        if(shortDate!==originalDate){
+          dateEl.textContent=shortDate;
+          ok=chooseWidth();
         }
       }
 
-      panel.style.width=chosen+'px';
-      poster.style.width='100%';
-      void poster.offsetHeight;
+      // 3. Si nécessaire, priorité à la coupure entre lieu et ville.
+      if(!ok){
+        const split=splitPlace(originalPlace);
+        if(split.includes('<br>')){
+          placeEl.innerHTML=split;
+          ok=chooseWidth();
+        }
+      }
 
-      // 2. Si même le panneau maximal ne suffit pas, on réduit
-      // harmonieusement les trois textes, jamais le panneau.
-      if(!fits()){
+      // La coupure lieu/ville peut aussi être utilisée même si le texte tient,
+      // lorsqu'elle améliore les marges au panneau maximal.
+      if(!ok || placeEl.scrollWidth>placeEl.clientWidth*.88){
+        const split=splitPlace(originalPlace);
+        if(split.includes('<br>')){
+          placeEl.innerHTML=split;
+          ok=chooseWidth();
+        }
+      }
+
+      // 4. Réduction harmonieuse seulement en dernier recours.
+      if(!ok){
         let best=.68;
         for(let f=1;f>=.68;f-=.02){
           setSizes(
@@ -1315,10 +1371,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
             Math.max(minimum.place,ideal.place*f)
           );
           void copy.offsetHeight;
-          if(fits()){
-            best=f;
-            break;
-          }
+          if(fits()){best=f;break;}
         }
         setSizes(
           Math.max(minimum.date,ideal.date*best),

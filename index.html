@@ -1530,6 +1530,45 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         }
       }
 
+      /* Après TOUTE coupure, on refait une étude complète. La coupure peut
+         modifier à la fois la largeur de chaque ligne et la hauteur totale.
+         On exploite donc d'abord toute la largeur de panneau disponible,
+         puis on recalcule la meilleure coupure à cette largeur. */
+      const recheckAfterPlaceSplit=()=>{
+        panel.style.width=maxW+'px';
+        poster.style.width='100%';
+        void poster.offsetHeight;
+
+        if(fits()) return true;
+
+        const candidates=[];
+        const natural=naturalPlaceSplit(originalPlace);
+        if(natural) candidates.push(natural);
+        candidates.push(...balancedPlaceSplits(originalPlace));
+
+        let best=null;
+        let bestScore=Infinity;
+        for(const candidate of candidates){
+          setPlaceLines(candidate);
+          void poster.offsetHeight;
+          const widths=placeLineWidths();
+          const safeW=Math.max(0,placeEl.clientWidth-2);
+          const overflow=widths.reduce((sum,w)=>sum+Math.max(0,w-safeW),0);
+          const maxLine=Math.max(0,...widths);
+          const balance=Math.abs((widths[0]||0)-(widths[1]||0));
+          const linesPenalty=placeLines()>2 ? 100000 : 0;
+          const score=linesPenalty+overflow*1000+maxLine+balance*.18;
+          if(score<bestScore){bestScore=score;best=candidate;}
+        }
+        if(best){
+          setPlaceLines(best);
+          void poster.offsetHeight;
+        }
+        return fits();
+      };
+
+      ok=recheckAfterPlaceSplit();
+
       // 4. Filet de sécurité systématique : toutes les marges restent prioritaires.
       // Après la meilleure coupure du lieu + ville, on contrôle TOUJOURS la
       // zone réellement disponible dans .poster-copy (donc après ses marges).

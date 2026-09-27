@@ -25,7 +25,7 @@ window.ACHALOU_CONCERTS = [
     "date": "2026-12-12",
     "lieu": "le grand cafe du bar a cote de la place · Montpellier le bien nomme",
     "heure": "20:00",
-    "info": "ta gueule",
+    "info": "",
     "etat": "annule",
     "complet": false,
     "raisonEtat": "ta mere en slip",

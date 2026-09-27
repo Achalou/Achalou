@@ -1242,8 +1242,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
       /* Contrôle ciblé de la première ligne du lieu + ville
          dans la largeur réellement disponible. */
-      const placeSafetyPx=isPortraitMobile ? 0 : 10;
-      const safePlaceWidth=()=>Math.max(0,placeEl.clientWidth-(placeSafetyPx*2));
+      const safePlaceWidth=()=>Math.max(0,copy.clientWidth);
 
       const firstPlaceLineFits=()=>{
         const widths=placeLineWidths();
@@ -1275,20 +1274,16 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         /* Contrôle permanent des 4 marges. En portrait, chaque nouvelle
            disposition (largeur, coupure ou taille) repasse par ce test. */
         const cs=getComputedStyle(copy);
-        const padT=parseFloat(cs.paddingTop)||0;
-        const padB=parseFloat(cs.paddingBottom)||0;
-        const padL=parseFloat(cs.paddingLeft)||0;
-        const padR=parseFloat(cs.paddingRight)||0;
         const gap=parseFloat(cs.rowGap)||parseFloat(cs.gap)||0;
-        const innerH=Math.max(0,copy.clientHeight-padT-padB);
-        const innerW=Math.max(0,copy.clientWidth-padL-padR);
+        const innerH=Math.max(0,copy.clientHeight);
+        const innerW=Math.max(0,copy.clientWidth);
         const els=[dateEl,timeEl,placeEl].filter(el=>el && el.textContent.trim());
         const usedH=els.reduce((sum,el)=>sum+el.getBoundingClientRect().height,0) +
                     Math.max(0,els.length-1)*gap;
         const dateW=dateEl.scrollWidth;
         const timeW=timeEl.scrollWidth;
         const placeW=placeMaxLineWidth();
-        const horizontalLimit=safePlaceWidth();
+        const horizontalLimit=Math.max(0,copy.clientWidth);
         return dateW<=horizontalLimit+0.5 &&
                timeW<=horizontalLimit+0.5 &&
                placeW<=horizontalLimit+0.5 &&
@@ -1418,7 +1413,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
            est responsable du débordement, il diminue très progressivement ;
            si c'est la hauteur totale/date/heure, l'ensemble diminue ensuite. */
         for(let step=0;step<100 && !fits();step++){
-          const placeTooWide=placeMaxLineWidth()>safePlaceWidth()+0.5;
+          const placeTooWide=placeMaxLineWidth()>copy.clientWidth+0.5;
           if(placeTooWide && l>6){
             l=Math.max(6,l-0.1);
             placeEl.style.fontSize=l+'px';

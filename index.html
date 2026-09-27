@@ -578,43 +578,31 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 
 
 <style>
-/* Titres de rubriques présentés comme des petits panneaux,
-   tout en conservant les vrais <h2> pour le référencement et l'accessibilité. */
+/* Panneau de rubrique : remplace visuellement l'ancien titre, sans le recentrer. */
 main section:not(.hero) > .wrap > h2{
-  width:min(430px, 78%);
-  margin:0 auto 34px;
-  padding:18px 28px;
+  width:430px;
+  max-width:100%;
+  aspect-ratio:500 / 249;
+  margin:0 0 28px 0;
+  padding:0 43% 0 6%;
   box-sizing:border-box;
-  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  background:url("acha-lou-sans-concert.png") center/100% 100% no-repeat;
   color:var(--ink);
-  border:1.5px solid rgba(31,42,51,.18);
-  border-radius:22px;
-  box-shadow:0 12px 34px rgba(0,0,0,.14);
-  text-align:center;
   font-family:Georgia,serif;
-  font-size:clamp(2rem,4.5vw,3.35rem);
-  line-height:1.05;
-  position:relative;
-}
-main section:not(.hero) > .wrap > h2::after{
-  content:"";
-  position:absolute;
-  inset:7px;
-  border:1px solid rgba(14,96,144,.20);
-  border-radius:15px;
-  pointer-events:none;
+  font-size:clamp(1.8rem,3.4vw,2.8rem);
+  line-height:1;
+  text-align:left;
 }
 @media(max-width:760px){
   main section:not(.hero) > .wrap > h2{
-    width:min(92%, 360px);
-    margin-bottom:28px;
-    padding:15px 18px;
-    border-radius:18px;
-    font-size:clamp(1.8rem,9vw,2.6rem);
-  }
-  main section:not(.hero) > .wrap > h2::after{
-    inset:6px;
-    border-radius:12px;
+    width:min(100%,430px);
+    margin:0 0 24px 0;
+    padding-left:6%;
+    padding-right:43%;
+    font-size:clamp(1.45rem,7vw,2.2rem);
   }
 }
 </style>

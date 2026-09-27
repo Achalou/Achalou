@@ -919,6 +919,19 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   box-sizing:border-box!important;
 }
 </style>
+
+<style>
+/* Panneau dynamique : zone de sécurité symétrique sur les 4 côtés. */
+#heroPanel.has-concert #concertPoster > .poster-copy{
+  left:0!important;
+  top:0!important;
+  width:69.33%!important;
+  height:100%!important;
+  box-sizing:border-box!important;
+  padding:5.5%!important;
+  overflow:hidden!important;
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1231,63 +1244,88 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     if(!bg || !copy || !dateEl || !timeEl || !placeEl) return;
 
     const run=()=>{
-      const available=Math.max(280,Math.min(720,window.innerWidth-32));
-      const minW=Math.min(400,available);
-      const maxW=available;
+      /* Le PNG reste souverain : aucune hauteur et aucun ratio forcés. */
+      poster.style.height='auto';
+      poster.style.aspectRatio='auto';
 
-      // Date et heure restent sur une ligne ; le lieu peut prendre deux lignes.
+      // Le panneau peut grandir, mais jamais au-delà de 600 px
+      // ni au-delà de l'espace réellement disponible à l'écran.
+      const screenMax=Math.max(280,window.innerWidth-32);
+      const maxW=Math.min(600,screenMax);
+      const minW=Math.min(420,maxW);
+
       dateEl.style.whiteSpace='nowrap';
       timeEl.style.whiteSpace='nowrap';
       placeEl.style.whiteSpace='normal';
 
-      const sizes={date:18,time:16,place:13};
+      // Tailles souhaitées : on essaie de les conserver en agrandissant
+      // d'abord le panneau.
+      const ideal={date:25,time:20,place:15};
+      const minimum={date:17,time:15,place:11};
 
-      const apply=(factor)=>{
-        dateEl.style.fontSize=Math.min(26,sizes.date*factor)+'px';
-        timeEl.style.fontSize=Math.min(22,sizes.time*factor)+'px';
-        placeEl.style.fontSize=Math.min(17,sizes.place*factor)+'px';
+      const setSizes=(d,t,l)=>{
+        dateEl.style.fontSize=d+'px';
+        timeEl.style.fontSize=t+'px';
+        placeEl.style.fontSize=l+'px';
       };
 
       const placeLines=()=>{
-        const lh=parseFloat(getComputedStyle(placeEl).lineHeight)||16;
-        return Math.round(placeEl.getBoundingClientRect().height/lh);
+        const cs=getComputedStyle(placeEl);
+        const lh=parseFloat(cs.lineHeight)||16;
+        return Math.ceil((placeEl.getBoundingClientRect().height-.5)/lh);
       };
 
       const fits=()=>{
-        const oneLineOK=
-          dateEl.scrollWidth<=dateEl.clientWidth+1 &&
-          timeEl.scrollWidth<=timeEl.clientWidth+1;
-        const placeOK=
-          placeEl.scrollWidth<=placeEl.clientWidth+1 &&
-          placeLines()<=2;
+        // clientWidth/clientHeight correspondent à la zone utile après
+        // le padding symétrique de 5,5 % sur les quatre côtés.
+        const dateOK=dateEl.scrollWidth<=dateEl.clientWidth+1;
+        const timeOK=timeEl.scrollWidth<=timeEl.clientWidth+1;
+        const placeOK=placeEl.scrollWidth<=placeEl.clientWidth+1 && placeLines()<=2;
         const verticalOK=copy.scrollHeight<=copy.clientHeight+1;
-        return oneLineOK && placeOK && verticalOK;
+        return dateOK && timeOK && placeOK && verticalOK;
       };
 
-      // Cherche la largeur minimale qui permet au contenu de tenir,
-      // avec jusqu'à deux lignes pour le lieu.
+      // 1. On conserve les tailles idéales et on agrandit le panneau
+      // jusqu'à ce que les 4 marges de sécurité soient respectées.
+      setSizes(ideal.date,ideal.time,ideal.place);
       let chosen=maxW;
-      apply(1);
-      for(let w=minW;w<=maxW;w+=10){
+      for(let w=minW;w<=maxW;w+=5){
         panel.style.width=w+'px';
+        panel.style.maxWidth='100%';
         poster.style.width='100%';
         void poster.offsetHeight;
-        if(fits()){chosen=w;break;}
+        if(fits()){
+          chosen=w;
+          break;
+        }
       }
 
       panel.style.width=chosen+'px';
       poster.style.width='100%';
       void poster.offsetHeight;
 
-      // Agrandit ensuite les trois textes ensemble jusqu'à la limite utile.
-      let best=1;
-      for(let f=1;f<=1.55;f+=0.025){
-        apply(f);
-        void copy.offsetHeight;
-        if(fits()) best=f;
-        else break;
+      // 2. Si même le panneau maximal ne suffit pas, on réduit
+      // harmonieusement les trois textes, jamais le panneau.
+      if(!fits()){
+        let best=.68;
+        for(let f=1;f>=.68;f-=.02){
+          setSizes(
+            Math.max(minimum.date,ideal.date*f),
+            Math.max(minimum.time,ideal.time*f),
+            Math.max(minimum.place,ideal.place*f)
+          );
+          void copy.offsetHeight;
+          if(fits()){
+            best=f;
+            break;
+          }
+        }
+        setSizes(
+          Math.max(minimum.date,ideal.date*best),
+          Math.max(minimum.time,ideal.time*best),
+          Math.max(minimum.place,ideal.place*best)
+        );
       }
-      apply(best);
     };
 
     if(bg.complete && bg.naturalWidth) run();

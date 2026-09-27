@@ -324,7 +324,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 @keyframes stampImpact{0%{opacity:0;transform:scale(1.65) rotate(-2deg)}68%{opacity:.52;transform:scale(.94) rotate(-10deg)}100%{opacity:.48;transform:scale(1) rotate(-9deg)}}
 
 /* Raison : second petit tampon flottant, lui aussi hors du flux */
-.card .concert-reason{
+.card .concert-reason,
+.report-transition .concert-reason{
  position:absolute;z-index:6;right:18px;bottom:14px;width:108px;height:108px;margin:0;padding:18px 13px;
  display:grid;place-items:center;border:3px dashed #555;border-radius:50%;background:transparent;color:#555;
  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px #555;
@@ -408,7 +409,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
    5 s discret     = fond transparent + texte/contour très pastel
    Le tampon reste toujours présent. */
 .card .concert-reason,
-.poster-copy .concert-reason{
+.poster-copy .concert-reason,
+.report-transition .concert-reason{
   opacity:1!important;
   visibility:visible!important;
   animation:reasonPriorityCycle 10s steps(1,end) infinite!important;
@@ -1153,6 +1155,75 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 </style>
 
+
+<style>
+/* MOBILE — correction du placement du texte des deux états reportés */
+@media (max-width:760px) and (orientation:portrait){
+  #heroPanel.has-concert.is-postponed #concertPoster{
+    width:min(100%, var(--report-mobile-width, 100%))!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel{
+    width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* La zone de texte correspond exactement à la partie blanche du PNG.
+     On garde une vraie marge intérieure sur les 4 côtés. */
+  #heroPanel.has-concert.is-postponed .concert-state-panel > .poster-copy{
+    left:0!important;
+    top:0!important;
+    width:69.33%!important;
+    height:100%!important;
+    padding:8% 5.2%!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    align-items:center!important;
+    gap:2px!important;
+    transform:none!important;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-time,
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
+    position:relative!important;
+    left:auto!important;
+    right:auto!important;
+    top:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    margin:0 auto!important;
+    padding:0!important;
+    text-align:center!important;
+    line-height:1.05!important;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-time{
+    width:max-content!important;
+    max-width:100%!important;
+    white-space:nowrap!important;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
+    width:100%!important;
+    max-width:100%!important;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place-line{
+    width:max-content!important;
+    max-width:100%!important;
+    margin:0 auto!important;
+    white-space:nowrap!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1596,7 +1667,10 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
       /* Contrôle ciblé de la première ligne du lieu + ville
          dans la largeur réellement disponible. */
-      const safePlaceWidth=()=>Math.max(0,copy.clientWidth);
+      const safePlaceWidth=()=>{
+        const cs=getComputedStyle(copy);
+        return Math.max(0,copy.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0));
+      };
 
       const firstPlaceLineFits=()=>{
         const widths=placeLineWidths();
@@ -1637,7 +1711,8 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         const dateW=dateEl.scrollWidth;
         const timeW=timeEl.scrollWidth;
         const placeW=placeMaxLineWidth();
-        const horizontalLimit=Math.max(0,copy.clientWidth);
+        const copyStyle=getComputedStyle(copy);
+      const horizontalLimit=Math.max(0,copy.clientWidth-(parseFloat(copyStyle.paddingLeft)||0)-(parseFloat(copyStyle.paddingRight)||0));
         return dateW<=horizontalLimit+0.5 &&
                timeW<=horizontalLimit+0.5 &&
                placeW<=horizontalLimit+0.5 &&
@@ -1836,9 +1911,11 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
           const usedH=els.reduce((sum,x)=>sum+x.getBoundingClientRect().height,0)+
                       Math.max(0,els.length-1)*gap;
           const maxLine=Math.max(0,...lineWidths());
-          return d.scrollWidth<=c.clientWidth+.5 &&
-                 t.scrollWidth<=c.clientWidth+.5 &&
-                 maxLine<=c.clientWidth+.5 &&
+          const cs=getComputedStyle(c);
+          const innerW=Math.max(0,c.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0));
+          return d.scrollWidth<=innerW+.5 &&
+                 t.scrollWidth<=innerW+.5 &&
+                 maxLine<=innerW+.5 &&
                  usedH<=c.clientHeight+.5;
         };
 

@@ -885,6 +885,40 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   overflow:hidden!important;
 }
 </style>
+
+<style>
+/* Panneau dynamique : amélioration du texte uniquement.
+   La géométrie et l'image du panneau restent inchangées. */
+#heroPanel.has-concert #concertPoster .poster-place{
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  text-wrap:balance;
+  line-height:1.08!important;
+}
+</style>
+
+<style>
+/* Panneau dynamique : marges gauche/droite strictement symétriques
+   à l'intérieur de la partie blanche. */
+#heroPanel.has-concert #concertPoster > .poster-copy{
+  left:0!important;
+  width:69.33%!important;
+  padding-left:5.5%!important;
+  padding-right:5.5%!important;
+  box-sizing:border-box!important;
+}
+#heroPanel.has-concert #concertPoster .poster-date,
+#heroPanel.has-concert #concertPoster .poster-time,
+#heroPanel.has-concert #concertPoster .poster-place{
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  text-align:center!important;
+  box-sizing:border-box!important;
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1197,69 +1231,63 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     if(!bg || !copy || !dateEl || !timeEl || !placeEl) return;
 
     const run=()=>{
-      /* L'image réelle impose toujours la hauteur :
-         aucune hauteur ni aucun ratio n'est calculé ici. */
-      poster.style.height='auto';
-      poster.style.aspectRatio='auto';
-
-      const available=Math.max(280, Math.min(720, window.innerWidth-32));
+      const available=Math.max(280,Math.min(720,window.innerWidth-32));
       const minW=Math.min(400,available);
       const maxW=available;
 
-      // Lisibilité minimale souhaitée.
-      const minDate=18, minTime=16, minPlace=12;
-      const idealDate=25, idealTime=20, idealPlace=15;
+      // Date et heure restent sur une ligne ; le lieu peut prendre deux lignes.
+      dateEl.style.whiteSpace='nowrap';
+      timeEl.style.whiteSpace='nowrap';
+      placeEl.style.whiteSpace='normal';
 
-      const applySizes=(d,t,l)=>{
-        dateEl.style.fontSize=d+'px';
-        timeEl.style.fontSize=t+'px';
-        placeEl.style.fontSize=l+'px';
+      const sizes={date:18,time:16,place:13};
+
+      const apply=(factor)=>{
+        dateEl.style.fontSize=Math.min(26,sizes.date*factor)+'px';
+        timeEl.style.fontSize=Math.min(22,sizes.time*factor)+'px';
+        placeEl.style.fontSize=Math.min(17,sizes.place*factor)+'px';
+      };
+
+      const placeLines=()=>{
+        const lh=parseFloat(getComputedStyle(placeEl).lineHeight)||16;
+        return Math.round(placeEl.getBoundingClientRect().height/lh);
       };
 
       const fits=()=>{
-        const horizontal =
-          dateEl.scrollWidth <= dateEl.clientWidth+1 &&
-          timeEl.scrollWidth <= timeEl.clientWidth+1 &&
-          placeEl.scrollWidth <= placeEl.clientWidth+1;
-        const vertical = copy.scrollHeight <= copy.clientHeight+1;
-        return horizontal && vertical;
+        const oneLineOK=
+          dateEl.scrollWidth<=dateEl.clientWidth+1 &&
+          timeEl.scrollWidth<=timeEl.clientWidth+1;
+        const placeOK=
+          placeEl.scrollWidth<=placeEl.clientWidth+1 &&
+          placeLines()<=2;
+        const verticalOK=copy.scrollHeight<=copy.clientHeight+1;
+        return oneLineOK && placeOK && verticalOK;
       };
 
-      // Cherche d'abord la plus petite taille de panneau permettant
-      // de conserver des textes lisibles.
+      // Cherche la largeur minimale qui permet au contenu de tenir,
+      // avec jusqu'à deux lignes pour le lieu.
       let chosen=maxW;
-      applySizes(minDate,minTime,minPlace);
-      for(let w=minW; w<=maxW; w+=10){
+      apply(1);
+      for(let w=minW;w<=maxW;w+=10){
         panel.style.width=w+'px';
         poster.style.width='100%';
-        // force le navigateur à recalculer les dimensions
         void poster.offsetHeight;
-        if(fits()){ chosen=w; break; }
+        if(fits()){chosen=w;break;}
       }
 
       panel.style.width=chosen+'px';
       poster.style.width='100%';
       void poster.offsetHeight;
 
-      // Une fois le panneau choisi, agrandit harmonieusement les trois textes
-      // ensemble jusqu'à la plus grande taille qui tient réellement.
-      let factor=1;
+      // Agrandit ensuite les trois textes ensemble jusqu'à la limite utile.
       let best=1;
-      for(factor=1; factor<=1.5; factor+=0.025){
-        const d=Math.min(idealDate, minDate*factor);
-        const t=Math.min(idealTime, minTime*factor);
-        const l=Math.min(idealPlace, minPlace*factor);
-        applySizes(d,t,l);
+      for(let f=1;f<=1.55;f+=0.025){
+        apply(f);
         void copy.offsetHeight;
-        if(fits()) best=factor;
+        if(fits()) best=f;
         else break;
       }
-
-      applySizes(
-        Math.min(idealDate,minDate*best),
-        Math.min(idealTime,minTime*best),
-        Math.min(idealPlace,minPlace*best)
-      );
+      apply(best);
     };
 
     if(bg.complete && bg.naturalWidth) run();

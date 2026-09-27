@@ -1150,13 +1150,6 @@ body.duo-modal-open{overflow:hidden}
 }
 </style>
 
-<style>
-/* Le duo : texte conservé sur la page, bouton simple vers les biographies */
-#duo .duo-launch{display:inline-block;margin-top:18px;padding:13px 20px;border:0;border-radius:999px;background:var(--blue);color:#fff;font:800 1rem system-ui,-apple-system,Segoe UI,Roboto,sans-serif;cursor:pointer;box-shadow:none}
-#duo .duo-launch:hover{transform:translateY(-2px);box-shadow:0 8px 20px #0002}
-#duo .duo-launch:focus-visible{outline:3px solid #ffffff;outline-offset:3px}
-@media(prefers-reduced-motion:reduce){#duo .duo-launch{transition:none}#duo .duo-launch:hover{transform:none}}
-</style>
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
@@ -1177,7 +1170,7 @@ body.duo-modal-open{overflow:hidden}
   </form>
 </div></div><div class="logo-card" id="heroPanel"><img src="acha-lou-sans-concert.png" alt="A’Cha Lou, duo de musique traditionnelle"><div class="concert-poster" id="concertPoster" hidden></div></div></div></section>
 
-<section class="intro reveal" id="duo"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></h2><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p><button type="button" class="duo-launch" id="duoOpen" aria-haspopup="dialog" aria-controls="duoDialog">Découvrir les musiciens</button></div></section>
+<section class="intro reveal" id="duo"><div class="wrap"><button type="button" class="duo-launch section-sign" id="duoOpen" aria-haspopup="dialog" aria-controls="duoDialog"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Le duo</span></button><p class="copy">A’Cha Lou réunit un accordéoniste et un violoniste chanteur autour d’un répertoire de musique traditionnelle. Une musique vivante, généreuse et faite pour la rencontre — sur scène comme sur le parquet.</p></div></section>
 
 <div class="duo-modal" id="duoDialog" hidden>
   <div class="duo-backdrop" data-duo-close></div>

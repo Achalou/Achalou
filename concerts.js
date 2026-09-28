@@ -9,7 +9,7 @@ window.ACHALOU_CONCERTS = [
     "heure": "20:00",
     "info": "entree au facies",
     "url": "https://www.lequipe.fr/",
-    "etat": "reporte",
+    "etat": "normal",
     "complet": false,
     "raisonEtat": "la vache a baillee",
     "nouvelleDate": "",

@@ -10,7 +10,7 @@ window.ACHALOU_CONCERTS = [
     "info": "entree au facies",
     "url": "https://www.lequipe.fr/",
     "etat": "normal",
-    "complet": false,
+    "complet": true,
     "raisonEtat": "",
     "nouvelleDate": "",
     "nouvelleHeure": "",
@@ -19,6 +19,7 @@ window.ACHALOU_CONCERTS = [
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": ""
   }
 ];

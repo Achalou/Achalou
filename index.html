@@ -1226,6 +1226,7 @@ body.duo-modal-open{overflow:hidden}
   <p>Un petit mot ? Écrivez-nous ici.</p>
   <form id="publicMessageForm">
     <label>Prénom<input name="prenom" type="text" maxlength="60" autocomplete="given-name" required></label>
+    <label>E-mail ou téléphone <span style="font-weight:400;opacity:.65">(facultatif)</span><input name="contact" type="text" maxlength="254" placeholder="Pour vous répondre si vous le souhaitez"></label>
     <label>Message<textarea name="message" maxlength="1200" rows="5" required></textarea></label>
     <label class="message-trap" aria-hidden="true">Site<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
     <button type="submit">Envoyer le message</button>
@@ -2063,6 +2064,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const fd=new FormData(form);
     const payload={
       prenom:String(fd.get("prenom")||"").trim(),
+      contact:String(fd.get("contact")||"").trim(),
       message:String(fd.get("message")||"").trim(),
       website:String(fd.get("website")||"").trim()
     };

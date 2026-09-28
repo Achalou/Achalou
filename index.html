@@ -1406,7 +1406,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const reportChange=initial ? '<p class="concert-change">Initialement : <del>'+esc(initial)+'</del></p>' : '';
     const legacyTime=!initial && c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
     const legacyPlace=!initial && c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(fmtPlace(c))+'</p>' : '';
-    const reason=c.raisonEtat ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
+    const reason=(String(c.etat||'normal')!=='normal' && c.raisonEtat) ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
     const rawUrl=String(c.url||'').trim();
     let concertLink='';
     if(rawUrl){try{const u=new URL(rawUrl);if(u.protocol==='http:'||u.protocol==='https:') concertLink='<p><a href="'+esc(u.href)+'" target="_blank" rel="noopener noreferrer">En savoir plus ↗</a></p>';}catch{}}

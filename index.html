@@ -1407,7 +1407,10 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const legacyTime=!initial && c.heureAvant ? '<p class="concert-change">Heure modifiée : <del>'+esc(String(c.heureAvant).replace(':','h'))+'</del> → '+esc(time||'à préciser')+'</p>' : '';
     const legacyPlace=!initial && c.lieuAvant ? '<p class="concert-change">Lieu modifié : <del>'+esc(c.lieuAvant)+'</del> → '+esc(fmtPlace(c))+'</p>' : '';
     const reason=c.raisonEtat ? '<p class="concert-reason">'+esc(c.raisonEtat)+'</p>' : '';
-    return '<article class="card">'+stamp+fullStamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(fmtPlace(c))+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+reportChange+legacyTime+legacyPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+'</article>';
+    const rawUrl=String(c.url||'').trim();
+    let concertLink='';
+    if(rawUrl){try{const u=new URL(rawUrl);if(u.protocol==='http:'||u.protocol==='https:') concertLink='<p><a href="'+esc(u.href)+'" target="_blank" rel="noopener noreferrer">En savoir plus ↗</a></p>';}catch{}}
+    return '<article class="card">'+stamp+fullStamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(fmtPlace(c))+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+reportChange+legacyTime+legacyPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+concertLink+'</article>';
   }
 
   const futureHost=document.getElementById('concertsUpcoming');

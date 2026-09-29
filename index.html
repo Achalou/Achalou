@@ -543,9 +543,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   margin:18px auto 0!important;
   z-index:auto!important;
 }
-</style>
 
-<style>
 @media(max-width:760px){
   #contact .organizer-form{
     width:calc(100% - 0px)!important;
@@ -558,10 +556,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     white-space:nowrap;
   }
 }
-</style>
 
-
-<style>
 #visitorMessageBox[hidden]{display:none!important}
 #contact #visitorMessageBox{
   background:#fff!important;
@@ -576,10 +571,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     max-width:100%;
   }
 }
-</style>
 
-
-<style>
 /* Titres de rubriques : image réelle non déformée + texte dans la zone blanche. */
 .section-sign{
   position:relative;
@@ -635,10 +627,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     font-size:clamp(1.1rem,5vw,1.65rem);
   }
 }
-</style>
 
-
-<style>
 /* Panneau dynamique — règles de base uniques.
    L’image complète garde son ratio naturel ; le texte reste dans les 69,33 % blancs. */
 #heroPanel.has-concert{
@@ -749,9 +738,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   word-break:normal!important;
 }
 #heroPanel.has-concert .poster-badge{display:none!important;}
-</style>
 
-<style>
 /* Mobile portrait — traitement autonome du panneau dynamique. */
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel.has-concert{
@@ -802,9 +789,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     overflow:hidden!important;
   }
 }
-</style>
 
-<style>
 /* Bureau avec prochain concert : même organisation que le mobile.
    Le panneau est placé au-dessus de « Duo · musique traditionnelle ». */
 @media (min-width:761px){
@@ -829,9 +814,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     margin:0!important;
   }
 }
-</style>
 
-<style>
 /* Entre les deux panneaux : réutilise le tampon raison déjà existant. */
 #heroPanel .report-transition{
   position:relative;
@@ -866,10 +849,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     left:calc(50% + 26px)!important;
   }
 }
-</style>
 
-
-<style>
 /* Flèche de report : volontairement très visible sur ordinateur et mobile */
 #heroPanel.has-concert.is-postponed .report-transition .report-arrow{
   position:relative!important;
@@ -919,10 +899,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     border-bottom-width:6px!important;
   }
 }
-</style>
 
-
-<style>
 /* MOBILE — correction du placement du texte des deux états reportés */
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel.has-concert.is-postponed #concertPoster{
@@ -988,10 +965,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
     white-space:nowrap!important;
   }
 }
-</style>
 
-
-<style>
 /* Concert reporté — structure commune */
 #heroPanel.has-concert.is-postponed{
   display:flex!important;
@@ -1084,10 +1058,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   #heroPanel .report-cross::before{animation:none;transform:rotate(14deg) scaleX(1)}
   #heroPanel .report-cross::after{animation:none;transform:rotate(-14deg) scaleX(1)}
 }
-</style>
 
-
-<style>
 /* Le duo — fenêtre portraits et biographies */
 .duo-launch-wrap{display:flex;justify-content:flex-start}
 .duo-launch{display:inline-flex;align-items:center;gap:14px;border:0;border-radius:999px;padding:10px 22px 10px 10px;background:var(--blue);color:#fff;font:700 clamp(1.35rem,3vw,2rem)/1 Georgia,serif;cursor:pointer;box-shadow:0 10px 28px #0002;transition:transform .2s ease,box-shadow .2s ease}
@@ -1148,10 +1119,7 @@ body.duo-modal-open{overflow:hidden}
 @media(max-width:760px){
   .duo-launch.section-sign > span{padding:0 4%;font-size:clamp(1.1rem,5vw,1.65rem)}
 }
-</style>
 
-
-<style>
 /* Harmonisation « Le duo » / panneau-titre « Concerts » */
 #duoOpen.duo-launch.section-sign{
   display:block!important;
@@ -1183,7 +1151,18 @@ body.duo-modal-open{overflow:hidden}
     margin:0 0 22px 0!important;
   }
 }
+
+/* Photos — bouton GIF, photo principale et album chronologique */
+.photo-album-launch{display:block;width:min(100%,414px);padding:0;border:0;background:transparent;cursor:pointer;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px #0002;transition:transform .2s ease,box-shadow .2s ease}
+.photo-album-launch:hover{transform:translateY(-2px);box-shadow:0 12px 30px #0003}.photo-album-launch img{display:block;width:100%;height:auto}
+.photo-featured{margin-top:24px;max-width:760px}.photo-featured figure{margin:0;display:inline-block;max-width:100%}.photo-featured img{display:block;max-width:100%;max-height:620px;width:auto;height:auto;border-radius:18px;box-shadow:0 10px 30px #00000018}.photo-featured figcaption{margin:10px 0 0;font-family:Georgia,'Times New Roman',serif;font-style:italic;color:var(--blue)}
+.photo-featured a,.album-meta a{color:var(--blue);font-weight:800}
+.photo-album-modal{position:fixed;inset:0;z-index:1000;background:rgba(12,18,22,.86);padding:28px;overflow:auto}.photo-album-panel{position:relative;width:min(1100px,100%);margin:auto;background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0007}.photo-album-close{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:var(--blue);color:#fff;font-size:1.5rem;cursor:pointer}.photo-album-panel h2{padding-right:56px}.photo-album-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;clear:both}.album-photo{margin:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px #0001}.album-photo button{display:block;width:100%;padding:0;border:0;background:#fff;cursor:zoom-in}.album-photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.album-meta{padding:12px 14px}.album-date{display:block;font-size:.82rem;font-weight:850;color:var(--blue);margin-bottom:4px}.album-caption{display:block;font-family:Georgia,'Times New Roman',serif;font-style:italic}.photo-lightbox{position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,.92);display:grid;place-items:center;padding:30px}.photo-lightbox[hidden],.photo-album-modal[hidden]{display:none!important}.photo-lightbox img{max-width:94vw;max-height:86vh;object-fit:contain}.photo-lightbox-close{position:absolute;right:22px;top:18px;border:0;background:#fff;color:#111;border-radius:50%;width:44px;height:44px;font-size:1.5rem;cursor:pointer}.album-year{grid-column:1/-1;margin:12px 0 -4px;font-size:1.45rem;color:var(--blue)}.photo-lightbox-prev,.photo-lightbox-next{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:#111;font-size:2rem;cursor:pointer}.photo-lightbox-prev{left:18px}.photo-lightbox-next{right:18px}.photo-lightbox-info{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:min(760px,88vw);padding:9px 14px;border-radius:14px;background:rgba(0,0,0,.7);color:#fff;text-align:center}.photo-lightbox-info a{color:#fff;text-decoration:underline}.photo-lightbox-counter{font-weight:800;margin-right:8px}
+@media(max-width:760px){.photo-album-modal{padding:12px}.photo-album-panel{padding:18px}.photo-album-grid{grid-template-columns:1fr 1fr;gap:12px}.photo-album-launch{width:min(100%,414px)}}
+@media(max-width:480px){.photo-album-grid{grid-template-columns:1fr}}
+
 </style>
+
 
 </head>
 <body>
@@ -1236,12 +1215,13 @@ body.duo-modal-open{overflow:hidden}
 
 <section class="reveal" id="videos"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Vidéos</span></h2><div id="videoGallery" class="video-gallery"><div class="placeholder"><strong>Chargement des vidéos…</strong></div></div></div></section>
 
-<section class="intro reveal" id="photos"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Photos</span></h2><div id="photoGallery" class="photo-gallery"><div class="placeholder"><strong>Chargement des photos…</strong></div></div></div></section>
+<section class="intro reveal" id="photos"><div class="wrap"><button type="button" class="photo-album-launch" id="photoAlbumOpen" aria-haspopup="dialog" aria-controls="photoAlbumModal" aria-label="Ouvrir l’album photos"><img src="gif-photos.gif" alt="Album photos A’Cha Lou"></button><div id="photoFeatured" class="photo-featured"><div class="placeholder"><strong>Chargement de la photo…</strong></div></div></div></section>
+<div class="photo-album-modal" id="photoAlbumModal" role="dialog" aria-modal="true" aria-labelledby="photoAlbumTitle" hidden><div class="photo-album-panel"><button type="button" class="photo-album-close" id="photoAlbumClose" aria-label="Fermer">×</button><h2 id="photoAlbumTitle">Album photos</h2><div id="photoAlbumGrid" class="photo-album-grid"></div></div></div>
+<div class="photo-lightbox" id="photoLightbox" hidden><button type="button" class="photo-lightbox-close" id="photoLightboxClose" aria-label="Fermer la photo">×</button><button type="button" class="photo-lightbox-prev" id="photoLightboxPrev" aria-label="Photo précédente">‹</button><img id="photoLightboxImage" alt=""><button type="button" class="photo-lightbox-next" id="photoLightboxNext" aria-label="Photo suivante">›</button><div class="photo-lightbox-info" id="photoLightboxInfo"></div></div>
 
 <section class="contact reveal" id="contact"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Contact</span></h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
 <button type="button" class="social contact-programmer" id="contactMessageOpen">Envoyer un message</button>
 <button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div></div>
-
 
 
 <div class="newsletter-box" hidden>
@@ -1998,27 +1978,26 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
 <script>
 (function(){
-  const host=document.getElementById('photoGallery');
-  if(!host) return;
+  const featured=document.getElementById('photoFeatured'), grid=document.getElementById('photoAlbumGrid'), modal=document.getElementById('photoAlbumModal'), open=document.getElementById('photoAlbumOpen'), close=document.getElementById('photoAlbumClose'), lightbox=document.getElementById('photoLightbox'), lightImg=document.getElementById('photoLightboxImage'), lightClose=document.getElementById('photoLightboxClose'),prev=document.getElementById('photoLightboxPrev'),next=document.getElementById('photoLightboxNext'),info=document.getElementById('photoLightboxInfo');
+  if(!featured||!grid||!modal||!open) return;
   const esc=s=>{const d=document.createElement('div');d.textContent=String(s||'');return d.innerHTML};
-  fetch('photos/photos.json?v='+Date.now(),{cache:'no-store'})
-    .then(r=>{if(!r.ok) throw new Error('Galerie indisponible');return r.json()})
-    .then(photos=>{
-      if(!Array.isArray(photos)||!photos.length){
-        host.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';
-        return;
-      }
-      host.innerHTML=photos.map(p=>{
-        const file=String(p.fichier||'');
-        if(!/^[A-Za-z0-9._-]+\.(?:jpe?g|png|webp)$/i.test(file)) return '';
-        const title=String(p.titre||'').trim();
-        return '<figure class="photo-item"><img src="photos/'+encodeURIComponent(file)+'" alt="'+esc(title||'Photo d’A’Cha Lou')+'" loading="lazy">'+(title?'<figcaption>'+esc(title)+'</figcaption>':'')+'</figure>';
-      }).join('');
-      if(!host.innerHTML.trim()) throw new Error('Aucune photo valide');
-    })
-    .catch(()=>{
-      host.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';
-    });
+  const validUrl=value=>{try{const u=new URL(String(value||''));return /^https?:$/.test(u.protocol)?u.href:''}catch{return ''}};
+  const fmtDate=value=>{if(!/^\d{4}-\d{2}-\d{2}/.test(String(value||'')))return '';const [y,m,d]=String(value).slice(0,10).split('-');return new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric'}).format(new Date(Number(y),Number(m)-1,Number(d)))};
+  const closeModal=()=>{modal.hidden=true;document.body.style.overflow='';open.focus()};
+  let photos=[],current=0;
+  const meta=p=>{const date=fmtDate(p.datePhoto),title=String(p.titre||'').trim(),credit=String(p.credit||'').trim(),link=validUrl(p.lien),label=String(p.texteLien||'').trim()||'Voir le lien';return {date,title,credit,link,label}};
+  const show=i=>{if(!photos.length)return;current=(i+photos.length)%photos.length;const p=photos[current],m=meta(p);lightImg.src='photos/'+encodeURIComponent(p.fichier);lightImg.alt=m.title||'Photo d’A’Cha Lou';info.innerHTML='<span class=\"photo-lightbox-counter\">'+(current+1)+' / '+photos.length+'</span>'+[m.date,m.title,m.credit].filter(Boolean).map(esc).join(' · ')+(m.link?' · <a href=\"'+esc(m.link)+'\" target=\"_blank\" rel=\"noopener noreferrer\">'+esc(m.label)+'</a>':'');lightbox.hidden=false};
+  fetch('photos/photos.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error();return r.json()}).then(list=>{
+    photos=(Array.isArray(list)?list:[]).filter(p=>p?.visible!==false&&/^[A-Za-z0-9._-]+\.(?:jpe?g|png|webp)$/i.test(String(p?.fichier||''))).sort((a,b)=>String(b.datePhoto||b.ajouteLe||'').localeCompare(String(a.datePhoto||a.ajouteLe||'')));
+    if(!photos.length){featured.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';grid.innerHTML='<div class="placeholder"><strong>Album en préparation.</strong></div>';return}
+    const main=photos.find(p=>p.principale)||photos[0], mainFile=encodeURIComponent(main.fichier), mm=meta(main);
+    featured.innerHTML='<figure><img src="photos/'+mainFile+'" alt="'+esc(mm.title||'Photo d’A’Cha Lou')+'">'+((mm.date||mm.title||mm.credit||mm.link)?'<figcaption>'+[mm.date,mm.title,mm.credit].filter(Boolean).map(esc).join(' · ')+(mm.link?' · <a href="'+esc(mm.link)+'" target="_blank" rel="noopener noreferrer">'+esc(mm.label)+'</a>':'')+'</figcaption>':'')+'</figure>';
+    let lastYear='';grid.innerHTML=photos.map((p,i)=>{const file=encodeURIComponent(p.fichier),m=meta(p),year=String(p.datePhoto||p.ajouteLe||'').slice(0,4),head=year&&year!==lastYear?'<h3 class="album-year">'+esc(year)+'</h3>':'';if(year)lastYear=year;return head+'<figure class="album-photo"><button type="button" data-photo-index="'+i+'"><img src="photos/'+file+'" alt="'+esc(m.title||'Photo d’A’Cha Lou')+'" loading="lazy"></button>'+((m.date||m.title||m.credit||m.link)?'<figcaption class="album-meta">'+(m.date?'<span class="album-date">'+esc(m.date)+'</span>':'')+(m.title?'<span class="album-caption">'+esc(m.title)+'</span>':'')+(m.credit?'<span>'+esc(m.credit)+'</span>':'')+(m.link?'<a href="'+esc(m.link)+'" target="_blank" rel="noopener noreferrer">'+esc(m.label)+'</a>':'')+'</figcaption>':'')+'</figure>'}).join('');
+    grid.querySelectorAll('[data-photo-index]').forEach(btn=>btn.addEventListener('click',()=>show(Number(btn.dataset.photoIndex))));
+  }).catch(()=>{featured.innerHTML='<div class="placeholder"><strong>Les premières photos d’A’Cha Lou arriveront ici.</strong></div>';grid.innerHTML='<div class="placeholder"><strong>Album indisponible.</strong></div>'});
+  open.addEventListener('click',()=>{modal.hidden=false;document.body.style.overflow='hidden';close.focus()}); close.addEventListener('click',closeModal); modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+  lightClose.addEventListener('click',()=>lightbox.hidden=true); prev.addEventListener('click',()=>show(current-1)); next.addEventListener('click',()=>show(current+1)); lightbox.addEventListener('click',e=>{if(e.target===lightbox)lightbox.hidden=true});
+  document.addEventListener('keydown',e=>{if(!lightbox.hidden&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){show(current+(e.key==='ArrowRight'?1:-1));return}if(e.key==='Escape'){if(!lightbox.hidden)lightbox.hidden=true;else if(!modal.hidden)closeModal()}});
 })();
 </script>
 
@@ -2308,8 +2287,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   });
 })();
 </script>
-
-
 
 
 <script>

@@ -1184,6 +1184,16 @@ body.duo-modal-open{overflow:hidden}
 @media(max-width:480px){.photo-album-grid{grid-template-columns:1fr}}
 
 
+/* Vidéos — même architecture et même dimensionnement que Photos / Le duo */
+.video-library-launch.section-sign{appearance:none;-webkit-appearance:none;display:block!important;width:350px!important;max-width:100%!important;height:auto!important;margin:0 0 26px 0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;line-height:0!important;cursor:pointer;overflow:visible!important;transition:transform .2s ease,filter .2s ease}
+.video-library-launch.section-sign:hover,.video-library-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
+.video-library-launch.section-sign>img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;margin:0!important;padding:0!important;border-radius:0!important;object-fit:initial!important;background:transparent!important}
+.video-library-launch.section-sign>span{position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;padding:0 5%;display:flex;align-items:center;justify-content:center;color:var(--ink)!important;font-family:Georgia,serif;font-size:clamp(1.35rem,2.35vw,2rem);font-weight:700;line-height:1!important;text-align:center;white-space:nowrap}
+@media(max-width:760px){.video-library-launch.section-sign{width:min(86vw,330px)!important;max-width:100%!important;margin:0 0 22px 0!important}.video-library-launch.section-sign>span{padding:0 4%;font-size:clamp(1.1rem,5vw,1.65rem)}}
+.video-featured{margin-top:24px;max-width:760px}.video-featured .video-item{margin:0}
+.video-library-modal{position:fixed;inset:0;z-index:1000;background:rgba(12,18,22,.86);padding:28px;overflow:auto}.video-library-modal[hidden]{display:none!important}.video-library-panel{position:relative;width:min(1100px,100%);margin:auto;background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0007}.video-library-close{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:var(--blue);color:#fff;font-size:1.5rem;cursor:pointer}.video-library-panel h2{padding-right:56px}.video-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;clear:both}
+@media(max-width:760px){.video-library-modal{padding:12px}.video-library-panel{padding:18px}.video-library-grid{grid-template-columns:1fr}}
+
 </style>
 
 
@@ -1236,7 +1246,8 @@ body.duo-modal-open{overflow:hidden}
 
 <section class="intro reveal" id="musique"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Musique</span></h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
 
-<section class="reveal" id="videos"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Vidéos</span></h2><div id="videoGallery" class="video-gallery"><div class="placeholder"><strong>Chargement des vidéos…</strong></div></div></div></section>
+<section class="reveal" id="videos"><div class="wrap"><button type="button" class="video-library-launch section-sign" id="videoLibraryOpen" aria-haspopup="dialog" aria-controls="videoLibraryModal" aria-label="Ouvrir la vidéothèque"><img src="animation-videos.gif" alt=""><span>Vidéos</span></button><div id="videoFeatured" class="video-featured"><div class="placeholder"><strong>Chargement de la vidéo…</strong></div></div></div></section>
+<div class="video-library-modal" id="videoLibraryModal" role="dialog" aria-modal="true" aria-labelledby="videoLibraryTitle" hidden><div class="video-library-panel"><button type="button" class="video-library-close" id="videoLibraryClose" aria-label="Fermer">×</button><h2 id="videoLibraryTitle">Vidéothèque</h2><div id="videoLibraryGrid" class="video-library-grid"></div></div></div>
 
 <section class="intro reveal" id="photos"><div class="wrap"><button type="button" class="photo-album-launch section-sign" id="photoAlbumOpen" aria-haspopup="dialog" aria-controls="photoAlbumModal" aria-label="Ouvrir l’album photos"><img src="animation-photos.gif" alt=""><span>Photos</span></button><div id="photoFeatured" class="photo-featured"><div class="placeholder"><strong>Chargement de la photo…</strong></div></div></div></section>
 <div class="photo-album-modal" id="photoAlbumModal" role="dialog" aria-modal="true" aria-labelledby="photoAlbumTitle" hidden><div class="photo-album-panel"><button type="button" class="photo-album-close" id="photoAlbumClose" aria-label="Fermer">×</button><h2 id="photoAlbumTitle">Album photos</h2><div id="photoAlbumGrid" class="photo-album-grid"></div></div></div>
@@ -2262,27 +2273,15 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
 <script>
 (function(){
-  const host=document.getElementById('videoGallery');
-  if(!host) return;
+  const featured=document.getElementById('videoFeatured'),grid=document.getElementById('videoLibraryGrid'),modal=document.getElementById('videoLibraryModal'),open=document.getElementById('videoLibraryOpen'),close=document.getElementById('videoLibraryClose');
+  if(!featured||!grid||!modal||!open||!close) return;
   const esc=value=>{const d=document.createElement('div');d.textContent=String(value||'');return d.innerHTML};
-  fetch('videos/videos.json?v='+Date.now(),{cache:'no-store'})
-    .then(r=>{if(!r.ok) throw new Error('Vidéos indisponibles');return r.json()})
-    .then(videos=>{
-      if(!Array.isArray(videos)||!videos.length){
-        host.innerHTML='<div class="placeholder"><strong>Les premières vidéos d’A’Cha Lou arriveront ici.</strong></div>';
-        return;
-      }
-      host.innerHTML=videos.map(v=>{
-        const id=String(v.youtubeId||'').trim();
-        if(!/^[A-Za-z0-9_-]{11}$/.test(id)) return '';
-        const title=String(v.titre||'Vidéo A’Cha Lou').trim();
-        return '<figure class="video-item"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'" title="'+esc(title)+'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><figcaption>'+esc(title)+'</figcaption></figure>';
-      }).join('');
-      if(!host.innerHTML.trim()) throw new Error('Aucune vidéo valide');
-    })
-    .catch(()=>{
-      host.innerHTML='<div class="placeholder"><strong>Les premières vidéos d’A’Cha Lou arriveront ici.</strong></div>';
-    });
+  const valid=v=>/^[A-Za-z0-9_-]{11}$/.test(String(v.youtubeId||'').trim());
+  const card=v=>{const id=String(v.youtubeId||'').trim(),title=String(v.titre||'Vidéo A’Cha Lou').trim();return '<figure class="video-item"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'" title="'+esc(title)+'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><figcaption>'+esc(title)+'</figcaption></figure>'};
+  const openModal=()=>{modal.hidden=false;document.body.style.overflow='hidden';close.focus()};
+  const closeModal=()=>{modal.hidden=true;document.body.style.overflow='';open.focus()};
+  open.addEventListener('click',openModal);close.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
+  fetch('videos/videos.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error();return r.json()}).then(videos=>{const list=Array.isArray(videos)?videos.filter(valid):[];if(!list.length)throw new Error();const main=list.find(v=>v.principale===true)||list[0];featured.innerHTML=card(main);grid.innerHTML=list.map(card).join('')}).catch(()=>{featured.innerHTML='<div class="placeholder"><strong>Les premières vidéos d’A’Cha Lou arriveront ici.</strong></div>';grid.innerHTML='<div class="placeholder"><strong>Aucune vidéo disponible pour le moment.</strong></div>'});
 })();
 </script>
 

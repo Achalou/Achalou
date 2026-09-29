@@ -1183,6 +1183,68 @@ body.duo-modal-open{overflow:hidden}
 @media(max-width:760px){.photo-album-modal{padding:12px}.photo-album-panel{padding:18px}.photo-album-grid{grid-template-columns:1fr 1fr;gap:12px}}
 @media(max-width:480px){.photo-album-grid{grid-template-columns:1fr}}
 
+
+/* Photos — géométrie imposée par le même panneau que les autres rubriques.
+   Le GIF ne dimensionne plus le panneau : il est seulement découpé dans la zone bleue. */
+#photoAlbumOpen.photo-album-launch.section-sign{
+  position:relative!important;
+  display:block!important;
+  width:350px!important;
+  max-width:100%!important;
+  height:auto!important;
+  margin:0 0 26px 0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+  line-height:0!important;
+}
+#photoAlbumOpen .photo-sign-base{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+}
+#photoAlbumOpen > span:not(.photo-sign-animation){
+  position:absolute!important;
+  left:0!important;top:0!important;
+  width:69.33%!important;height:100%!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:0 5%!important;box-sizing:border-box!important;
+  color:var(--ink)!important;font-family:Georgia,serif!important;
+  font-size:clamp(1.35rem,2.35vw,2rem)!important;font-weight:700!important;
+  line-height:1!important;text-align:center!important;white-space:nowrap!important;
+  z-index:2!important;
+}
+#photoAlbumOpen .photo-sign-animation{
+  position:absolute!important;
+  left:69.33%!important;right:0!important;top:0!important;bottom:0!important;
+  display:block!important;
+  overflow:hidden!important;
+  border-radius:0!important;
+  z-index:3!important;
+  pointer-events:none!important;
+}
+#photoAlbumOpen .photo-sign-animation img{
+  position:absolute!important;
+  left:auto!important;right:0!important;top:0!important;
+  width:326.04%!important;
+  max-width:none!important;
+  height:100%!important;
+  object-fit:fill!important;
+  margin:0!important;padding:0!important;
+}
+@media(max-width:760px){
+  #photoAlbumOpen.photo-album-launch.section-sign{
+    width:min(86vw,330px)!important;
+    max-width:100%!important;
+    margin:0 0 22px 0!important;
+  }
+}
+
 </style>
 
 
@@ -1237,7 +1299,7 @@ body.duo-modal-open{overflow:hidden}
 
 <section class="reveal" id="videos"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Vidéos</span></h2><div id="videoGallery" class="video-gallery"><div class="placeholder"><strong>Chargement des vidéos…</strong></div></div></div></section>
 
-<section class="reveal" id="photos"><div class="wrap"><button type="button" class="photo-album-launch section-sign" id="photoAlbumOpen" aria-haspopup="dialog" aria-controls="photoAlbumModal" aria-label="Ouvrir l’album photos"><img src="animation-photos.gif" alt=""><span>Photos</span></button><div id="photoFeatured" class="photo-featured"><div class="placeholder"><strong>Chargement de la photo…</strong></div></div></div></section>
+<section class="reveal" id="photos"><div class="wrap"><button type="button" class="photo-album-launch section-sign" id="photoAlbumOpen" aria-haspopup="dialog" aria-controls="photoAlbumModal" aria-label="Ouvrir l’album photos"><img class="photo-sign-base" src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Photos</span><span class="photo-sign-animation" aria-hidden="true"><img src="gif-photos.gif" alt=""></span></button><div id="photoFeatured" class="photo-featured"><div class="placeholder"><strong>Chargement de la photo…</strong></div></div></div></section>
 <div class="photo-album-modal" id="photoAlbumModal" role="dialog" aria-modal="true" aria-labelledby="photoAlbumTitle" hidden><div class="photo-album-panel"><button type="button" class="photo-album-close" id="photoAlbumClose" aria-label="Fermer">×</button><h2 id="photoAlbumTitle">Album photos</h2><div id="photoAlbumGrid" class="photo-album-grid"></div></div></div>
 <div class="photo-lightbox" id="photoLightbox" hidden><button type="button" class="photo-lightbox-close" id="photoLightboxClose" aria-label="Fermer la photo">×</button><button type="button" class="photo-lightbox-prev" id="photoLightboxPrev" aria-label="Photo précédente">‹</button><img id="photoLightboxImage" alt=""><button type="button" class="photo-lightbox-next" id="photoLightboxNext" aria-label="Photo suivante">›</button><div class="photo-lightbox-info" id="photoLightboxInfo"></div></div>
 

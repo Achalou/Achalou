@@ -9,17 +9,18 @@ window.ACHALOU_CONCERTS = [
     "heure": "20:00",
     "info": "festival",
     "url": "",
-    "etat": "normal",
-    "complet": false,
-    "raisonEtat": "",
-    "nouvelleDate": "",
+    "etat": "reporte",
+    "complet": true,
+    "raisonEtat": "il pleut comme vache qui pisse",
+    "nouvelleDate": "2026-10-11",
     "nouvelleHeure": "",
     "nouveauLieu": "",
     "nouvelleVille": "",
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": ""
   },
   {
     "date": "2026-12-12",

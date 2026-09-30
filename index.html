@@ -1285,6 +1285,46 @@ body.concert-modal-open{overflow:hidden}
   }
 }
 
+
+/* Alignement Concerts sur Musique — horizontal uniquement */
+.concert-launch.section-sign{
+  margin-left:5px!important;
+}
+@media(max-width:760px){
+  .concert-launch.section-sign{
+    margin-left:5px!important;
+  }
+}
+
+
+/* Espacement uniforme entre les titres de rubrique et leur contenu */
+#concerts .section-sign,
+#musique .section-sign,
+#videos .section-sign,
+#photos .section-sign{
+  margin-bottom:18px!important;
+}
+#concerts .section-sign + *,
+#musique .section-sign + *,
+#videos .section-sign + *,
+#photos .section-sign + *{
+  margin-top:0!important;
+}
+@media(max-width:760px){
+  #concerts .section-sign,
+  #musique .section-sign,
+  #videos .section-sign,
+  #photos .section-sign{
+    margin-bottom:18px!important;
+  }
+  #concerts .section-sign + *,
+  #musique .section-sign + *,
+  #videos .section-sign + *,
+  #photos .section-sign + *{
+    margin-top:0!important;
+  }
+}
+
 </style>
 
 

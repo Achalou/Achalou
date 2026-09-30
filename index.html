@@ -1631,8 +1631,8 @@ body.concert-modal-open{overflow:hidden}
   }
 }
 
-/* VERROU FINAL — marges haut/bas strictement identiques.
-   Ces règles sont volontairement les dernières de la feuille. */
+/* GEOMETRIE FINALE — marges haut/bas strictement identiques.
+   Duo, Concerts, Musique, Videos, Photos et Contact partagent le même rythme vertical. */
 #duo,
 #concerts,
 #musique,
@@ -1663,66 +1663,7 @@ body.concert-modal-open{overflow:hidden}
 
 
 /* ============================================================
-   VERROU FINAL — PANNEAUX PNG DE MEME DIMENSION
-   Duo conserve volontairement ses dimensions propres.
-   ============================================================ */
-#concerts .concert-launch.section-sign,
-#musique .section-sign,
-#videos .video-library-launch.section-sign,
-#photos .photo-album-launch.section-sign,
-#contact .section-sign{
-  width:350px!important;
-  max-width:100%!important;
-  height:auto!important;
-  box-sizing:border-box!important;
-}
-
-#concerts .concert-launch.section-sign > img,
-#musique .section-sign > img,
-#videos .video-library-launch.section-sign > img,
-#photos .photo-album-launch.section-sign > img,
-#contact .section-sign > img{
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
-  max-width:100%!important;
-}
-
-/* Même zone et même typographie de libellé sur le PNG commun. */
-#concerts .concert-launch.section-sign > span,
-#musique .section-sign > span,
-#videos .video-library-launch.section-sign > span,
-#photos .photo-album-launch.section-sign > span,
-#contact .section-sign > span{
-  width:69.33%!important;
-  height:100%!important;
-  padding:0 5%!important;
-  font-size:clamp(1.35rem,2.35vw,2rem)!important;
-}
-
-@media(max-width:760px){
-  #concerts .concert-launch.section-sign,
-  #musique .section-sign,
-  #videos .video-library-launch.section-sign,
-  #photos .photo-album-launch.section-sign,
-  #contact .section-sign{
-    width:min(86vw,330px)!important;
-    max-width:100%!important;
-  }
-
-  #concerts .concert-launch.section-sign > span,
-  #musique .section-sign > span,
-  #videos .video-library-launch.section-sign > span,
-  #photos .photo-album-launch.section-sign > span,
-  #contact .section-sign > span{
-    padding:0 4%!important;
-    font-size:clamp(1.1rem,5vw,1.65rem)!important;
-  }
-}
-
-
-/* ============================================================
-   VERROU FINAL — DIMENSIONS REELLES IDENTIQUES DES 5 PANNEAUX
+   COMPOSANT FINAL — DIMENSIONS IDENTIQUES DES 5 PANNEAUX
    Concerts / Musique / Videos / Photos / Contact.
    Neutralise aussi les styles natifs differents de button et h2.
    Duo reste volontairement hors de cette regle.

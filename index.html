@@ -1318,6 +1318,217 @@ body.concert-modal-open{overflow:hidden}
   }
 }
 
+
+
+/* ============================================================
+   HARMONISATION DES ESPACEMENTS — PAGE PRINCIPALE
+   Une seule échelle pilote désormais les rubriques principales.
+   ============================================================ */
+:root{
+  --acl-section-y:46px;
+  --acl-section-y-mobile:34px;
+  --acl-content-gap:18px;
+}
+
+/* Même respiration verticale pour toutes les rubriques principales. */
+#duo,
+#concerts,
+#musique,
+#videos,
+#photos,
+#contact{
+  padding-top:var(--acl-section-y)!important;
+  padding-bottom:var(--acl-section-y)!important;
+}
+
+/* Même espace autour des panneaux-titres. */
+#duo .section-sign,
+#concerts .section-sign,
+#musique .section-sign,
+#videos .section-sign,
+#photos .section-sign{
+  margin-top:0!important;
+  margin-bottom:var(--acl-content-gap)!important;
+}
+
+/* Les panneaux-titres partent tous du même axe du .wrap.
+   On supprime les anciennes compensations successives de Concerts. */
+.concert-launch.section-sign,
+.duo-launch.section-sign,
+.video-library-launch.section-sign,
+.photo-album-launch.section-sign,
+#musique .section-sign{
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+/* Les listes/grilles gèrent elles-mêmes l'espace entre leurs fenêtres. */
+.music-gallery{
+  gap:var(--acl-content-gap)!important;
+}
+.music-item{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+
+/* Même départ du contenu sous les panneaux-titres. */
+.concert-main-next,
+.video-featured,
+.photo-featured{
+  margin-top:0!important;
+}
+
+/* Contact : même intervalle entre la rangée d'actions et les formulaires. */
+#contact .organizer-form,
+#contact #visitorMessageBox{
+  margin-top:var(--acl-content-gap)!important;
+  margin-bottom:0!important;
+}
+
+@media(max-width:760px){
+  #duo,
+  #concerts,
+  #musique,
+  #videos,
+  #photos,
+  #contact{
+    padding-top:var(--acl-section-y-mobile)!important;
+    padding-bottom:var(--acl-section-y-mobile)!important;
+  }
+
+  #duo .section-sign,
+  #concerts .section-sign,
+  #musique .section-sign,
+  #videos .section-sign,
+  #photos .section-sign{
+    margin-top:0!important;
+    margin-bottom:var(--acl-content-gap)!important;
+  }
+
+  .concert-launch.section-sign,
+  .duo-launch.section-sign,
+  .video-library-launch.section-sign,
+  .photo-album-launch.section-sign,
+  #musique .section-sign{
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+}
+
+
+/* ============================================================
+   REFACTORISATION VISUELLE — COMPOSANTS COMMUNS
+   Cette couche remplace les répétitions sans modifier le design.
+   ============================================================ */
+:root{
+  --acl-modal-pad:18px;
+  --acl-modal-radius:24px;
+  --acl-modal-shadow:0 24px 80px #0007;
+  --acl-modal-backdrop:rgba(12,18,22,.86);
+  --acl-close-size:44px;
+}
+
+/* Socle commun des panneaux-titres interactifs. Les largeurs propres à
+   chaque animation restent définies par leurs règles historiques. */
+.duo-launch.section-sign,
+.concert-launch.section-sign,
+.video-library-launch.section-sign,
+.photo-album-launch.section-sign{
+  appearance:none;
+  -webkit-appearance:none;
+  display:block!important;
+  max-width:100%!important;
+  height:auto!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  line-height:0!important;
+  cursor:pointer;
+  overflow:visible!important;
+  transition:transform .2s ease,filter .2s ease;
+}
+.duo-launch.section-sign:hover,
+.duo-launch.section-sign:focus-visible,
+.concert-launch.section-sign:hover,
+.concert-launch.section-sign:focus-visible,
+.video-library-launch.section-sign:hover,
+.video-library-launch.section-sign:focus-visible,
+.photo-album-launch.section-sign:hover,
+.photo-album-launch.section-sign:focus-visible{
+  transform:translateY(-2px);
+  filter:drop-shadow(0 8px 12px #0002);
+}
+.duo-launch.section-sign>img,
+.concert-launch.section-sign>img,
+.video-library-launch.section-sign>img,
+.photo-album-launch.section-sign>img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+
+/* Socle commun des grandes fenêtres. Les différences de largeur et de
+   position du bouton Fermer restent propres à chaque contenu. */
+.video-library-modal,
+.photo-album-modal,
+.concert-modal{
+  position:fixed;
+  inset:0;
+  padding:var(--acl-modal-pad);
+  background:var(--acl-modal-backdrop);
+}
+.video-library-panel,
+.photo-album-panel,
+.concert-modal-panel,
+.duo-dialog{
+  position:relative;
+  max-width:100%;
+  background:var(--paper);
+  box-shadow:var(--acl-modal-shadow);
+}
+.video-library-panel,
+.photo-album-panel{
+  border-radius:var(--acl-modal-radius);
+}
+.video-library-close,
+.photo-album-close,
+.concert-modal-close,
+.duo-close{
+  width:var(--acl-close-size);
+  height:var(--acl-close-size);
+  border:0;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* Focus clavier visible et cohérent sur les commandes principales. */
+.section-sign:focus-visible,
+.video-library-close:focus-visible,
+.photo-album-close:focus-visible,
+.concert-modal-close:focus-visible,
+.duo-close:focus-visible,
+.photo-lightbox-close:focus-visible,
+.photo-lightbox-prev:focus-visible,
+.photo-lightbox-next:focus-visible{
+  outline:3px solid var(--blue);
+  outline-offset:4px;
+}
+
+@media(max-width:760px){
+  .video-library-modal,
+  .photo-album-modal,
+  .concert-modal{
+    padding:var(--acl-modal-pad);
+  }
+}
+
 </style>
 
 

@@ -1297,31 +1297,13 @@ body.concert-modal-open{overflow:hidden}
 }
 
 
-/* Espacement uniforme entre les titres de rubrique et leur contenu */
-#concerts .section-sign,
-#musique .section-sign,
-#videos .section-sign,
-#photos .section-sign{
-  margin-bottom:18px!important;
-}
-#concerts .section-sign + *,
-#musique .section-sign + *,
-#videos .section-sign + *,
-#photos .section-sign + *{
-  margin-top:0!important;
+/* Concerts — même marge gauche que Musique */
+.concert-launch.section-sign{
+  margin-left:0!important;
 }
 @media(max-width:760px){
-  #concerts .section-sign,
-  #musique .section-sign,
-  #videos .section-sign,
-  #photos .section-sign{
-    margin-bottom:18px!important;
-  }
-  #concerts .section-sign + *,
-  #musique .section-sign + *,
-  #videos .section-sign + *,
-  #photos .section-sign + *{
-    margin-top:0!important;
+  .concert-launch.section-sign{
+    margin-left:0!important;
   }
 }
 

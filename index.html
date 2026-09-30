@@ -1195,19 +1195,32 @@ body.duo-modal-open{overflow:hidden}
 @media(max-width:760px){.video-library-modal{padding:12px}.video-library-panel{padding:18px}.video-library-grid{grid-template-columns:1fr}}
 
 
-/* Concerts — prochaine date + bouton calendrier + fenêtres compactes */
-.concert-overview{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:18px;align-items:stretch;margin:0 0 24px}
-.calendar-launch{appearance:none;-webkit-appearance:none;width:170px;min-height:118px;border:1px solid #111;border-radius:10px;background:#fff;box-shadow:0 8px 22px #0000000d;cursor:pointer;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:var(--ink);transition:transform .2s ease,box-shadow .2s ease}
-.calendar-launch:hover,.calendar-launch:focus-visible{transform:translateY(-2px);box-shadow:0 11px 26px #0002}.calendar-launch-icon{font-size:2rem;line-height:1;color:var(--blue)}.calendar-launch strong{font:700 1.05rem/1.1 Georgia,serif}.calendar-launch small{font-size:.72rem;opacity:.65}
-.concert-calendar{background:#fff;border:1px solid #00000010;border-radius:22px;padding:18px;box-shadow:0 8px 24px #0000000a}.concert-calendar-title{margin:0 0 12px;font:700 1.15rem/1.2 Georgia,serif;color:var(--blue)}
-.concert-months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.concert-month h3{margin:0 0 7px;text-align:center;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--blue)}
-.mini-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;font-size:.68rem}.mini-cal .dow{font-weight:800;opacity:.55}.mini-cal .day{position:relative;min-height:25px;display:grid;place-items:center;border-radius:50%}.mini-cal .day.has-concert{font-weight:950;color:#fff;background:var(--blue);cursor:pointer}.mini-cal .day.has-concert.multi:after{content:attr(data-count);position:absolute;right:-2px;top:-4px;min-width:14px;height:14px;padding:0 2px;border-radius:9px;background:var(--ink);color:#fff;font:800 9px/14px system-ui}.concert-calendar-note{margin:10px 0 0;font-size:.8rem;opacity:.62;text-align:center}
-.calendar-modal[hidden]{display:none!important}.calendar-modal{position:fixed;inset:0;z-index:1250;display:grid;place-items:center;padding:18px;background:#172027b8;backdrop-filter:blur(5px)}.calendar-modal-panel{position:relative;width:min(760px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--paper);border-radius:26px;padding:clamp(20px,4vw,34px);box-shadow:0 24px 80px #0006}.calendar-modal-close{position:absolute;right:15px;top:13px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;font-size:2rem;cursor:pointer}.calendar-modal-panel>h2{margin:0 55px 18px 0;color:var(--blue)}
-.concert-launch.section-sign{appearance:none;-webkit-appearance:none;border:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important;cursor:pointer;text-align:inherit;transition:transform .2s ease,filter .2s ease}.concert-launch.section-sign:hover,.concert-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
-.concert-modal[hidden]{display:none!important}.concert-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:18px;background:#172027b8;backdrop-filter:blur(5px)}.concert-modal-panel{position:relative;width:min(860px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--paper);border-radius:26px;padding:clamp(20px,4vw,34px);box-shadow:0 24px 80px #0006}.concert-modal-close{position:absolute;right:15px;top:13px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;font-size:2rem;cursor:pointer}.concert-modal-panel>h2{margin:0 55px 18px 0;color:var(--blue)}
-.concert-list-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 7px;font-weight:900;color:var(--blue)}.concert-list{display:grid;border-top:1px solid #0001}.concert-line{border-bottom:1px solid #0001}.concert-line summary{list-style:none;display:grid;grid-template-columns:100px 70px 1fr auto;gap:10px;align-items:center;padding:10px 4px;cursor:pointer}.concert-line summary::-webkit-details-marker{display:none}.concert-line-date{font-weight:950;color:var(--blue);text-transform:uppercase;font-size:.83rem}.concert-line-time{font-weight:800}.concert-line-place{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.concert-line-state{font-size:.72rem;font-weight:900;text-transform:uppercase}.concert-line-detail{padding:0 4px 13px 180px;font-size:.92rem}.concert-year{border-top:1px solid #0001}.concert-year>summary{list-style:none;cursor:pointer;padding:11px 4px;font-weight:900;display:flex;justify-content:space-between}.concert-year>summary::-webkit-details-marker{display:none}
-@media(max-width:900px){.concert-overview{grid-template-columns:minmax(0,1fr) 145px}.calendar-launch{width:145px}.concert-months{overflow-x:auto;grid-template-columns:repeat(3,190px)}}@media(max-width:620px){.concert-overview{grid-template-columns:minmax(0,1fr) 112px;gap:10px}.calendar-launch{width:112px;min-height:100px;padding:8px}.calendar-launch-icon{font-size:1.55rem}.calendar-launch strong{font-size:.88rem}.calendar-launch small{font-size:.62rem}.concert-calendar{padding:14px}.concert-months{grid-template-columns:repeat(3,155px)}.concert-line summary{grid-template-columns:76px 1fr auto;gap:6px}.concert-line-time{grid-column:1}.concert-line-place{grid-column:2}.concert-line-state{grid-column:3;grid-row:1/3}.concert-line-detail{padding:0 4px 12px 82px}.concert-modal-panel,.calendar-modal-panel{padding:20px 15px}}
-body.concert-modal-open,body.calendar-modal-open{overflow:hidden}
+/* Concerts — prochaine date sur la page + calendrier repliable dans la fenêtre */
+.concert-main-next{max-width:760px;margin-top:18px}
+.concert-main-next .cards{grid-template-columns:1fr}
+.concert-launch.section-sign{appearance:none;-webkit-appearance:none;border:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important;cursor:pointer;text-align:inherit;transition:transform .2s ease,filter .2s ease}
+.concert-launch.section-sign:hover,.concert-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
+.concert-modal[hidden]{display:none!important}.concert-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:18px;background:#172027b8;backdrop-filter:blur(5px)}
+.concert-modal-panel{position:relative;width:min(900px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--paper);border-radius:26px;padding:clamp(20px,4vw,34px);box-shadow:0 24px 80px #0006}
+.concert-modal-close{position:absolute;right:15px;top:13px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;font-size:2rem;cursor:pointer}.concert-modal-panel>h2{margin:0 55px 18px 0;color:var(--blue)}
+.calendar-fold{margin:2px 0 22px;border:1px solid #0002;border-radius:18px;background:#fff;overflow:hidden;box-shadow:0 7px 22px #0000000a}
+.calendar-fold>summary{list-style:none;cursor:pointer;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:15px;font-weight:900;color:var(--blue)}
+.calendar-fold>summary::-webkit-details-marker{display:none}.calendar-fold>summary::after{content:"›";font-size:1.7rem;line-height:1;transition:transform .2s ease}.calendar-fold[open]>summary::after{transform:rotate(90deg)}
+.calendar-fold-sub{display:block;margin-top:2px;color:var(--ink);font-size:.78rem;font-weight:600;opacity:.58}
+.concert-calendar{padding:4px 18px 20px}.concert-months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.concert-month{padding:12px 10px 14px;border-radius:16px;background:#faf8f1;border:1px solid #0000000b}
+.concert-month h3{margin:0 0 12px;text-align:center;font:800 .9rem/1.2 system-ui;text-transform:capitalize;color:var(--blue)}
+.mini-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:.72rem}.mini-cal .dow{height:24px;display:grid;place-items:center;font-size:.64rem;font-weight:900;opacity:.45}
+.mini-cal .day{position:relative;aspect-ratio:1;min-width:0;display:grid;place-items:center;border-radius:50%;font-weight:650}
+.mini-cal .day.has-concert{font-weight:950;color:#fff;background:var(--blue);cursor:pointer;box-shadow:0 3px 9px #006a9a35;outline:2px solid #fff;outline-offset:-3px}
+.mini-cal .day.has-concert:hover{transform:scale(1.08)}.mini-cal .day.has-concert.multi:after{content:attr(data-count);position:absolute;right:-3px;top:-4px;min-width:15px;height:15px;padding:0 2px;border-radius:9px;background:var(--ink);color:#fff;font:800 9px/15px system-ui}
+.concert-calendar-note{margin:13px 0 0;font-size:.78rem;opacity:.6;text-align:center}
+.concert-list-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 7px;font-weight:900;color:var(--blue)}.concert-list{display:grid;border-top:1px solid #0001}
+.concert-line{border-bottom:1px solid #0001}.concert-line summary{list-style:none;display:grid;grid-template-columns:100px 70px 1fr auto;gap:10px;align-items:center;padding:10px 4px;cursor:pointer}.concert-line summary::-webkit-details-marker{display:none}
+.concert-line-date{font-weight:950;color:var(--blue);text-transform:uppercase;font-size:.83rem}.concert-line-time{font-weight:800}.concert-line-place{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.concert-line-state{font-size:.72rem;font-weight:900;text-transform:uppercase}.concert-line-detail{padding:0 4px 13px 180px;font-size:.92rem}
+.concert-year{border-top:1px solid #0001}.concert-year>summary{list-style:none;cursor:pointer;padding:13px 4px;font-weight:900;display:flex;justify-content:space-between}.concert-year>summary::-webkit-details-marker{display:none}.concert-year>summary::after{content:"›";margin-left:10px}.concert-year[open]>summary::after{transform:rotate(90deg)}
+@media(max-width:720px){.concert-months{grid-template-columns:1fr;gap:10px}.concert-month{max-width:310px;width:100%;margin:auto}.concert-calendar{padding:2px 12px 16px}.concert-line summary{grid-template-columns:76px 1fr auto;gap:6px}.concert-line-time{grid-column:1}.concert-line-place{grid-column:2}.concert-line-state{grid-column:3;grid-row:1/3}.concert-line-detail{padding:0 4px 12px 82px}.concert-modal-panel{padding:20px 15px}}
+body.concert-modal-open{overflow:hidden}
 
 </style>
 
@@ -1257,9 +1270,8 @@ body.concert-modal-open,body.calendar-modal-open{overflow:hidden}
   </div>
 </div>
 
-<section class="reveal" id="concerts"><div class="wrap"><button type="button" class="concert-launch section-sign" id="concertLibraryOpen" aria-haspopup="dialog" aria-controls="concertLibraryModal" aria-label="Ouvrir les concerts"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Concerts</span></button></div></section>
+<section class="reveal" id="concerts"><div class="wrap"><button type="button" class="concert-launch section-sign" id="concertLibraryOpen" aria-haspopup="dialog" aria-controls="concertLibraryModal" aria-label="Ouvrir les concerts"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Concerts</span></button><div id="concertMainNext" class="concert-main-next"></div></div></section>
 <div class="concert-modal" id="concertLibraryModal" role="dialog" aria-modal="true" aria-labelledby="concertLibraryTitle" hidden><div class="concert-modal-panel"><button type="button" class="concert-modal-close" id="concertLibraryClose" aria-label="Fermer">×</button><h2 id="concertLibraryTitle">Concerts</h2><div id="concertLibraryContent"></div></div></div>
-<div class="calendar-modal" id="concertCalendarModal" role="dialog" aria-modal="true" aria-labelledby="concertCalendarModalTitle" hidden><div class="calendar-modal-panel"><button type="button" class="calendar-modal-close" id="concertCalendarClose" aria-label="Fermer">×</button><h2 id="concertCalendarModalTitle">Calendrier des concerts</h2><div id="concertCalendar" class="concert-calendar"></div></div></div>
 
 <section class="intro reveal" id="musique"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Musique</span></h2><div id="musicGallery" class="music-gallery"><div class="placeholder"><strong>Chargement des morceaux…</strong></div></div></div></section>
 
@@ -1484,22 +1496,17 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   const hasGazette=past.some(c=>c.date===gazette.date && String(c.lieu).toLowerCase().includes('gazette'));
   const archives=hasGazette ? past : [...past,gazette].map(c=>{const times=concertTimes(c);return times?{...c,...times}:c}).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 
-  const heroPanelForCalendar=document.getElementById('heroPanel');
-  const calendar=document.getElementById('concertCalendar');
-  let calendarLaunch=document.getElementById('concertCalendarOpen');
-  if(heroPanelForCalendar && !calendarLaunch){
-    const overview=document.createElement('div'); overview.className='concert-overview';
-    heroPanelForCalendar.parentNode.insertBefore(overview,heroPanelForCalendar);
-    overview.appendChild(heroPanelForCalendar);
-    calendarLaunch=document.createElement('button');calendarLaunch.type='button';calendarLaunch.id='concertCalendarOpen';calendarLaunch.className='calendar-launch';
-    calendarLaunch.setAttribute('aria-haspopup','dialog');calendarLaunch.setAttribute('aria-controls','concertCalendarModal');
-    calendarLaunch.innerHTML='<span class="calendar-launch-icon" aria-hidden="true">▦</span><strong>Calendrier</strong><small>3 mois</small>';
-    overview.appendChild(calendarLaunch);
+  const mainNext=document.getElementById('concertMainNext');
+  if(mainNext){
+    mainNext.innerHTML=next
+      ? '<div class="cards">'+concertCard(next,'Prochaine date')+'</div>'
+      : '<div class="cards"><article class="card"><div class="date">Prochaine date</div><h3>Bientôt ici</h3><p>Les nouvelles dates seront publiées ici dès leur confirmation.</p></article></div>';
   }
+  let calendar=null;
   function dateKeyLocal(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function effectiveDate(c){return (String(c.etat||'normal')==='reporte'&&c.nouvelleDate)?c.nouvelleDate:c.date}
   function renderCalendar(){
-    if(!calendar)return;
+    calendar=document.getElementById('concertCalendar'); if(!calendar)return;
     const base=new Date(now.getFullYear(),now.getMonth(),1), days=['L','M','M','J','V','S','D'];
     const counts=new Map(); upcoming.forEach(c=>{const k=effectiveDate(c);counts.set(k,(counts.get(k)||0)+1)});
     let html='<h3 class="concert-calendar-title">Les 3 prochains mois</h3><div class="concert-months">';
@@ -1511,8 +1518,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     }
     calendar.innerHTML=html+'</div><p class="concert-calendar-note">● date avec concert</p>';
   }
-  renderCalendar();
-
   function compactLine(c){
     const d=effectiveDate(c), dt=new Date(d+'T12:00:00'), short=new Intl.DateTimeFormat('fr-FR',{day:'2-digit',month:'short'}).format(dt), st=stateInfo(c),time=fmtTime(c),rawUrl=String(c.url||'').trim();
     let link='';if(rawUrl){try{const u=new URL(rawUrl);if(u.protocol==='http:'||u.protocol==='https:')link='<p><a href="'+esc(u.href)+'" target="_blank" rel="noopener noreferrer">En savoir plus ↗</a></p>'}catch{}}
@@ -1520,22 +1525,19 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   }
   const lib=document.getElementById('concertLibraryContent');
   if(lib){
-    let html='<div class="concert-list-title"><span>À venir</span><span>'+upcoming.length+'</span></div><div class="concert-list">'+(upcoming.length?upcoming.map(compactLine).join(''):'<p>De nouvelles dates seront annoncées bientôt.</p>')+'</div>';
+    let html='<details class="calendar-fold"><summary><span>Calendrier des 3 prochains mois<span class="calendar-fold-sub">Voir les dates de concerts</span></span></summary><div id="concertCalendar" class="concert-calendar"></div></details>';
+    html+='<div class="concert-list-title"><span>À venir</span><span>'+upcoming.length+'</span></div><div class="concert-list">'+(upcoming.length?upcoming.map(compactLine).join(''):'<p>De nouvelles dates seront annoncées bientôt.</p>')+'</div>';
     const years=new Map();archives.forEach(c=>{const y=String(effectiveDate(c)||'').slice(0,4)||'Sans date';if(!years.has(y))years.set(y,[]);years.get(y).push(c)});
     html+='<div class="concert-list-title"><span>Concerts passés</span><span>'+archives.length+'</span></div>';
-    [...years.entries()].sort((a,b)=>String(b[0]).localeCompare(String(a[0]))).forEach(([y,list],i)=>{html+='<details class="concert-year" '+(i===0?'open':'')+'><summary><span>'+esc(y)+'</span><span>'+list.length+' concert'+(list.length>1?'s':'')+'</span></summary><div class="concert-list">'+list.map(compactLine).join('')+'</div></details>'});
+    [...years.entries()].sort((a,b)=>String(b[0]).localeCompare(String(a[0]))).forEach(([y,list])=>{html+='<details class="concert-year"><summary><span>'+esc(y)+'</span><span>'+list.length+' concert'+(list.length>1?'s':'')+'</span></summary><div class="concert-list">'+list.map(compactLine).join('')+'</div></details>'});
     lib.innerHTML=html;
+    renderCalendar();
   }
   const openConcerts=document.getElementById('concertLibraryOpen'),modalConcerts=document.getElementById('concertLibraryModal'),closeConcerts=document.getElementById('concertLibraryClose');
   function setConcertModal(open,date){if(!modalConcerts)return;modalConcerts.hidden=!open;document.body.classList.toggle('concert-modal-open',open);if(open&&date){const row=modalConcerts.querySelector('[data-concert-date="'+CSS.escape(date)+'"]');if(row){row.open=true;setTimeout(()=>row.scrollIntoView({block:'center'}),0)}}}
   openConcerts?.addEventListener('click',()=>setConcertModal(true)); closeConcerts?.addEventListener('click',()=>setConcertModal(false));
-  modalConcerts?.addEventListener('click',e=>{if(e.target===modalConcerts)setConcertModal(false)});
-  const calendarModal=document.getElementById('concertCalendarModal'),calendarClose=document.getElementById('concertCalendarClose');
-  function setCalendarModal(open){if(!calendarModal)return;calendarModal.hidden=!open;document.body.classList.toggle('calendar-modal-open',open)}
-  calendarLaunch?.addEventListener('click',()=>setCalendarModal(true));calendarClose?.addEventListener('click',()=>setCalendarModal(false));
-  calendarModal?.addEventListener('click',e=>{if(e.target===calendarModal)setCalendarModal(false)});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!calendarModal?.hidden)setCalendarModal(false);else if(!modalConcerts?.hidden)setConcertModal(false)}});
-  calendar?.addEventListener('click',e=>{const day=e.target.closest('[data-concert-date]');if(day){setCalendarModal(false);setConcertModal(true,day.dataset.concertDate)}});
+  modalConcerts?.addEventListener('click',e=>{if(e.target===modalConcerts)setConcertModal(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modalConcerts?.hidden)setConcertModal(false)});
+  lib?.addEventListener('click',e=>{const day=e.target.closest('#concertCalendar [data-concert-date]');if(day){const fold=day.closest('.calendar-fold');if(fold)fold.open=false;setConcertModal(true,day.dataset.concertDate)}});
 
   const title=document.getElementById('heroTitle');
   const oldBox=document.getElementById('heroConcert');

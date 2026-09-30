@@ -1529,6 +1529,137 @@ body.concert-modal-open{overflow:hidden}
   }
 }
 
+
+/* ============================================================
+   GRILLE STRICTE — HOMOGENEITE REELLE DES MARGES
+   Le conteneur de rubrique pilote seul le rythme vertical.
+   ============================================================ */
+:root{
+  --acl-main-section-y:46px;
+  --acl-main-gap:18px;
+  --acl-main-section-y-mobile:34px;
+}
+
+/* Six rubriques = une seule géométrie extérieure. */
+#duo,
+#concerts,
+#musique,
+#videos,
+#photos,
+#contact{
+  padding-block:var(--acl-main-section-y)!important;
+}
+
+/* Une seule source de vérité pour les intervalles internes. */
+#duo > .wrap,
+#concerts > .wrap,
+#musique > .wrap,
+#videos > .wrap,
+#photos > .wrap,
+#contact > .wrap{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:var(--acl-main-gap)!important;
+}
+
+/* Aucun enfant direct ne rajoute sa propre marge au gap commun. */
+#duo > .wrap > *,
+#concerts > .wrap > *,
+#musique > .wrap > *,
+#videos > .wrap > *,
+#photos > .wrap > *,
+#contact > .wrap > *{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+
+/* Tous les panneaux-titres démarrent exactement sur l'axe du .wrap. */
+#duo .section-sign,
+#concerts .section-sign,
+#musique .section-sign,
+#videos .section-sign,
+#photos .section-sign,
+#contact .section-sign{
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+/* Les contenus principaux ne recréent aucun décalage vertical. */
+#concerts .concert-main-next,
+#musique .music-gallery,
+#videos .video-featured,
+#photos .photo-featured,
+#contact .socials,
+#contact .organizer-form,
+#contact #visitorMessageBox{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+
+/* Dans Musique, le même pas de 18 px sépare aussi chaque fenêtre. */
+#musique .music-gallery{
+  gap:var(--acl-main-gap)!important;
+}
+#musique .music-item{
+  margin:0!important;
+}
+
+/* Les formulaires du Contact restent sur le même axe que le reste. */
+#contact .organizer-form,
+#contact #visitorMessageBox{
+  align-self:flex-start!important;
+}
+
+@media(max-width:760px){
+  #duo,
+  #concerts,
+  #musique,
+  #videos,
+  #photos,
+  #contact{
+    padding-block:var(--acl-main-section-y-mobile)!important;
+  }
+
+  #duo > .wrap,
+  #concerts > .wrap,
+  #musique > .wrap,
+  #videos > .wrap,
+  #photos > .wrap,
+  #contact > .wrap{
+    gap:var(--acl-main-gap)!important;
+  }
+}
+
+/* VERROU FINAL — marges haut/bas strictement identiques.
+   Ces règles sont volontairement les dernières de la feuille. */
+#duo,
+#concerts,
+#musique,
+#videos,
+#photos,
+#contact{
+  margin-top:0!important;
+  margin-bottom:0!important;
+  padding-top:46px!important;
+  padding-bottom:46px!important;
+  box-sizing:border-box;
+}
+
+@media(max-width:760px){
+  #duo,
+  #concerts,
+  #musique,
+  #videos,
+  #photos,
+  #contact{
+    margin-top:0!important;
+    margin-bottom:0!important;
+    padding-top:34px!important;
+    padding-bottom:34px!important;
+  }
+}
+
 </style>
 
 

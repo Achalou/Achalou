@@ -1225,6 +1225,22 @@ body.duo-modal-open{overflow:hidden}
 @media(max-width:720px){.concert-months{grid-template-columns:1fr;gap:10px}.concert-month{max-width:310px;width:100%;margin:auto}.concert-calendar{padding:2px 12px 16px}.concert-line summary{grid-template-columns:76px 1fr auto;gap:6px}.concert-line-time{grid-column:1}.concert-line-place{grid-column:2}.concert-line-state{grid-column:3;grid-row:1/3}.concert-line-detail{padding:0 4px 12px 82px}.concert-modal-panel{padding:20px 15px}}
 body.concert-modal-open{overflow:hidden}
 
+
+/* Harmonisation visuelle finale — géométrie des rubriques uniquement */
+#concerts, #musique, #videos, #photos{padding-top:46px;padding-bottom:46px}
+#concerts .section-sign,
+#musique .section-sign,
+#videos .section-sign,
+#photos .section-sign{margin-bottom:22px!important}
+
+@media(max-width:760px){
+  #concerts, #musique, #videos, #photos{padding-top:34px;padding-bottom:34px}
+  #concerts .section-sign,
+  #musique .section-sign,
+  #videos .section-sign,
+  #photos .section-sign{margin-bottom:19px!important}
+}
+
 </style>
 
 

@@ -38,6 +38,7 @@ window.ACHALOU_CONCERTS = [
     "heureAvant": "",
     "lieuAvant": "",
     "statut": "publie",
-    "publicationProgrammee": ""
+    "publicationProgrammee": "",
+    "supprimeLe": "2026-09-30T20:00:49.812Z"
   }
 ];

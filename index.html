@@ -1035,18 +1035,16 @@ body.concert-modal-open{overflow:hidden}
 .attachment-help{display:block;margin:6px 0 0;font-size:.76rem;line-height:1.35;opacity:.62}
 @media(max-width:520px){.attachment-picker{align-items:flex-start;flex-direction:column;gap:6px}.attachment-name{width:100%;white-space:normal;overflow-wrap:anywhere}}
 
-
-/* Boutons principaux — gabarit uniforme sur tout le site */
-.hero .cta,
-.hero .organizer-open,
-#contact .social{
+/* Boutons d’action publics — gabarit générique unique */
+.site-action{
   box-sizing:border-box;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-width:220px;
+  width:230px;
+  height:48px;
   min-height:48px;
-  padding:12px 22px;
+  padding:0 18px;
   margin-left:0;
   margin-right:0;
   border-radius:999px;
@@ -1056,12 +1054,8 @@ body.concert-modal-open{overflow:hidden}
   text-align:center;
 }
 @media(max-width:760px){
-  .hero .cta,
-  .hero .organizer-open,
-  #contact .social{
-    width:100%;
-    max-width:280px;
-    min-width:0;
+  .site-action{
+    width:min(100%,280px);
   }
 }
 
@@ -1072,9 +1066,9 @@ body.concert-modal-open{overflow:hidden}
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><div class="brand-row"><a class="brand" href="#accueil">A’Cha Lou</a><a class="admin-shortcut" href="https://achalou-admin.achalou24.workers.dev/" aria-label="Administration" title="Administration">⚙︎</a></div><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#videos">Vidéos</a><a href="#photos">Photos</a><a href="#contact">Contact</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a>
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta site-action" href="#concerts" id="concertLink">Voir les concerts</a>
 <div class="organizer-invite" id="organizerInvite">
-  <button type="button" class="organizer-open" id="organizerOpen">Programmer A’Cha Lou ?</button>
+  <button type="button" class="organizer-open site-action" id="organizerOpen">Programmer A’Cha Lou ?</button>
   <form id="organizerForm" class="organizer-form" hidden>
     <div class="organizer-contact-intro">
       <h3>Programmer A’Cha Lou</h3>
@@ -1137,9 +1131,9 @@ body.concert-modal-open{overflow:hidden}
 <div class="photo-album-modal" id="photoAlbumModal" role="dialog" aria-modal="true" aria-labelledby="photoAlbumTitle" hidden><div class="photo-album-panel"><button type="button" class="photo-album-close" id="photoAlbumClose" aria-label="Fermer">×</button><h2 id="photoAlbumTitle">Album photos</h2><div id="photoAlbumGrid" class="photo-album-grid"></div></div></div>
 <div class="photo-lightbox" id="photoLightbox" hidden><button type="button" class="photo-lightbox-close" id="photoLightboxClose" aria-label="Fermer la photo">×</button><button type="button" class="photo-lightbox-prev" id="photoLightboxPrev" aria-label="Photo précédente">‹</button><img id="photoLightboxImage" alt=""><button type="button" class="photo-lightbox-next" id="photoLightboxNext" aria-label="Photo suivante">›</button><div class="photo-lightbox-info" id="photoLightboxInfo"></div></div>
 
-<section class="contact reveal" id="contact"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Contact</span></h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram</a>
-<button type="button" class="social contact-programmer" id="contactMessageOpen">Envoyer un message</button>
-<button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div>
+<section class="contact reveal" id="contact"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Contact</span></h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social site-action" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social site-action" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram</a>
+<button type="button" class="social contact-programmer site-action" id="contactMessageOpen">Envoyer un message</button>
+<button type="button" class="social contact-programmer site-action" id="contactProgrammer">Programmer A’Cha Lou ?</button></div>
 
 <div class="visitor-message" id="visitorMessageBox" hidden>
   <h3>Laisser un message à A’Cha Lou</h3>

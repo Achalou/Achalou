@@ -290,9 +290,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
-.contact-programmer{font:inherit;cursor:pointer;border:0}
-
-.contact-programmer{font-weight:800}
+.contact-programmer{font:inherit;font-weight:800;cursor:pointer;border:0}
 
 #contact .organizer-form{
   color:var(--ink);
@@ -304,7 +302,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   transform:none;
   width:100%;
   max-width:590px;
-  margin:18px auto 0;
+  margin:24px auto 0;
   z-index:auto;
 }
 
@@ -312,7 +310,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   #contact .organizer-form{
     width:calc(100% - 0px);
     max-width:100%;
-    margin:16px auto 0;
+    margin:22px auto 0;
     padding:18px 16px;
     box-sizing:border-box;
   }
@@ -327,7 +325,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   color:var(--ink);
   width:100%;
   max-width:590px;
-  margin:18px auto 0;
+  margin:24px auto 0;
   box-sizing:border-box;
 }
 @media(max-width:760px){
@@ -961,6 +959,7 @@ body.concert-modal-open{overflow:hidden}
 #videos .video-library-launch.section-sign > span,
 #photos .photo-album-launch.section-sign > span,
 #contact .section-sign > span{
+  color:var(--ink);
   position:absolute;
   left:0;
   top:0;
@@ -1007,18 +1006,18 @@ body.concert-modal-open{overflow:hidden}
   }
 }
 
-/* Pièces jointes — sélecteur harmonisé avec A’Cha Lou */
-.attachment-field{margin:14px 0 8px}
-.attachment-field .attachment-title{display:block;margin:0 0 8px;font-weight:700}
-.attachment-field .attachment-optional{font-weight:400;opacity:.65}
-.attachment-picker{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+/* Pièces jointes — bloc compact */
+.attachment-field{margin:12px 0 14px;padding:10px 12px;border:1px solid #0002;border-radius:14px;background:#fff9}
+.attachment-title{display:block;margin:0 0 7px;font-size:.94rem;font-weight:750}
+.attachment-optional{font-weight:400;opacity:.62}
+.attachment-picker{display:flex;align-items:center;gap:10px;min-width:0}
 .attachment-picker input[type="file"]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
-.attachment-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;margin:0;padding:10px 16px;border:1px solid color-mix(in srgb,var(--blue) 30%,transparent);border-radius:999px;background:var(--blue);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 4px 12px #0000000d;transition:transform .15s ease,box-shadow .15s ease}
-.attachment-button:hover{transform:translateY(-1px);box-shadow:0 6px 16px #00000016}
-.attachment-button:focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 28%,transparent);outline-offset:3px}
-.attachment-name{min-width:0;max-width:100%;font-size:.92rem;opacity:.76;overflow-wrap:anywhere}
-.attachment-help{display:block;margin:7px 0 14px;font-size:.82rem;line-height:1.45;opacity:.68}
-@media(max-width:520px){.attachment-picker{align-items:stretch;flex-direction:column}.attachment-button{align-self:flex-start}.attachment-name{padding-left:3px}}
+.attachment-button{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;margin:0;padding:7px 11px;border:1px solid #07649555;border-radius:10px;background:#fff;color:var(--blue);font:inherit;font-size:.9rem;font-weight:800;cursor:pointer}
+.attachment-button:hover{background:#0764950b}
+.attachment-button:focus-visible{outline:3px solid #07649535;outline-offset:2px}
+.attachment-name{min-width:0;font-size:.86rem;opacity:.72;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.attachment-help{display:block;margin:6px 0 0;font-size:.76rem;line-height:1.35;opacity:.62}
+@media(max-width:520px){.attachment-picker{align-items:flex-start;flex-direction:column;gap:6px}.attachment-name{width:100%;white-space:normal;overflow-wrap:anywhere}}
 
 </style>
 
@@ -2056,7 +2055,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const first=form.querySelector('input[name="nom"]');
     if(first && window.matchMedia("(min-width: 761px)").matches) first.focus();
 
-    form.scrollIntoView({behavior:"smooth",block:"nearest"});
+    contactSection.scrollIntoView({behavior:"smooth",block:"start"});
   });
 
   heroButton.addEventListener("click",()=>{
@@ -2109,7 +2108,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     button.textContent=box.hidden ? openLabel : closeLabel;
 
     if(!box.hidden){
-      box.scrollIntoView({behavior:"smooth",block:"nearest"});
+      document.getElementById("contact")?.scrollIntoView({behavior:"smooth",block:"start"});
       if(window.matchMedia("(min-width: 761px)").matches){
         form?.querySelector('input[name="prenom"]')?.focus();
       }

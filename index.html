@@ -1023,7 +1023,7 @@ body.concert-modal-open{overflow:hidden}
     <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" placeholder="Téléphone ou e-mail requis"></label>
     <label>Ville ou lieu<input name="lieu" type="text" maxlength="100" autocomplete="address-level2" required></label>
     <label>Message<textarea name="message" maxlength="1200" rows="5" required></textarea></label>
-    <label>Pièce jointe <span style="font-weight:400;opacity:.65">(facultatif · 5 Mo max)</span><input name="piece_jointe" type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp"></label>
+    <label>Pièce jointe <span style="font-weight:400;opacity:.65">(facultatif · 10 Mo max)</span><input name="piece_jointe" type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp"></label>
     <small>Formats acceptés : PDF, DOCX, JPG, PNG, WebP. N’envoyez que des fichiers que vous connaissez.</small>
     <label class="message-trap" aria-hidden="true">Site<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
     <button type="submit">Envoyer la demande</button>
@@ -1079,7 +1079,7 @@ body.concert-modal-open{overflow:hidden}
     <label>Prénom<input name="prenom" type="text" maxlength="60" autocomplete="given-name" required></label>
     <label>E-mail ou téléphone <span style="font-weight:400;opacity:.65">(facultatif)</span><input name="contact" type="text" maxlength="254" placeholder="Pour vous répondre si vous le souhaitez"></label>
     <label>Message<textarea name="message" maxlength="1200" rows="5" required></textarea></label>
-    <label>Pièce jointe <span style="font-weight:400;opacity:.65">(facultatif · 5 Mo max)</span><input name="piece_jointe" type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp"></label>
+    <label>Pièce jointe <span style="font-weight:400;opacity:.65">(facultatif · 10 Mo max)</span><input name="piece_jointe" type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp"></label>
     <small>Formats acceptés : PDF, DOCX, JPG, PNG, WebP. N’envoyez que des fichiers que vous connaissez.</small>
     <label class="message-trap" aria-hidden="true">Site<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
     <button type="submit">Envoyer le message</button>
@@ -1875,7 +1875,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     const button=form.querySelector('button[type="submit"]');
     const fd=new FormData(form);
     const file=fd.get("piece_jointe");
-    if(file instanceof File && file.size>5*1024*1024){status.className="message-status err";status.textContent="La pièce jointe dépasse 5 Mo.";return;}
+    if(file instanceof File && file.size>10*1024*1024){status.className="message-status err";status.textContent="La pièce jointe dépasse 10 Mo.";return;}
     status.className="message-status";
     status.textContent="Envoi…";
     button.disabled=true;
@@ -1947,7 +1947,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       return;
     }
     const file=fd.get("piece_jointe");
-    if(file instanceof File && file.size>5*1024*1024){status.className="message-status err";status.textContent="La pièce jointe dépasse 5 Mo.";return;}
+    if(file instanceof File && file.size>10*1024*1024){status.className="message-status err";status.textContent="La pièce jointe dépasse 10 Mo.";return;}
     status.textContent="Envoi…";
     button.disabled=true;
     try{

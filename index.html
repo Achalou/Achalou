@@ -28,34 +28,24 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6}a{color:inherit}.wrap{width:min(var(--max),calc(100% - 36px));margin:auto}
 .skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;background:#fff;padding:10px;z-index:99}
 nav{position:sticky;top:0;z-index:10;background:rgba(251,248,240,.95);backdrop-filter:blur(8px);border-bottom:1px solid #0001}.nav{display:flex;align-items:center;justify-content:space-between;min-height:68px}.brand{font-weight:900;font-size:1.35rem;text-decoration:none;white-space:nowrap}.links{display:flex;gap:22px}.links a{text-decoration:none;font-weight:650;white-space:nowrap}
-.hero{min-height:78vh;display:grid;place-items:center;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:var(--blue)}h1{font-family:Georgia,serif;font-size:clamp(3.5rem,9vw,7.5rem);line-height:.9;margin:.15em 0;white-space:nowrap}.tag{font-size:clamp(1.35rem,3vw,2.1rem);font-weight:700;margin:0 0 24px}.lead{font-size:1.15rem;max-width:650px}.cta{display:inline-block;margin-top:18px;padding:13px 20px;background:var(--blue);color:#fff;text-decoration:none;border-radius:999px;font-weight:800}.logo-card{position:relative;overflow:hidden;background:#fff;border-radius:28px;padding:18px;box-shadow:0 18px 60px #0002}.logo-card img{display:block;width:100%;border-radius:18px}.logo-card .concert-poster{display:none;width:100%;aspect-ratio:1944/767;background:#fff;border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;grid-template-columns:66% 34%;align-items:stretch}
-.logo-card.has-concert>img{display:none}
-.logo-card.has-concert .concert-poster{display:grid}
-.poster-copy{min-width:0;padding:clamp(14px,2vw,26px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
-.concert-poster .poster-date{font-family:Georgia,serif;font-size:2.15rem;font-weight:700;line-height:1.08;margin:0 0 10px;color:var(--ink);max-width:100%;text-align:center}
-.poster-time,.poster-place{display:block}.poster-place{margin-top:2px}
-.poster-badge{background:var(--blue);display:flex;align-items:stretch;justify-content:stretch;overflow:hidden;padding:0}
-@media(max-width:760px){.logo-card .concert-poster{aspect-ratio:1944/767;grid-template-columns:66% 34%}.poster-copy{padding:12px}.concert-poster .poster-date{font-size:clamp(1.05rem,5vw,1.75rem)}.poster-badge{padding:2px}}
+.hero{min-height:78vh;display:grid;place-items:center;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:var(--blue)}h1{font-family:Georgia,serif;font-size:clamp(3.5rem,9vw,7.5rem);line-height:.9;margin:.15em 0;white-space:nowrap}.tag{font-size:clamp(1.35rem,3vw,2.1rem);font-weight:700;margin:0 0 24px}.lead{font-size:1.15rem;max-width:650px}.cta{display:inline-block;margin-top:18px;padding:13px 20px;background:var(--blue);color:#fff;text-decoration:none;border-radius:999px;font-weight:800}.logo-card{position:relative;overflow:hidden;background:#fff;border-radius:28px;padding:18px;box-shadow:0 18px 60px #0002}.logo-card img{display:block;width:100%;border-radius:18px}
 section{padding:54px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.2rem);margin:0 0 24px}.intro{background:var(--sand)}.copy{font-size:1.2rem;max-width:800px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid #0001;border-radius:20px;padding:26px;min-height:180px}.card h3{font-size:1.4rem;margin-top:0}.date{font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.08em}.placeholder{border:2px dashed #0002;min-height:220px;border-radius:22px;display:grid;place-items:center;text-align:center;padding:24px;background:#fff8}.contact{background:var(--blue);color:#fff}.socials{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.social{display:inline-block;padding:13px 20px;background:#fff;color:var(--blue);text-decoration:none;border-radius:999px;font-weight:900}.foot{padding:30px 0;text-align:center;font-size:.9rem}.tech{font-size:.75rem;opacity:.6;margin-top:7px}
 @media(max-width:760px){.hero{min-height:auto;padding:48px 0}.hero-grid{grid-template-columns:1fr;gap:28px}.logo-card{order:-1}.cards{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column;padding:10px 0}.links{display:flex;flex-wrap:wrap;gap:6px 14px;padding:4px 0 8px;width:100%;overflow:visible;font-size:.82rem;line-height:1.35}.links a{display:inline-flex;align-items:center;min-height:28px}.links .admin-shortcut{flex:0 0 28px;margin-left:0}section{padding:40px 0}h1{font-size:clamp(3.2rem,16vw,5rem)}}
 
-/* Mobile paysage : le cadre épouse exactement le panneau.
-   Cela supprime la grande zone blanche vide à droite. */
 @media(max-width:760px) and (orientation:landscape){
   .logo-card.has-concert{
     width:max-content!important;
     max-width:none!important;
     justify-self:center!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    border:0!important;
-    padding:0!important;
+    background:transparent;
+    box-shadow:none;
+    border:0;
+    padding:0;
   }
 }
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-/* Animations légères A’Cha Lou — sans bibliothèque externe */
 @keyframes aclFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes aclLogoIn{from{opacity:0;transform:scale(.975)}to{opacity:1;transform:scale(1)}}
 @keyframes aclBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
@@ -70,12 +60,11 @@ section{padding:54px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4
 .card,.placeholder{transition:transform .22s ease,box-shadow .22s ease}.card:hover,.placeholder:hover{transform:translateY(-3px);box-shadow:0 12px 30px #00000012}
 
 @media(prefers-reduced-motion:reduce){
-  .hero .eyebrow,.hero h1,.hero .tag,.hero .lead,.hero .cta,.logo-card,.logo-card img{opacity:1;animation:none!important;transform:none!important}
-  .cta,.social,.links a:after,.card,.placeholder{transition:none!important}
-  .cta:hover,.social:hover,.card:hover,.placeholder:hover{transform:none!important;box-shadow:none!important}
+  .hero .eyebrow,.hero h1,.hero .tag,.hero .lead,.hero .cta,.logo-card,.logo-card img{opacity:1;animation:none;transform:none}
+  .cta,.social,.links a:after,.card,.placeholder{transition:none}
+  .cta:hover,.social:hover,.card:hover,.placeholder:hover{transform:none;box-shadow:none}
 }
 
-/* Finitions discrètes */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .reveal.seen{opacity:1;transform:none}
 .float-tools{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;gap:9px;flex-direction:column}
@@ -84,7 +73,6 @@ section{padding:54px 0}h2{font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4
 @media(min-width:761px){#shareBtn{display:none}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.float-btn{transition:none}}
 
-/* Navigation vivante, sans nouvel élément visuel */
 .links a{transition:opacity .22s ease,color .22s ease}
 .links a.active{color:var(--blue)}
 .links a.active:after{right:0}
@@ -99,99 +87,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   .links a{transition:none}
 }
 
-/* Prochain concert automatique dans l'accueil */
-.hero-concert{margin:.15em 0 18px;max-width:680px}
-.hero-concert .next-label{text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--blue);font-size:.9rem}
-.hero-concert .next-date{font-family:Georgia,serif;font-weight:700;font-size:clamp(2.15rem,5.5vw,4.6rem);line-height:1;margin:.14em 0;white-space:nowrap}
-.hero-concert .next-place{font-size:clamp(1.1rem,2.3vw,1.45rem);font-weight:750}
-
-/* Panneau concert */
-.concert-poster .poster-date,
-.concert-poster .poster-time,
-.concert-poster .poster-place{
-  display:block;
-  width:100%;
-  text-align:center;
-}
-.concert-poster .poster-time,
-.concert-poster .poster-place{
-  font-weight:850;
-  color:var(--blue);
-  line-height:1.25;
-}
-.concert-poster .poster-place{
-  white-space:normal;
-  overflow-wrap:anywhere;
-}
-.poster-badge img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  object-position:center center!important;
-  border-radius:0!important;
-  animation:none!important;
-}
-
-/* Ordinateur : la hauteur vient du texte.
-   La largeur bleue suit ensuite le ratio naturel de l'icône. */
-@media(min-width:761px){
-  .logo-card{overflow:visible}
-
-  .logo-card .concert-poster{
-    display:none;
-    width:auto;
-    max-width:none;
-    height:auto;
-    aspect-ratio:auto;
-    grid-template-columns:none;
-    align-items:stretch;
-    transform-origin:top left;
-  }
-  .logo-card.has-concert{
-    width:max-content;
-    height:max-content;
-    justify-self:center;
-    padding:6px;
-    perspective:1100px;
-  }
-  .logo-card.has-concert .concert-poster{
-    display:flex;
-  }
-
-  .poster-copy{
-    flex:0 0 390px;
-    width:390px;
-    min-width:390px;
-    height:auto;
-    overflow:visible;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    align-items:stretch;
-    border-right:0;
-    outline:0;
-    box-shadow:none;
-  }
-  .poster-badge{
-    flex:0 0 auto;
-    width:0;
-    height:auto;
-    min-width:0;
-    aspect-ratio:auto;
-    padding:0;
-    background:var(--blue);
-    overflow:hidden;
-    border:0;
-    outline:0;
-    box-shadow:none;
-    border-radius:0 16px 16px 0;
-  }
-}
-
-/* Entrée du panneau lorsqu'un concert existe */
 @keyframes concertSpinArrival{
   0%{opacity:0;translate:110vw 0;rotate:0deg}
   18%{opacity:1}
@@ -206,80 +101,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   will-change:translate,rotate,opacity;
 }
 
-/* MOBILE : mêmes proportions internes que sur ordinateur.
-   Aucun élément interne n'est redimensionné séparément. */
-@media(max-width:760px){
-  /* On reprend réellement la structure ordinateur AVANT la réduction globale. */
-  .logo-card{overflow:visible!important}
-
-  .logo-card .concert-poster{
-    display:none;
-    width:auto;
-    max-width:none;
-    height:auto;
-    aspect-ratio:auto;
-    grid-template-columns:none;
-    align-items:stretch;
-    transform-origin:top left;
-  }
-  .logo-card.has-concert{
-    width:100%!important;
-    max-width:100%!important;
-    height:max-content;
-    justify-self:center;
-    padding:6px!important;
-    overflow:visible!important;
-    perspective:1100px;
-  }
-  .logo-card.has-concert .concert-poster{
-    display:flex;
-  }
-
-  .logo-card.has-concert .poster-copy{
-    flex:0 0 390px;
-    width:390px;
-    min-width:390px;
-    height:auto;
-    overflow:visible;
-    display:flex;
-    flex-direction:column;
-    justify-content:center!important;
-    gap:18px!important;
-    align-items:stretch;
-    border-right:0;
-    outline:0;
-    box-shadow:none;
-  }
-
-  .logo-card.has-concert .poster-badge{
-    flex:0 0 auto;
-    width:0;
-    height:auto;
-    min-width:0;
-    aspect-ratio:auto;
-    padding:0;
-    background:var(--blue);
-    overflow:hidden;
-    border:0;
-    outline:0;
-    box-shadow:none;
-    border-radius:0 16px 16px 0;
-  }
-
-  .logo-card.has-concert .poster-badge img{
-    display:block!important;
-    width:100%!important;
-    height:100%!important;
-    max-width:none!important;
-    max-height:none!important;
-    object-fit:contain!important;
-    object-position:center center!important;
-    border-radius:0!important;
-  }
-}
-
-/* Sans concert : l'image possède déjà son cadre.
-   Le conteneur extérieur du site devient donc invisible. */
 .logo-card:not(.has-concert){
   background:transparent;
   padding:0;
@@ -296,16 +117,14 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .logo-card.has-concert .concert-poster{animation:none!important}
+  .logo-card.has-concert .concert-poster{animation:none}
 }
 
-/* Modification 1 — Étape 3 : états des concerts */
 .card{position:relative;overflow:hidden}
 .concert-state{display:inline-block;margin:0 0 10px;padding:5px 10px;border-radius:999px;font-weight:950;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
 .concert-state.annule{background:#ffe5e5;color:#9d1717}.concert-state.reporte{background:#fff1cf;color:#765000}.concert-state.complet{background:#e9e4f7;color:#4e3977}
 .concert-change{font-size:.9rem;font-weight:750;margin:.35em 0}.concert-change del{opacity:.58}
 
-/* Tampons en surimpression : position absolue = aucun déplacement du texte ni du panneau */
 .concert-stamp{
  position:absolute;z-index:5;right:14px;top:14px;width:122px;height:122px;
  border:4px dashed currentColor;border-radius:50%;background:transparent;color:#ef7f89;
@@ -323,7 +142,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .concert-stamp.complet{color:#076495}
 @keyframes stampImpact{0%{opacity:0;transform:scale(1.65) rotate(-2deg)}68%{opacity:.52;transform:scale(.94) rotate(-10deg)}100%{opacity:.48;transform:scale(1) rotate(-9deg)}}
 
-/* Raison : second petit tampon flottant, lui aussi hors du flux */
 .card .concert-reason,
 .report-transition .concert-reason{
  position:absolute;z-index:6;right:18px;bottom:14px;width:108px;height:108px;margin:0;padding:18px 13px;
@@ -333,8 +151,6 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
  overflow-wrap:anywhere;pointer-events:none
 }
 
-/* Dans le panneau d'accueil, les tampons sont de vraies surimpressions :
-   ils ne participent jamais à la hauteur/largeur calculée du panneau. */
 .poster-copy{position:relative}
 .poster-copy .concert-stamp{
  position:absolute;z-index:1;left:28%;top:47%;right:auto;
@@ -353,67 +169,50 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .poster-copy .poster-place,
 .poster-copy .poster-state,
 .poster-copy .poster-change{position:relative;z-index:2}
-.poster-state{font-weight:950;text-transform:uppercase;letter-spacing:.08em}
-.poster-change{font-size:.78rem;font-weight:800;line-height:1.15}.poster-change del{opacity:.55}
-.poster-copy .concert-stamp{animation:none}
+.poster-state{font-weight:950;text-transform:uppercase;letter-spacing:.08em}.poster-copy .concert-stamp{animation:none}
 @media(prefers-reduced-motion:reduce){.concert-stamp{animation:none}}
 
-/* Référence exacte du panneau sans concert :
-   même cadrage des personnages à l'intérieur de la partie bleue. */
-.logo-card.has-concert .poster-badge{
-  background-color:var(--blue)!important;
-  background-image:url("acha-lou-sans-concert.png")!important;
-  background-repeat:no-repeat!important;
-  background-size:326.04% 100%!important;
-  background-position:100% 50%!important;
-}
-
-.concert-stamp-second{top:auto!important;bottom:12px!important;right:12px!important;transform:rotate(7deg)!important}
+.concert-stamp-second{top:auto;bottom:12px;right:12px;transform:rotate(7deg)}
 .poster-copy .concert-stamp-second{
-  left:auto!important;
-  top:8%!important;
-  right:4%!important;
-  bottom:auto!important;
-  width:150px!important;
-  height:150px!important;
-  font-size:18px!important;
-  line-height:1!important;
-  letter-spacing:1px!important;
-  transform:rotate(7deg)!important;
+  left:auto;
+  top:8%;
+  right:4%;
+  bottom:auto;
+  width:150px;
+  height:150px;
+  font-size:18px;
+  line-height:1;
+  letter-spacing:1px;
+  transform:rotate(7deg);
 }
 
-/* Prochaines dates : trois zones indépendantes */
 .card .concert-stamp:not(.concert-stamp-second){
-  top:10px!important; right:10px!important; bottom:auto!important; left:auto!important;
+  top:10px; right:10px; bottom:auto; left:auto;
 }
 .card .concert-stamp-second{
-  top:auto!important; right:10px!important; bottom:10px!important; left:auto!important;
+  top:auto; right:10px; bottom:10px; left:auto;
 }
 .card .concert-reason{
-  top:auto!important; left:10px!important; right:auto!important; bottom:10px!important;
+  top:auto; left:10px; right:auto; bottom:10px;
 }
 
 .poster-copy .concert-stamp.complet.concert-stamp-second .stamp-center{
-  width:auto!important;
-  max-width:110px!important;
-  padding:6px!important;
-  font-size:1.05rem!important;
-  line-height:1!important;
-  letter-spacing:.5px!important;
-  white-space:nowrap!important;
-  box-sizing:border-box!important;
+  width:auto;
+  max-width:110px;
+  padding:6px;
+  font-size:1.05rem;
+  line-height:1;
+  letter-spacing:.5px;
+  white-space:nowrap;
+  box-sizing:border-box;
 }
 
-/* Tampon raison :
-   5 s prioritaire = fond pastel opaque + texte/contour lisibles
-   5 s discret     = fond transparent + texte/contour très pastel
-   Le tampon reste toujours présent. */
 .card .concert-reason,
 .poster-copy .concert-reason,
 .report-transition .concert-reason{
-  opacity:1!important;
-  visibility:visible!important;
-  animation:reasonPriorityCycle 10s steps(1,end) infinite!important;
+  opacity:1;
+  visibility:visible;
+  animation:reasonPriorityCycle 10s steps(1,end) infinite;
 }
 
 @keyframes reasonPriorityCycle{
@@ -431,39 +230,18 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
-.photo-gallery{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px}.photo-item{display:table!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:0!important;background:none!important;border:0!important;border-radius:0!important;overflow:visible!important;box-shadow:none!important}.photo-item:hover{transform:none!important;box-shadow:none!important;background:none!important}.photo-item img{display:block;width:auto;height:auto;max-width:520px;max-height:520px;object-fit:contain;border-radius:18px;box-shadow:0 10px 30px #00000018}.photo-item figcaption{
-  width:max-content;max-width:calc(100% - 16px);margin:10px auto 0;padding:5px 14px 6px;
-  text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:.92rem;
-  font-style:italic;font-weight:400;line-height:1.25;letter-spacing:.015em;color:var(--blue);
-  background:rgba(255,255,255,.72);border-radius:999px;box-shadow:0 3px 12px #0000000b
-}.photo-gallery .placeholder{width:100%}@media(max-width:760px){.photo-item{max-width:100%}.photo-item img{width:auto;max-width:100%;height:auto;max-height:none}}
-/* Concert affiché : retire uniquement le support blanc extérieur. */
-.logo-card.has-concert{
-  background:transparent!important;
-  box-shadow:none!important;
-  border:0!important;
-  border-radius:0!important;
-  padding:0!important;
-}
-
-
-/* Musique — morceaux gérés depuis l’administration */
 .music-gallery{display:grid;gap:14px;max-width:820px}
 .music-item{background:rgba(255,255,255,.78);border:1px solid #00000010;border-radius:18px;padding:18px 20px;box-shadow:0 8px 24px #0000000a}
 .music-item-title{font-family:Georgia,'Times New Roman',serif;font-size:1.25rem;font-weight:700;line-height:1.2;color:var(--ink)}
 .music-item-artist{margin:3px 0 12px;color:var(--blue);font-size:.94rem;font-weight:750}
 .music-item audio{display:block;width:100%;height:40px}
-@media(max-width:760px){.music-item{padding:16px}.music-item-title{font-size:1.15rem}}
-
-.video-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-.video-item{margin:0;background:rgba(255,255,255,.78);border:1px solid #00000010;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px #0000000a}
+@media(max-width:760px){.music-item{padding:16px}.music-item-title{font-size:1.15rem}}.video-item{margin:0;background:rgba(255,255,255,.78);border:1px solid #00000010;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px #0000000a}
 .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000}
 .video-frame iframe{display:block;width:100%;height:100%;border:0}
 .video-item figcaption{padding:11px 18px 13px;text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:.94rem;font-style:italic;font-weight:500;line-height:1.3;color:var(--blue)}
-@media(max-width:760px){.video-gallery{grid-template-columns:1fr}.video-item figcaption{font-size:.9rem}}
+@media(max-width:760px){.video-item figcaption{font-size:.9rem}}
 
-
-.admin-shortcut{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-left:2px;border-radius:50%;text-decoration:none!important;font-size:17px;line-height:1;color:inherit;opacity:.55;transition:opacity .18s ease,background .18s ease}.admin-shortcut:hover,.admin-shortcut:focus-visible{opacity:1;background:rgba(7,100,149,.09)}
+.admin-shortcut{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-left:2px;border-radius:50%;text-decoration:none;font-size:17px;line-height:1;color:inherit;opacity:.55;transition:opacity .18s ease,background .18s ease}.admin-shortcut:hover,.admin-shortcut:focus-visible{opacity:1;background:rgba(7,100,149,.09)}
 
 .visitor-message{max-width:620px;margin:34px auto 0;padding:22px;background:rgba(255,255,255,.72);border:1px solid #00000010;border-radius:20px;box-shadow:0 8px 24px #0000000a}
 .visitor-message h3{margin:0 0 5px;font-family:Georgia,'Times New Roman',serif;font-size:1.35rem;color:var(--blue)}
@@ -475,19 +253,8 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .visitor-message button:disabled{opacity:.55;cursor:wait}
 .message-status{min-height:1.4em;margin-top:10px;font-size:.92rem;font-weight:700}
 .message-status.ok{color:#24633a}.message-status.err{color:#9d1717}
-.message-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.message-trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 
-.newsletter-box{max-width:620px;margin:34px auto 0;padding:22px;background:rgba(255,255,255,.72);border:1px solid #00000010;border-radius:20px;box-shadow:0 8px 24px #0000000a}
-.newsletter-box h3{margin:0 0 5px;font-family:Georgia,'Times New Roman',serif;font-size:1.35rem;color:var(--blue)}
-.newsletter-box>p{margin:0 0 14px;opacity:.72}
-.newsletter-box label{display:block;margin:12px 0;font-weight:700}
-.newsletter-box input{display:block;width:100%;margin-top:6px;padding:11px 12px;border:1px solid #0003;border-radius:12px;background:#fff;color:var(--ink);font:inherit}
-.newsletter-box button{border:0;border-radius:999px;padding:11px 18px;background:var(--blue);color:#fff;font:inherit;font-weight:800;cursor:pointer}
-.newsletter-box button:disabled{opacity:.55;cursor:wait}
-.newsletter-note{display:block;margin-top:8px;opacity:.62;line-height:1.35}
-
-.organizer-invite{max-width:760px;margin:28px auto 34px;padding:26px 28px;border:2px solid var(--blue);border-radius:22px;background:rgba(255,255,255,.9);box-shadow:0 12px 30px #00000010;text-align:center}
-.organizer-kicker{display:inline-block;margin-bottom:6px;font-size:.78rem;font-weight:900;letter-spacing:.12em;color:var(--blue)}
 .organizer-invite h3{margin:0;font-family:Georgia,'Times New Roman',serif;font-size:1.55rem;color:var(--ink)}
 .organizer-invite p{margin:8px auto 18px;max-width:620px;line-height:1.45;opacity:.78}
 .organizer-open,.organizer-form button{border:0;border-radius:999px;padding:12px 22px;background:var(--blue);color:#fff;font:inherit;font-weight:850;cursor:pointer}
@@ -496,71 +263,68 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 .organizer-form input,.organizer-form textarea{display:block;width:100%;margin-top:6px;padding:11px 12px;border:1px solid #0003;border-radius:12px;background:#fff;color:var(--ink);font:inherit;box-sizing:border-box}
 .organizer-form textarea{resize:vertical;min-height:110px}
 .organizer-form button:disabled{opacity:.55;cursor:wait}
-@media(max-width:760px){.organizer-invite{padding:21px 17px}.organizer-invite h3{font-size:1.35rem}}
+@media(max-width:760px){.organizer-invite h3{font-size:1.35rem}}
 
-/* Programmation : bouton seul, formulaire dépliable */
-.organizer-invite{max-width:760px!important;margin:26px auto 34px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;text-align:center}
-.organizer-open{display:inline-flex!important;align-items:center;justify-content:center;border:0!important;border-radius:999px!important;padding:13px 24px!important;background:#fff!important;color:var(--blue)!important;font:inherit!important;font-weight:850!important;box-shadow:0 5px 16px #00000012!important;cursor:pointer}
-.organizer-open:hover,.organizer-open:focus-visible{transform:translateY(-1px);box-shadow:0 7px 20px #00000018!important}
-.organizer-form{margin:18px auto 0!important;max-width:620px!important;padding:22px!important;background:#fff!important;border:1px solid #00000010!important;border-radius:20px!important;box-shadow:0 8px 24px #0000000a!important;text-align:left!important}
-.organizer-form[hidden]{display:none!important}
+.organizer-invite{max-width:760px;margin:26px auto 34px;padding:0;border:0;border-radius:22px;background:transparent;box-shadow:none;text-align:center}
+.organizer-open{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:13px 24px;background:#fff;color:var(--blue);font:inherit;font-weight:850;box-shadow:0 5px 16px #00000012;cursor:pointer}
+.organizer-open:hover,.organizer-open:focus-visible{transform:translateY(-1px);box-shadow:0 7px 20px #00000018}
+.organizer-form{margin:18px auto 0;max-width:620px;padding:22px;background:#fff;border:1px solid #00000010;border-radius:20px;box-shadow:0 8px 24px #0000000a;text-align:left}
+.organizer-form[hidden]{display:none}
 
-/* Programmation près du bouton Voir les concerts */
-.hero .organizer-invite{display:inline-block!important;vertical-align:middle!important;max-width:none!important;margin:0 0 0 10px!important;padding:0!important;position:relative!important}
-.hero .organizer-open{background:#fff!important;color:var(--blue)!important}
-.hero .organizer-form{position:absolute!important;z-index:30!important;top:calc(100% + 12px)!important;left:50%!important;transform:translateX(-50%)!important;width:min(620px,calc(100vw - 32px))!important;margin:0!important}
-@media(max-width:760px){.hero .organizer-invite{margin:10px 0 0 8px!important}.hero .organizer-form{left:auto!important;right:-8px!important;transform:none!important}}
+.hero .organizer-invite{display:inline-block;vertical-align:middle;max-width:none;margin:0 0 0 10px;padding:0;position:relative}
+.hero .organizer-open{background:#fff;color:var(--blue)}
+.hero .organizer-form{position:absolute;z-index:30;top:calc(100% + 12px);left:50%;transform:translateX(-50%);width:min(620px,calc(100vw - 32px));margin:0}
+@media(max-width:760px){.hero .organizer-invite{margin:10px 0 0 8px}.hero .organizer-form{left:auto;right:-8px;transform:none}}
 
-/* Calage du formulaire de programmation : marge gauche/droite régulière */
 .hero .organizer-form{
-  width:min(590px,calc(100vw - 48px))!important;
+  width:min(590px,calc(100vw - 48px));
 }
 @media(max-width:760px) and (orientation:portrait){
   .hero .organizer-form{
-    width:calc(100vw - 20px)!important;
-    max-width:none!important;
-    right:auto!important;
-    left:var(--hero-form-mobile-left, 0px)!important;
-    transform:none!important;
-    box-sizing:border-box!important;
+    width:calc(100vw - 20px);
+    max-width:none;
+    right:auto;
+    left:var(--hero-form-mobile-left, 0px);
+    transform:none;
+    box-sizing:border-box;
   }
 }
 
 .contact-programmer{font:inherit;cursor:pointer;border:0}
 
-.contact-programmer{font-weight:800!important}
+.contact-programmer{font-weight:800}
 
 #contact .organizer-form{
-  color:var(--ink)!important;
-  position:relative!important;
-  left:auto!important;
-  right:auto!important;
-  top:auto!important;
-  bottom:auto!important;
-  transform:none!important;
-  width:100%!important;
-  max-width:590px!important;
-  margin:18px auto 0!important;
-  z-index:auto!important;
+  color:var(--ink);
+  position:relative;
+  left:auto;
+  right:auto;
+  top:auto;
+  bottom:auto;
+  transform:none;
+  width:100%;
+  max-width:590px;
+  margin:18px auto 0;
+  z-index:auto;
 }
 
 @media(max-width:760px){
   #contact .organizer-form{
-    width:calc(100% - 0px)!important;
-    max-width:100%!important;
-    margin:16px auto 0!important;
-    padding:18px 16px!important;
-    box-sizing:border-box!important;
+    width:calc(100% - 0px);
+    max-width:100%;
+    margin:16px auto 0;
+    padding:18px 16px;
+    box-sizing:border-box;
   }
   #contact .contact-programmer{
     white-space:nowrap;
   }
 }
 
-#visitorMessageBox[hidden]{display:none!important}
+#visitorMessageBox[hidden]{display:none}
 #contact #visitorMessageBox{
-  background:#fff!important;
-  color:var(--ink)!important;
+  background:#fff;
+  color:var(--ink);
   width:100%;
   max-width:590px;
   margin:18px auto 0;
@@ -572,250 +336,151 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
-/* Titres de rubriques : image réelle non déformée + texte dans la zone blanche. */
-.section-sign{
-  position:relative;
-  display:block;
-  width:350px;
+#heroPanel.has-concert{
+  width:min(520px,100%);
   max-width:100%;
   height:auto;
-  margin:0 0 26px 0!important;
-  padding:0!important;
-  line-height:0!important;
-  overflow:visible;
-}
-
-.section-sign > img{
-  display:block;
-  width:100%;
-  height:auto;
-  max-width:100%;
+  min-height:0;
   margin:0;
   padding:0;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:visible;
 }
-
-.section-sign > span{
+#heroPanel.has-concert > img{display:none;}
+#heroPanel.has-concert #concertPoster{
+  position:relative;
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  min-height:0;
+  margin:0;
+  padding:0;
+  aspect-ratio:auto;
+  background:none;
+  border:0;
+  box-shadow:none;
+  overflow:visible;
+}
+#heroPanel.has-concert #concertPoster > .poster-bg{
+  position:relative;
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  object-fit:contain;
+  object-position:center;
+  border-radius:0;
+  animation:none;
+  transform:none;
+}
+#heroPanel.has-concert #concertPoster > .poster-copy{
   position:absolute;
   left:0;
   top:0;
   width:69.33%;
   height:100%;
+  min-width:0;
+  min-height:0;
   box-sizing:border-box;
-  padding:0 5%;
-
+  margin:0;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-
-  color:var(--ink)!important;
-  font-family:Georgia,serif;
-  font-size:clamp(1.35rem,2.35vw,2rem);
-  font-weight:700;
-  line-height:1!important;
+  gap:3px;
   text-align:center;
-  white-space:nowrap;
-}
-
-@media(max-width:760px){
-  .section-sign{
-    width:min(86vw,330px);
-    max-width:100%;
-    margin:0 0 22px 0!important;
-  }
-  .section-sign > span{
-    padding:0 4%;
-    font-size:clamp(1.1rem,5vw,1.65rem);
-  }
-}
-
-/* Panneau dynamique — règles de base uniques.
-   L’image complète garde son ratio naturel ; le texte reste dans les 69,33 % blancs. */
-#heroPanel.has-concert{
-  width:min(520px,100%);
-  max-width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  margin:0!important;
-  padding:0!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-  overflow:visible!important;
-}
-#heroPanel.has-concert > img{display:none!important;}
-#heroPanel.has-concert #concertPoster{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  margin:0!important;
-  padding:0!important;
-  aspect-ratio:auto!important;
-  background:none!important;
-  border:0!important;
-  box-shadow:none!important;
-  overflow:visible!important;
-}
-#heroPanel.has-concert #concertPoster > .poster-bg{
-  position:relative!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  height:auto!important;
-  margin:0!important;
-  padding:0!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  border-radius:0!important;
-  animation:none!important;
-  transform:none!important;
-}
-#heroPanel.has-concert #concertPoster > .poster-copy{
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  width:69.33%!important;
-  height:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  box-sizing:border-box!important;
-  margin:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:3px!important;
-  text-align:center!important;
-  overflow:hidden!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
+  overflow:hidden;
+  background:transparent;
+  border:0;
+  box-shadow:none;
 }
 #heroPanel.has-concert #concertPoster .poster-date,
 #heroPanel.has-concert #concertPoster .poster-time,
 #heroPanel.has-concert #concertPoster .poster-place{
-  position:static!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  margin:0!important;
-  padding:0!important;
-  box-sizing:border-box!important;
-  text-align:center!important;
-  line-height:1.05!important;
+  position:static;
+  display:block;
+  width:100%;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  text-align:center;
+  line-height:1.05;
 }
 #heroPanel.has-concert #concertPoster .poster-date{
-  color:var(--ink)!important;
-  font-family:Georgia,serif!important;
-  font-weight:700!important;
-  white-space:nowrap!important;
+  color:var(--ink);
+  font-family:Georgia,serif;
+  font-weight:700;
+  white-space:nowrap;
 }
 #heroPanel.has-concert #concertPoster .poster-time{
-  color:var(--blue)!important;
-  font-weight:850!important;
-  white-space:nowrap!important;
+  color:var(--blue);
+  font-weight:850;
+  white-space:nowrap;
 }
 #heroPanel.has-concert #concertPoster .poster-place{
-  color:var(--blue)!important;
-  font-weight:850!important;
-  white-space:normal!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
+  color:var(--blue);
+  font-weight:850;
+  white-space:normal;
+  overflow-wrap:normal;
+  word-break:normal;
   text-wrap:balance;
-  line-height:1.08!important;
+  line-height:1.08;
 }
 #heroPanel.has-concert #concertPoster .poster-place-line{
-  display:block!important;
-  width:max-content!important;
-  max-width:none!important;
-  margin:0 auto!important;
-  padding:0!important;
-  white-space:nowrap!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
+  display:block;
+  width:max-content;
+  max-width:none;
+  margin:0 auto;
+  padding:0;
+  white-space:nowrap;
+  overflow-wrap:normal;
+  word-break:normal;
 }
-#heroPanel.has-concert .poster-badge{display:none!important;}
 
-/* Mobile portrait — traitement autonome du panneau dynamique. */
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel.has-concert{
-    order:-1!important;
-    position:relative!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    height:auto!important;
-    justify-self:stretch!important;
-    align-self:start!important;
-    margin:0!important;
-    padding:0!important;
-    overflow:visible!important;
+    order:-1;
+    position:relative;
+    width:100%;
+    min-width:0;
+    justify-self:stretch;
+    align-self:start;
   }
-  #heroPanel.has-concert #concertPoster{
-    position:relative!important;
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    height:auto!important;
-    margin:0!important;
-    padding:0!important;
-    overflow:visible!important;
-  }
-  #heroPanel.has-concert #concertPoster > .poster-bg{
-    position:relative!important;
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    height:auto!important;
-    margin:0!important;
-  }
+  #heroPanel.has-concert #concertPoster{min-width:0;}
   #heroPanel.has-concert #concertPoster > .poster-copy{
-    position:absolute!important;
-    left:0!important;
-    top:0!important;
-    width:69.33%!important;
-    height:100%!important;
-    box-sizing:border-box!important;
-    padding:10px 14px!important;
-    gap:2px!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
+    padding:10px 14px;
+    gap:2px;
   }
 }
 
-/* Bureau avec prochain concert : même organisation que le mobile.
-   Le panneau est placé au-dessus de « Duo · musique traditionnelle ». */
 @media (min-width:761px){
-  /* Sur ordinateur, marges fixes dans la zone blanche.
-     Évite le padding vertical en %, qui grossissait avec la largeur du panneau
-     et faisait croire au calcul que le texte débordait en hauteur. */
+  
   #heroPanel.has-concert #concertPoster > .poster-copy{
-    padding:10px 14px!important;
+    padding:10px 14px;
   }
 
   .hero-grid:has(#heroPanel.has-concert){
-    grid-template-columns:1fr!important;
-    gap:22px!important;
-    align-items:start!important;
+    grid-template-columns:1fr;
+    gap:22px;
+    align-items:start;
   }
   .hero-grid:has(#heroPanel.has-concert) #heroPanel.has-concert{
-    order:-1!important;
-    width:min(600px,100%)!important;
-    max-width:600px!important;
-    justify-self:start!important;
-    transform:none!important;
-    margin:0!important;
+    order:-1;
+    width:min(600px,100%);
+    max-width:600px;
+    justify-self:start;
+    transform:none;
+    margin:0;
   }
 }
 
-/* Entre les deux panneaux : réutilise le tampon raison déjà existant. */
 #heroPanel .report-transition{
   position:relative;
   min-height:124px;
@@ -830,148 +495,80 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   flex:0 0 auto;
 }
 #heroPanel .report-transition .concert-reason.report-transition-reason{
-  position:absolute!important;
-  left:calc(50% + 35px)!important;
-  right:auto!important;
-  top:50%!important;
-  bottom:auto!important;
-  width:108px!important;
-  height:108px!important;
-  margin:0!important;
-  padding:18px 13px!important;
-  transform:translateY(-50%) rotate(7deg)!important;
-  z-index:8!important;
+  position:absolute;
+  left:calc(50% + 35px);
+  right:auto;
+  top:50%;
+  bottom:auto;
+  width:108px;
+  height:108px;
+  margin:0;
+  padding:18px 13px;
+  transform:translateY(-50%) rotate(7deg);
+  z-index:8;
 }
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel .report-transition{min-height:116px;}
   #heroPanel .report-transition .report-arrow{height:38px;}
   #heroPanel .report-transition .concert-reason.report-transition-reason{
-    left:calc(50% + 26px)!important;
+    left:calc(50% + 26px);
   }
 }
 
-/* Flèche de report : volontairement très visible sur ordinateur et mobile */
 #heroPanel.has-concert.is-postponed .report-transition .report-arrow{
-  position:relative!important;
-  width:58px!important;
-  height:82px!important;
-  flex:0 0 58px!important;
-  font-size:0!important;
-  color:var(--blue)!important;
+  position:relative;
+  width:58px;
+  height:82px;
+  flex:0 0 58px;
+  font-size:0;
+  color:var(--blue);
 }
 #heroPanel.has-concert.is-postponed .report-transition .report-arrow::before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:7px!important;
-  width:7px!important;
-  height:52px!important;
-  border-radius:999px!important;
-  background:currentColor!important;
-  transform:translateX(-50%)!important;
+  content:"";
+  position:absolute;
+  left:50%;
+  top:7px;
+  width:7px;
+  height:52px;
+  border-radius:999px;
+  background:currentColor;
+  transform:translateX(-50%);
 }
 #heroPanel.has-concert.is-postponed .report-transition .report-arrow::after{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  bottom:8px!important;
-  width:27px!important;
-  height:27px!important;
-  border-right:7px solid currentColor!important;
-  border-bottom:7px solid currentColor!important;
-  transform:translateX(-50%) rotate(45deg)!important;
-  box-sizing:border-box!important;
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:8px;
+  width:27px;
+  height:27px;
+  border-right:7px solid currentColor;
+  border-bottom:7px solid currentColor;
+  transform:translateX(-50%) rotate(45deg);
+  box-sizing:border-box;
 }
 @media (max-width:760px) and (orientation:portrait){
   #heroPanel.has-concert.is-postponed .report-transition .report-arrow{
-    width:52px!important;
-    height:74px!important;
-    flex-basis:52px!important;
+    width:52px;
+    height:74px;
+    flex-basis:52px;
   }
   #heroPanel.has-concert.is-postponed .report-transition .report-arrow::before{
-    width:6px!important;
-    height:46px!important;
+    width:6px;
+    height:46px;
   }
   #heroPanel.has-concert.is-postponed .report-transition .report-arrow::after{
-    width:24px!important;
-    height:24px!important;
-    border-right-width:6px!important;
-    border-bottom-width:6px!important;
+    width:24px;
+    height:24px;
+    border-right-width:6px;
+    border-bottom-width:6px;
   }
 }
 
-/* MOBILE — correction du placement du texte des deux états reportés */
-@media (max-width:760px) and (orientation:portrait){
-  #heroPanel.has-concert.is-postponed #concertPoster{
-    width:min(100%, var(--report-mobile-width, 100%))!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-  }
-
-  #heroPanel.has-concert.is-postponed .concert-state-panel{
-    width:100%!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-  }
-
-  /* La zone de texte correspond exactement à la partie blanche du PNG.
-     On garde une vraie marge intérieure sur les 4 côtés. */
-  #heroPanel.has-concert.is-postponed .concert-state-panel > .poster-copy{
-    left:0!important;
-    top:0!important;
-    width:69.33%!important;
-    height:100%!important;
-    padding:8% 5.2%!important;
-    box-sizing:border-box!important;
-    display:flex!important;
-    flex-direction:column!important;
-    justify-content:center!important;
-    align-items:center!important;
-    gap:2px!important;
-    transform:none!important;
-  }
-
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-time,
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
-    position:relative!important;
-    left:auto!important;
-    right:auto!important;
-    top:auto!important;
-    bottom:auto!important;
-    transform:none!important;
-    margin:0 auto!important;
-    padding:0!important;
-    text-align:center!important;
-    line-height:1.05!important;
-  }
-
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-time{
-    width:max-content!important;
-    max-width:100%!important;
-    white-space:nowrap!important;
-  }
-
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
-    width:100%!important;
-    max-width:100%!important;
-  }
-
-  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place-line{
-    width:max-content!important;
-    max-width:100%!important;
-    margin:0 auto!important;
-    white-space:nowrap!important;
-  }
-}
-
-/* Concert reporté — structure commune */
 #heroPanel.has-concert.is-postponed{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:stretch!important;
-  gap:0!important;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:0;
 }
 #heroPanel.has-concert.is-postponed #concertPoster,
 #heroPanel.has-concert.is-postponed .concert-state-panel{
@@ -1026,6 +623,69 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   margin:0 auto;
   white-space:nowrap;
 }
+
+@media (max-width:760px) and (orientation:portrait){
+  #heroPanel.has-concert.is-postponed #concertPoster{
+    width:min(100%, var(--report-mobile-width, 100%));
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel{
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel > .poster-copy{
+    left:0;
+    top:0;
+    width:69.33%;
+    height:100%;
+    padding:8% 5.2%;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:2px;
+    transform:none;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-time,
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    bottom:auto;
+    transform:none;
+    margin:0 auto;
+    padding:0;
+    text-align:center;
+    line-height:1.05;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-date,
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-time{
+    width:max-content;
+    max-width:100%;
+    white-space:nowrap;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place{
+    width:100%;
+    max-width:100%;
+  }
+
+  #heroPanel.has-concert.is-postponed .concert-state-panel .poster-place-line{
+    width:max-content;
+    max-width:100%;
+    margin:0 auto;
+    white-space:nowrap;
+  }
+}
 #heroPanel .report-cross{
   position:absolute;
   inset:4% 1.5%;
@@ -1057,153 +717,43 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 @media(prefers-reduced-motion:reduce){
   #heroPanel .report-cross::before{animation:none;transform:rotate(14deg) scaleX(1)}
   #heroPanel .report-cross::after{animation:none;transform:rotate(-14deg) scaleX(1)}
-}
-
-/* Le duo — fenêtre portraits et biographies */
-.duo-launch-wrap{display:flex;justify-content:flex-start}
-.duo-launch{display:inline-flex;align-items:center;gap:14px;border:0;border-radius:999px;padding:10px 22px 10px 10px;background:var(--blue);color:#fff;font:700 clamp(1.35rem,3vw,2rem)/1 Georgia,serif;cursor:pointer;box-shadow:0 10px 28px #0002;transition:transform .2s ease,box-shadow .2s ease}
+}.duo-launch{display:inline-flex;align-items:center;gap:14px;border:0;border-radius:999px;padding:10px 22px 10px 10px;background:var(--blue);color:#fff;font:700 clamp(1.35rem,3vw,2rem)/1 Georgia,serif;cursor:pointer;box-shadow:0 10px 28px #0002;transition:transform .2s ease,box-shadow .2s ease}
 .duo-launch:hover,.duo-launch:focus-visible{transform:translateY(-2px);box-shadow:0 14px 34px #0003}
 .duo-launch img{width:62px;height:62px;object-fit:cover;border-radius:50%;background:#fff}
 .duo-modal[hidden]{display:none}.duo-modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:18px}.duo-backdrop{position:absolute;inset:0;background:#172027b8;backdrop-filter:blur(5px)}
 .duo-dialog{position:relative;z-index:1;width:min(900px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--paper);border-radius:26px;padding:clamp(22px,4vw,38px);box-shadow:0 24px 80px #0006}
-.duo-dialog>h2{margin:0 48px 8px 0;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--blue)}.duo-intro{margin:0 0 24px;max-width:720px}
-.duo-close{position:absolute;right:16px;top:14px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:var(--ink);font-size:2rem;line-height:1;cursor:pointer;box-shadow:0 5px 18px #0002}
+.duo-dialog>h2{margin:0 48px 8px 0;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--blue)}.duo-close{position:absolute;right:16px;top:14px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:var(--ink);font-size:2rem;line-height:1;cursor:pointer;box-shadow:0 5px 18px #0002}
 .duo-portraits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.duo-person{border:0;background:#fff;border-radius:22px;padding:12px 12px 18px;cursor:pointer;box-shadow:0 10px 30px #00000012;transition:transform .2s ease,box-shadow .2s ease}.duo-person:hover,.duo-person:focus-visible{transform:translateY(-4px);box-shadow:0 16px 36px #0002}.duo-person img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:16px}.duo-person span{display:block;margin-top:13px;color:var(--blue);font:700 clamp(1.2rem,3vw,1.6rem)/1.2 Georgia,serif}
 .duo-bio{background:#fff;border-radius:20px;padding:clamp(20px,4vw,30px);box-shadow:0 10px 30px #00000010}.duo-bio h3{margin:8px 0 12px;color:var(--blue);font:700 clamp(1.7rem,4vw,2.4rem)/1.15 Georgia,serif}.duo-bio p{margin:0;white-space:pre-line;font-size:1.05rem}.duo-back{border:0;background:transparent;color:var(--blue);padding:0;font-weight:800;cursor:pointer}
 body.duo-modal-open{overflow:hidden}
-@media(max-width:620px){.duo-portraits{grid-template-columns:1fr;gap:16px}.duo-person img{aspect-ratio:4/3;object-position:center 32%}.duo-dialog{padding:22px 16px}.duo-launch-wrap{justify-content:center}}
+@media(max-width:620px){.duo-portraits{grid-template-columns:1fr;gap:16px}.duo-person img{aspect-ratio:4/3;object-position:center 32%}.duo-dialog{padding:22px 16px}}
 @media(prefers-reduced-motion:reduce){.duo-launch,.duo-person{transition:none}}
 
-/* Le bouton « Le duo » reprend exactement le panneau graphique des autres rubriques. */
-.duo-launch.section-sign{
-  appearance:none;
-  -webkit-appearance:none;
-  border:0;
-  background:transparent;
-  border-radius:0;
-  box-shadow:none;
-  cursor:pointer;
-  gap:0;
-  transition:transform .2s ease,filter .2s ease;
-  text-align:inherit;
-}
-.duo-launch.section-sign:hover,.duo-launch.section-sign:focus-visible{
-  transform:translateY(-2px);
-  box-shadow:none;
-  filter:drop-shadow(0 8px 12px #0002);
-}
-.duo-launch.section-sign > img{
-  display:block;
-  width:100%;
-  height:auto;
-  max-width:100%;
-  margin:0;
-  padding:0;
-  object-fit:initial;
-  border-radius:0;
-  background:transparent;
-}
-.duo-launch.section-sign > span{
-  position:absolute;
-  left:0;top:0;
-  width:69.33%;height:100%;
-  box-sizing:border-box;
-  padding:0 5%;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--ink)!important;
-  font-family:Georgia,serif;
-  font-size:clamp(1.35rem,2.35vw,2rem);
-  font-weight:700;line-height:1!important;
-  text-align:center;white-space:nowrap;
-}
-@media(max-width:760px){
-  .duo-launch.section-sign > span{padding:0 4%;font-size:clamp(1.1rem,5vw,1.65rem)}
-}
-
-/* Harmonisation « Le duo » / panneau-titre « Concerts » */
 #duoOpen.duo-launch.section-sign{
-  display:block!important;
-  width:350px!important;
-  max-width:100%!important;
-  height:auto!important;
-  margin:0 0 26px 0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  line-height:0!important;
-  gap:0!important;
+  -webkit-appearance:none;appearance:none;display:block;position:relative;
+  width:350px;max-width:100%;height:auto;margin:0;padding:0;
+  border:0;border-radius:0;background:transparent;box-shadow:none;
+  line-height:0;gap:0;cursor:pointer;overflow:visible;
+  transition:transform .2s ease,filter .2s ease;text-align:inherit;
 }
-#duoOpen.duo-launch.section-sign > img{
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
-  max-width:100%!important;
-  margin:0!important;
-  padding:0!important;
-  border-radius:0!important;
-}
-@media(max-width:760px){
-  #duoOpen.duo-launch.section-sign{
-    width:min(86vw,330px)!important;
-    max-width:100%!important;
-    margin:0 0 22px 0!important;
-  }
-}
+#duoOpen.duo-launch.section-sign:hover,#duoOpen.duo-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
+#duoOpen.duo-launch.section-sign>img{display:block;width:100%;height:auto;max-width:100%;margin:0;padding:0;border-radius:0;object-fit:contain;background:transparent}
+#duoOpen.duo-launch.section-sign>span{position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;padding:0 5%;display:flex;align-items:center;justify-content:center;color:var(--ink);font-family:Georgia,serif;font-size:clamp(1.35rem,2.35vw,2rem);font-weight:700;line-height:1;text-align:center;white-space:nowrap}
+@media(max-width:760px){#duoOpen.duo-launch.section-sign{width:min(86vw,330px)}#duoOpen.duo-launch.section-sign>span{padding:0 4%;font-size:clamp(1.1rem,5vw,1.65rem)}}
 
-/* Photos — bouton GIF, photo principale et album chronologique */
-/* Photos : même mécanisme de dimensionnement que « Le duo ». */
-.photo-album-launch.section-sign{
-  appearance:none;-webkit-appearance:none;
-  display:block!important;width:303px!important;max-width:100%!important;height:auto!important;
-  margin:0 0 23px 18px!important;padding:0!important;border:0!important;border-radius:0!important;
-  background:transparent!important;box-shadow:none!important;line-height:0!important;
-  cursor:pointer;overflow:visible!important;transition:transform .2s ease,filter .2s ease;
-}
-.photo-album-launch.section-sign:hover,.photo-album-launch.section-sign:focus-visible{
-  transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002);
-}
-.photo-album-launch.section-sign > img{
-  display:block!important;width:100%!important;height:auto!important;max-width:100%!important;
-  margin:0!important;padding:0!important;border-radius:0!important;object-fit:initial!important;background:transparent!important;
-}
-.photo-album-launch.section-sign > span{
-  position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;padding:0 5%;
-  display:flex;align-items:center;justify-content:center;color:var(--ink)!important;font-family:Georgia,serif;
-  font-size:clamp(1.17rem,2.03vw,1.73rem);font-weight:700;line-height:1!important;text-align:center;white-space:nowrap;
-}
-@media(max-width:760px){
-  .photo-album-launch.section-sign{width:min(74.4vw,285px)!important;max-width:100%!important;margin:0 0 19px 15px!important}
-  .photo-album-launch.section-sign > span{padding:0 4%;font-size:clamp(.95rem,4.33vw,1.43rem)}
-}
 .photo-featured{margin-top:0;max-width:760px}.photo-featured figure{margin:0;display:inline-block;max-width:100%}.photo-featured img{display:block;max-width:100%;max-height:620px;width:auto;height:auto;border-radius:18px;box-shadow:0 10px 30px #00000018}.photo-featured figcaption{margin:10px 0 0;font-family:Georgia,'Times New Roman',serif;font-style:italic;color:var(--blue)}
 .photo-featured a,.album-meta a{color:var(--blue);font-weight:800}
-.photo-album-modal{position:fixed;inset:0;z-index:1000;background:rgba(12,18,22,.86);padding:18px;overflow:auto}.photo-album-panel{position:relative;width:min(1100px,100%);margin:auto;background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0007}.photo-album-close{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:var(--blue);color:#fff;font-size:1.5rem;cursor:pointer}.photo-album-panel h2{padding-right:56px}.photo-album-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;clear:both}.album-photo{margin:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px #0001}.album-photo button{display:block;width:100%;padding:0;border:0;background:#fff;cursor:zoom-in}.album-photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.album-meta{padding:12px 14px}.album-date{display:block;font-size:.82rem;font-weight:850;color:var(--blue);margin-bottom:4px}.album-caption{display:block;font-family:Georgia,'Times New Roman',serif;font-style:italic}.photo-lightbox{position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,.92);display:grid;place-items:center;padding:30px}.photo-lightbox[hidden],.photo-album-modal[hidden]{display:none!important}.photo-lightbox img{max-width:94vw;max-height:86vh;object-fit:contain}.photo-lightbox-close{position:absolute;right:22px;top:18px;border:0;background:#fff;color:#111;border-radius:50%;width:44px;height:44px;font-size:1.5rem;cursor:pointer}.album-year{grid-column:1/-1;margin:12px 0 -4px;font-size:1.45rem;color:var(--blue)}.photo-lightbox-prev,.photo-lightbox-next{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:#111;font-size:2rem;cursor:pointer}.photo-lightbox-prev{left:18px}.photo-lightbox-next{right:18px}.photo-lightbox-info{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:min(760px,88vw);padding:9px 14px;border-radius:14px;background:rgba(0,0,0,.7);color:#fff;text-align:center}.photo-lightbox-info a{color:#fff;text-decoration:underline}.photo-lightbox-counter{font-weight:800;margin-right:8px}
+.photo-album-modal{position:fixed;inset:0;z-index:1000;background:rgba(12,18,22,.86);padding:18px;overflow:auto}.photo-album-panel{position:relative;width:min(1100px,100%);margin:auto;background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0007}.photo-album-close{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:var(--blue);color:#fff;font-size:1.5rem;cursor:pointer}.photo-album-panel h2{padding-right:56px}.photo-album-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;clear:both}.album-photo{margin:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px #0001}.album-photo button{display:block;width:100%;padding:0;border:0;background:#fff;cursor:zoom-in}.album-photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.album-meta{padding:12px 14px}.album-date{display:block;font-size:.82rem;font-weight:850;color:var(--blue);margin-bottom:4px}.album-caption{display:block;font-family:Georgia,'Times New Roman',serif;font-style:italic}.photo-lightbox{position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,.92);display:grid;place-items:center;padding:30px}.photo-lightbox[hidden],.photo-album-modal[hidden]{display:none}.photo-lightbox img{max-width:94vw;max-height:86vh;object-fit:contain}.photo-lightbox-close{position:absolute;right:22px;top:18px;border:0;background:#fff;color:#111;border-radius:50%;width:44px;height:44px;font-size:1.5rem;cursor:pointer}.album-year{grid-column:1/-1;margin:12px 0 -4px;font-size:1.45rem;color:var(--blue)}.photo-lightbox-prev,.photo-lightbox-next{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:#111;font-size:2rem;cursor:pointer}.photo-lightbox-prev{left:18px}.photo-lightbox-next{right:18px}.photo-lightbox-info{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:min(760px,88vw);padding:9px 14px;border-radius:14px;background:rgba(0,0,0,.7);color:#fff;text-align:center}.photo-lightbox-info a{color:#fff;text-decoration:underline}.photo-lightbox-counter{font-weight:800;margin-right:8px}
 @media(max-width:760px){.photo-album-modal{padding:18px}.photo-album-panel{padding:18px}.photo-album-grid{grid-template-columns:1fr 1fr;gap:12px}}
 @media(max-width:480px){.photo-album-grid{grid-template-columns:1fr}}
 
-
-/* Vidéos — même architecture et même dimensionnement que Photos / Le duo */
-.video-library-launch.section-sign{appearance:none;-webkit-appearance:none;display:block!important;width:350px!important;max-width:100%!important;height:auto!important;margin:0 0 26px 0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;line-height:0!important;cursor:pointer;overflow:visible!important;transition:transform .2s ease,filter .2s ease}
-.video-library-launch.section-sign:hover,.video-library-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
-.video-library-launch.section-sign>img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;margin:0!important;padding:0!important;border-radius:0!important;object-fit:initial!important;background:transparent!important}
-.video-library-launch.section-sign>span{position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;padding:0 5%;display:flex;align-items:center;justify-content:center;color:var(--ink)!important;font-family:Georgia,serif;font-size:clamp(1.35rem,2.35vw,2rem);font-weight:700;line-height:1!important;text-align:center;white-space:nowrap}
-@media(max-width:760px){.video-library-launch.section-sign{width:min(86vw,330px)!important;max-width:100%!important;margin:0 0 22px 0!important}.video-library-launch.section-sign>span{padding:0 4%;font-size:clamp(1.1rem,5vw,1.65rem)}}
 .video-featured{margin-top:0;max-width:760px}.video-featured .video-item{margin:0}
-.video-library-modal{position:fixed;inset:0;z-index:1000;background:rgba(12,18,22,.86);padding:18px;overflow:auto}.video-library-modal[hidden]{display:none!important}.video-library-panel{position:relative;width:min(1100px,100%);margin:auto;background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0007}.video-library-close{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:var(--blue);color:#fff;font-size:1.5rem;cursor:pointer}.video-library-panel h2{padding-right:56px}.video-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;clear:both}
+.video-library-modal{position:fixed;inset:0;z-index:1000;background:rgba(12,18,22,.86);padding:18px;overflow:auto}.video-library-modal[hidden]{display:none}.video-library-panel{position:relative;width:min(1100px,100%);margin:auto;background:var(--paper);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0007}.video-library-close{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;border:0;border-radius:50%;background:var(--blue);color:#fff;font-size:1.5rem;cursor:pointer}.video-library-panel h2{padding-right:56px}.video-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;clear:both}
 @media(max-width:760px){.video-library-modal{padding:18px}.video-library-panel{padding:18px}.video-library-grid{grid-template-columns:1fr}}
 
-
-/* Concerts — prochaine date sur la page + calendrier repliable dans la fenêtre */
 .concert-main-next{width:min(540px,100%);margin:18px 0 0}.concert-main-next .card{text-align:center;padding:24px 28px}.concert-main-next .card .date,.concert-main-next .card h3,.concert-main-next .card p{text-align:center}.concert-main-next .card h3{margin-left:auto;margin-right:auto}.concert-main-next .card a{display:inline-block}
 .concert-main-next .cards{grid-template-columns:1fr}
-.concert-launch.section-sign{appearance:none;-webkit-appearance:none;display:block!important;width:303px!important;max-width:100%!important;height:auto!important;margin:0 0 23px 18px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;line-height:0!important;cursor:pointer;overflow:visible!important;text-align:inherit;transition:transform .2s ease,filter .2s ease}
-.concert-launch.section-sign:hover,.concert-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
-.concert-launch.section-sign>img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;margin:0!important;padding:0!important;border-radius:0!important;object-fit:initial!important;background:transparent!important}
-.concert-launch.section-sign>span{position:absolute;left:0;top:0;width:69.33%;height:100%;box-sizing:border-box;padding:0 5%;display:flex;align-items:center;justify-content:center;color:var(--ink)!important;font-family:Georgia,serif;font-size:clamp(1.17rem,2.03vw,1.73rem);font-weight:700;line-height:1!important;text-align:center;white-space:nowrap}
-@media(max-width:760px){.concert-launch.section-sign{width:min(74.4vw,285px)!important;max-width:100%!important;margin:0 0 19px 15px!important}.concert-launch.section-sign>span{padding:0 4%;font-size:clamp(.95rem,4.33vw,1.43rem)}}
-.concert-modal[hidden]{display:none!important}.concert-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:18px;background:#172027b8;backdrop-filter:blur(5px)}
+.concert-modal[hidden]{display:none}.concert-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:18px;background:#172027b8;backdrop-filter:blur(5px)}
 .concert-modal-panel{position:relative;width:min(900px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--paper);border-radius:26px;padding:clamp(20px,4vw,34px);box-shadow:0 24px 80px #0006}
 .concert-modal-close{position:absolute;right:15px;top:13px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;font-size:2rem;cursor:pointer}.concert-modal-panel>h2{margin:0 55px 18px 0;color:var(--blue)}
 .calendar-fold{margin:2px 0 22px;border:1px solid #0002;border-radius:18px;background:#fff;overflow:hidden;box-shadow:0 7px 22px #0000000a}
@@ -1225,201 +775,6 @@ body.duo-modal-open{overflow:hidden}
 @media(max-width:720px){.concert-months{grid-template-columns:1fr;gap:10px}.concert-month{max-width:310px;width:100%;margin:auto}.concert-calendar{padding:2px 12px 16px}.concert-line summary{grid-template-columns:76px 1fr auto;gap:6px}.concert-line-time{grid-column:1}.concert-line-place{grid-column:2}.concert-line-state{grid-column:3;grid-row:1/3}.concert-line-detail{padding:0 4px 12px 82px}.concert-modal-panel{padding:20px 15px}}
 body.concert-modal-open{overflow:hidden}
 
-
-/* Harmonisation visuelle finale — géométrie des rubriques uniquement */
-#concerts, #musique, #videos, #photos{padding-top:46px;padding-bottom:46px}
-#concerts .section-sign,
-#musique .section-sign,
-#videos .section-sign,
-#photos .section-sign{margin-bottom:22px!important}
-
-@media(max-width:760px){
-  #concerts, #musique, #videos, #photos{padding-top:34px;padding-bottom:34px}
-  #concerts .section-sign,
-  #musique .section-sign,
-  #videos .section-sign,
-  #photos .section-sign{margin-bottom:19px!important}
-}
-
-
-/* Harmonisation finale — grandes fenêtres Musique et Contact */
-.music-item{
-  margin-top:18px;
-  margin-bottom:18px;
-}
-#contact .organizer-form,
-#contact #visitorMessageBox{
-  margin-top:18px!important;
-  margin-bottom:18px!important;
-}
-@media(max-width:760px){
-  .music-item{
-    margin-top:18px;
-    margin-bottom:18px;
-  }
-  #contact .organizer-form,
-  #contact #visitorMessageBox{
-    margin-top:18px!important;
-    margin-bottom:18px!important;
-  }
-}
-
-
-/* Harmonisation — marges haut/bas des boutons et images de titre */
-.section-sign,
-.duo-launch.section-sign,
-.concert-launch.section-sign,
-.video-library-launch.section-sign,
-.photo-album-launch.section-sign{
-  margin-top:18px!important;
-  margin-bottom:18px!important;
-}
-@media(max-width:760px){
-  .section-sign,
-  .duo-launch.section-sign,
-  .concert-launch.section-sign,
-  .video-library-launch.section-sign,
-  .photo-album-launch.section-sign{
-    margin-top:18px!important;
-    margin-bottom:18px!important;
-  }
-}
-
-
-/* Alignement Concerts sur Musique — horizontal uniquement */
-.concert-launch.section-sign{
-  margin-left:5px!important;
-}
-@media(max-width:760px){
-  .concert-launch.section-sign{
-    margin-left:5px!important;
-  }
-}
-
-
-/* Concerts — alignement VISUEL sur le panneau Musique */
-.concert-launch.section-sign{
-  margin-left:18px!important;
-}
-@media(max-width:760px){
-  .concert-launch.section-sign{
-    margin-left:15px!important;
-  }
-}
-
-
-/* Concerts — correction d'alignement avec Musique, PC et mobile */
-.concert-launch.section-sign{
-  margin-left:23px!important;
-}
-@media(max-width:760px){
-  .concert-launch.section-sign{
-    margin-left:20px!important;
-  }
-}
-
-
-
-/* ============================================================
-   HARMONISATION DES ESPACEMENTS — PAGE PRINCIPALE
-   Une seule échelle pilote désormais les rubriques principales.
-   ============================================================ */
-:root{
-  --acl-section-y:46px;
-  --acl-section-y-mobile:34px;
-  --acl-content-gap:18px;
-}
-
-/* Même respiration verticale pour toutes les rubriques principales. */
-#duo,
-#concerts,
-#musique,
-#videos,
-#photos,
-#contact{
-  padding-top:var(--acl-section-y)!important;
-  padding-bottom:var(--acl-section-y)!important;
-}
-
-/* Même espace autour des panneaux-titres. */
-#duo .section-sign,
-#concerts .section-sign,
-#musique .section-sign,
-#videos .section-sign,
-#photos .section-sign{
-  margin-top:0!important;
-  margin-bottom:var(--acl-content-gap)!important;
-}
-
-/* Les panneaux-titres partent tous du même axe du .wrap.
-   On supprime les anciennes compensations successives de Concerts. */
-.concert-launch.section-sign,
-.duo-launch.section-sign,
-.video-library-launch.section-sign,
-.photo-album-launch.section-sign,
-#musique .section-sign{
-  margin-left:0!important;
-  margin-right:0!important;
-}
-
-/* Les listes/grilles gèrent elles-mêmes l'espace entre leurs fenêtres. */
-.music-gallery{
-  gap:var(--acl-content-gap)!important;
-}
-.music-item{
-  margin-top:0!important;
-  margin-bottom:0!important;
-}
-
-/* Même départ du contenu sous les panneaux-titres. */
-.concert-main-next,
-.video-featured,
-.photo-featured{
-  margin-top:0!important;
-}
-
-/* Contact : même intervalle entre la rangée d'actions et les formulaires. */
-#contact .organizer-form,
-#contact #visitorMessageBox{
-  margin-top:var(--acl-content-gap)!important;
-  margin-bottom:0!important;
-}
-
-@media(max-width:760px){
-  #duo,
-  #concerts,
-  #musique,
-  #videos,
-  #photos,
-  #contact{
-    padding-top:var(--acl-section-y-mobile)!important;
-    padding-bottom:var(--acl-section-y-mobile)!important;
-  }
-
-  #duo .section-sign,
-  #concerts .section-sign,
-  #musique .section-sign,
-  #videos .section-sign,
-  #photos .section-sign{
-    margin-top:0!important;
-    margin-bottom:var(--acl-content-gap)!important;
-  }
-
-  .concert-launch.section-sign,
-  .duo-launch.section-sign,
-  .video-library-launch.section-sign,
-  .photo-album-launch.section-sign,
-  #musique .section-sign{
-    margin-left:0!important;
-    margin-right:0!important;
-  }
-}
-
-
-/* ============================================================
-   REFACTORISATION VISUELLE — COMPOSANTS COMMUNS
-   Cette couche remplace les répétitions sans modifier le design.
-   ============================================================ */
 :root{
   --acl-modal-pad:18px;
   --acl-modal-radius:24px;
@@ -1428,54 +783,9 @@ body.concert-modal-open{overflow:hidden}
   --acl-close-size:44px;
 }
 
-/* Socle commun des panneaux-titres interactifs. Les largeurs propres à
-   chaque animation restent définies par leurs règles historiques. */
-.duo-launch.section-sign,
-.concert-launch.section-sign,
-.video-library-launch.section-sign,
-.photo-album-launch.section-sign{
-  appearance:none;
-  -webkit-appearance:none;
-  display:block!important;
-  max-width:100%!important;
-  height:auto!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  line-height:0!important;
-  cursor:pointer;
-  overflow:visible!important;
-  transition:transform .2s ease,filter .2s ease;
-}
-.duo-launch.section-sign:hover,
-.duo-launch.section-sign:focus-visible,
-.concert-launch.section-sign:hover,
-.concert-launch.section-sign:focus-visible,
-.video-library-launch.section-sign:hover,
-.video-library-launch.section-sign:focus-visible,
-.photo-album-launch.section-sign:hover,
-.photo-album-launch.section-sign:focus-visible{
-  transform:translateY(-2px);
-  filter:drop-shadow(0 8px 12px #0002);
-}
-.duo-launch.section-sign>img,
-.concert-launch.section-sign>img,
-.video-library-launch.section-sign>img,
-.photo-album-launch.section-sign>img{
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
-  max-width:100%!important;
-  margin:0!important;
-  padding:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-}
+.concert-launch.section-sign,.video-library-launch.section-sign,.photo-album-launch.section-sign{cursor:pointer;transition:transform .2s ease,filter .2s ease}
+.concert-launch.section-sign:hover,.concert-launch.section-sign:focus-visible,.video-library-launch.section-sign:hover,.video-library-launch.section-sign:focus-visible,.photo-album-launch.section-sign:hover,.photo-album-launch.section-sign:focus-visible{transform:translateY(-2px);filter:drop-shadow(0 8px 12px #0002)}
 
-/* Socle commun des grandes fenêtres. Les différences de largeur et de
-   position du bouton Fermer restent propres à chaque contenu. */
 .video-library-modal,
 .photo-album-modal,
 .concert-modal{
@@ -1508,7 +818,6 @@ body.concert-modal-open{overflow:hidden}
   cursor:pointer;
 }
 
-/* Focus clavier visible et cohérent sur les commandes principales. */
 .section-sign:focus-visible,
 .video-library-close:focus-visible,
 .photo-album-close:focus-visible,
@@ -1521,71 +830,53 @@ body.concert-modal-open{overflow:hidden}
   outline-offset:4px;
 }
 
-@media(max-width:760px){
-  .video-library-modal,
-  .photo-album-modal,
-  .concert-modal{
-    padding:var(--acl-modal-pad);
-  }
-}
-
-
-/* ============================================================
-   GRILLE STRICTE — HOMOGENEITE REELLE DES MARGES
-   Le conteneur de rubrique pilote seul le rythme vertical.
-   ============================================================ */
 :root{
   --acl-main-section-y:46px;
   --acl-main-gap:18px;
   --acl-main-section-y-mobile:34px;
 }
 
-/* Six rubriques = une seule géométrie extérieure. */
 #duo,
 #concerts,
 #musique,
 #videos,
 #photos,
 #contact{
-  padding-block:var(--acl-main-section-y)!important;
+  padding-block:var(--acl-main-section-y);
 }
 
-/* Une seule source de vérité pour les intervalles internes. */
 #duo > .wrap,
 #concerts > .wrap,
 #musique > .wrap,
 #videos > .wrap,
 #photos > .wrap,
 #contact > .wrap{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  gap:var(--acl-main-gap)!important;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:var(--acl-main-gap);
 }
 
-/* Aucun enfant direct ne rajoute sa propre marge au gap commun. */
 #duo > .wrap > *,
 #concerts > .wrap > *,
 #musique > .wrap > *,
 #videos > .wrap > *,
 #photos > .wrap > *,
 #contact > .wrap > *{
-  margin-top:0!important;
-  margin-bottom:0!important;
+  margin-top:0;
+  margin-bottom:0;
 }
 
-/* Tous les panneaux-titres démarrent exactement sur l'axe du .wrap. */
 #duo .section-sign,
 #concerts .section-sign,
 #musique .section-sign,
 #videos .section-sign,
 #photos .section-sign,
 #contact .section-sign{
-  margin-left:0!important;
-  margin-right:0!important;
+  margin-left:0;
+  margin-right:0;
 }
 
-/* Les contenus principaux ne recréent aucun décalage vertical. */
 #concerts .concert-main-next,
 #musique .music-gallery,
 #videos .video-featured,
@@ -1593,22 +884,20 @@ body.concert-modal-open{overflow:hidden}
 #contact .socials,
 #contact .organizer-form,
 #contact #visitorMessageBox{
-  margin-top:0!important;
-  margin-bottom:0!important;
+  margin-top:0;
+  margin-bottom:0;
 }
 
-/* Dans Musique, le même pas de 18 px sépare aussi chaque fenêtre. */
 #musique .music-gallery{
-  gap:var(--acl-main-gap)!important;
+  gap:var(--acl-main-gap);
 }
 #musique .music-item{
-  margin:0!important;
+  margin:0;
 }
 
-/* Les formulaires du Contact restent sur le même axe que le reste. */
 #contact .organizer-form,
 #contact #visitorMessageBox{
-  align-self:flex-start!important;
+  align-self:flex-start;
 }
 
 @media(max-width:760px){
@@ -1618,82 +907,36 @@ body.concert-modal-open{overflow:hidden}
   #videos,
   #photos,
   #contact{
-    padding-block:var(--acl-main-section-y-mobile)!important;
-  }
-
-  #duo > .wrap,
-  #concerts > .wrap,
-  #musique > .wrap,
-  #videos > .wrap,
-  #photos > .wrap,
-  #contact > .wrap{
-    gap:var(--acl-main-gap)!important;
+    padding-block:var(--acl-main-section-y-mobile);
   }
 }
 
-/* GEOMETRIE FINALE — marges haut/bas strictement identiques.
-   Duo, Concerts, Musique, Videos, Photos et Contact partagent le même rythme vertical. */
-#duo,
-#concerts,
-#musique,
-#videos,
-#photos,
-#contact{
-  margin-top:0!important;
-  margin-bottom:0!important;
-  padding-top:46px!important;
-  padding-bottom:46px!important;
-  box-sizing:border-box;
-}
-
-@media(max-width:760px){
-  #duo,
-  #concerts,
-  #musique,
-  #videos,
-  #photos,
-  #contact{
-    margin-top:0!important;
-    margin-bottom:0!important;
-    padding-top:34px!important;
-    padding-bottom:34px!important;
-  }
-}
-
-
-
-/* ============================================================
-   COMPOSANT FINAL — DIMENSIONS IDENTIQUES DES 5 PANNEAUX
-   Concerts / Musique / Videos / Photos / Contact.
-   Neutralise aussi les styles natifs differents de button et h2.
-   Duo reste volontairement hors de cette regle.
-   ============================================================ */
 #concerts .concert-launch.section-sign,
 #musique .section-sign,
 #videos .video-library-launch.section-sign,
 #photos .photo-album-launch.section-sign,
 #contact .section-sign{
-  -webkit-appearance:none!important;
-  appearance:none!important;
-  display:block!important;
-  position:relative!important;
-  width:350px!important;
-  max-width:100%!important;
-  height:auto!important;
-  min-width:0!important;
-  min-height:0!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
+  -webkit-appearance:none;
+  appearance:none;
+  display:block;
+  position:relative;
+  width:350px;
+  max-width:100%;
+  height:auto;
+  min-width:0;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
   outline-offset:4px;
-  background:transparent!important;
-  box-shadow:none!important;
-  box-sizing:border-box!important;
-  line-height:0!important;
+  background:transparent;
+  box-shadow:none;
+  box-sizing:border-box;
+  line-height:0;
   font:inherit;
-  overflow:visible!important;
-  vertical-align:top!important;
+  overflow:visible;
+  vertical-align:top;
 }
 
 #concerts .concert-launch.section-sign > img,
@@ -1701,16 +944,16 @@ body.concert-modal-open{overflow:hidden}
 #videos .video-library-launch.section-sign > img,
 #photos .photo-album-launch.section-sign > img,
 #contact .section-sign > img{
-  display:block!important;
-  width:350px!important;
-  max-width:100%!important;
-  height:auto!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  object-fit:contain!important;
-  box-sizing:border-box!important;
+  display:block;
+  width:350px;
+  max-width:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  object-fit:contain;
+  box-sizing:border-box;
 }
 
 #concerts .concert-launch.section-sign > span,
@@ -1718,23 +961,23 @@ body.concert-modal-open{overflow:hidden}
 #videos .video-library-launch.section-sign > span,
 #photos .photo-album-launch.section-sign > span,
 #contact .section-sign > span{
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  width:69.33%!important;
-  height:100%!important;
-  margin:0!important;
-  padding:0 5%!important;
-  box-sizing:border-box!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  font-family:Georgia,serif!important;
-  font-size:clamp(1.35rem,2.35vw,2rem)!important;
-  font-weight:700!important;
-  line-height:1!important;
-  text-align:center!important;
-  white-space:nowrap!important;
+  position:absolute;
+  left:0;
+  top:0;
+  width:69.33%;
+  height:100%;
+  margin:0;
+  padding:0 5%;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Georgia,serif;
+  font-size:clamp(1.35rem,2.35vw,2rem);
+  font-weight:700;
+  line-height:1;
+  text-align:center;
+  white-space:nowrap;
 }
 
 @media(max-width:760px){
@@ -1743,7 +986,7 @@ body.concert-modal-open{overflow:hidden}
   #videos .video-library-launch.section-sign,
   #photos .photo-album-launch.section-sign,
   #contact .section-sign{
-    width:min(86vw,330px)!important;
+    width:min(86vw,330px);
   }
 
   #concerts .concert-launch.section-sign > img,
@@ -1751,7 +994,7 @@ body.concert-modal-open{overflow:hidden}
   #videos .video-library-launch.section-sign > img,
   #photos .photo-album-launch.section-sign > img,
   #contact .section-sign > img{
-    width:100%!important;
+    width:100%;
   }
 
   #concerts .concert-launch.section-sign > span,
@@ -1759,20 +1002,19 @@ body.concert-modal-open{overflow:hidden}
   #videos .video-library-launch.section-sign > span,
   #photos .photo-album-launch.section-sign > span,
   #contact .section-sign > span{
-    padding:0 4%!important;
-    font-size:clamp(1.1rem,5vw,1.65rem)!important;
+    padding:0 4%;
+    font-size:clamp(1.1rem,5vw,1.65rem);
   }
 }
 
 </style>
-
 
 </head>
 <body>
 <a class="skip" href="#accueil">Aller au contenu</a>
 <nav><div class="wrap nav"><a class="brand" href="#accueil">A’Cha Lou</a><div class="links"><a href="#duo">Le duo</a><a href="#concerts">Concerts</a><a href="#musique">Musique</a><a href="#videos">Vidéos</a><a href="#photos">Photos</a><a href="#contact">Contact</a><a class="admin-shortcut" href="https://achalou-admin.achalou24.workers.dev/" aria-label="Administration" title="Administration">⚙︎</a></div></div></nav>
 <main>
-<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><div id="heroConcert" class="hero-concert" hidden></div><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a>
+<section class="hero" id="accueil"><div class="wrap hero-grid"><div><div class="eyebrow" id="heroEyebrow">Duo · musique traditionnelle</div><h1 id="heroTitle">A’Cha Lou</h1><p class="tag">Accordéon piano · Violon · Chant</p><p class="lead">Deux musiciens avec une même envie : faire vivre les mélodies traditionnelles avec énergie, complicité et plaisir.</p><a class="cta" href="#concerts" id="concertLink">Voir les concerts</a>
 <div class="organizer-invite" id="organizerInvite">
   <button type="button" class="organizer-open" id="organizerOpen">Programmer A’Cha Lou ?</button>
   <form id="organizerForm" class="organizer-form" hidden>
@@ -1827,19 +1069,6 @@ body.concert-modal-open{overflow:hidden}
 <section class="contact reveal" id="contact"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Contact</span></h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
 <button type="button" class="social contact-programmer" id="contactMessageOpen">Envoyer un message</button>
 <button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div></div>
-
-
-<div class="newsletter-box" hidden>
-  <h3>Recevoir les prochaines dates</h3>
-  <p>Laissez votre adresse e-mail pour recevoir les nouvelles dates d’A’Cha Lou.</p>
-  <form id="publicSubscribeForm">
-    <label>Adresse e-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
-    <label class="message-trap" aria-hidden="true">Site<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
-    <button type="submit">Je m’inscris</button>
-    <div id="publicSubscribeStatus" class="message-status" role="status" aria-live="polite"></div>
-  </form>
-  <small class="newsletter-note">Votre adresse sert uniquement à vous envoyer les nouvelles d’A’Cha Lou.</small>
-</div>
 
 <div class="visitor-message" id="visitorMessageBox" hidden>
   <h3>Laisser un message à A’Cha Lou</h3>
@@ -1910,7 +1139,7 @@ body.concert-modal-open{overflow:hidden}
 </script>
 
 <script>
-/* Charge toujours la version actuelle de concerts.js après une modification admin. */
+
 document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 </script>
 
@@ -2033,7 +1262,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     return '<article class="card">'+stamp+fullStamp+'<div class="date">'+esc(label)+'</div>'+state+'<h3>'+esc(fmtPlace(c))+'</h3><p>'+esc(fmtDate(c))+(time ? ' · '+esc(time) : '')+'</p>'+reportChange+legacyTime+legacyPlace+reason+(c.info ? '<p>'+esc(c.info)+'</p>' : '')+concertLink+'</article>';
   }
 
-  /* Vue concerts compacte : calendrier 3 mois + fenêtre complète. */
   const gazette={date:'2025-11-19',lieu:'Gazette Café · Montpellier',heure:'',info:''};
   const hasGazette=past.some(c=>c.date===gazette.date && String(c.lieu).toLowerCase().includes('gazette'));
   const archives=hasGazette ? past : [...past,gazette].map(c=>{const times=concertTimes(c);return times?{...c,...times}:c}).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
@@ -2080,11 +1308,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   openConcerts?.addEventListener('click',()=>setConcertModal(true)); closeConcerts?.addEventListener('click',()=>setConcertModal(false));
   modalConcerts?.addEventListener('click',e=>{if(e.target===modalConcerts)setConcertModal(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modalConcerts?.hidden)setConcertModal(false)});
   lib?.addEventListener('click',e=>{const day=e.target.closest('#concertCalendar [data-concert-date]');if(day){const fold=day.closest('.calendar-fold');if(fold)fold.open=false;setConcertModal(true,day.dataset.concertDate)}});
-
-  const title=document.getElementById('heroTitle');
-  const oldBox=document.getElementById('heroConcert');
-  if(title) title.hidden=false;
-  if(oldBox) oldBox.hidden=true;
 
   const panel=document.getElementById('heroPanel');
   const poster=document.getElementById('concertPoster');
@@ -2136,7 +1359,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
     requestAnimationFrame(fitHeroConcert);
   }
 
-
   function fitHeroConcert(){
     const panel=document.getElementById('heroPanel');
     const poster=document.getElementById('concertPoster');
@@ -2168,9 +1390,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       );
     };
 
-    /* Lieu long : on essaie d'abord la coupure naturelle lieu / ville.
-       Si elle n'est pas satisfaisante, on cherchera ensuite la coupure
-       entre mots qui utilise le mieux les deux lignes. */
     const naturalPlaceSplit=(txt)=>{
       const parts=txt.split(/\s*[·•|]\s*/);
       if(parts.length>=2){
@@ -2220,9 +1439,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       // En portrait mobile, on réserve 16 px de respiration de chaque côté.
       // Le panneau entier est donc toujours contenu dans la largeur visible.
       const parentW=panel.parentElement ? panel.parentElement.clientWidth : viewportW;
-      /* La largeur maximale est la largeur REELLEMENT accordée au panneau par
-         la grille. Sur ordinateur cette colonne peut aller jusqu'à 600 px :
-         on l'utilise avant de réduire le texte. */
+      
       const screenMax=isPortraitMobile
         ? Math.max(240,Math.min(parentW,viewportW-36))
         : Math.max(280,Math.min(600,parentW));
@@ -2257,8 +1474,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         return Math.ceil((placeEl.getBoundingClientRect().height-.5)/lh);
       };
 
-      /* Mesure chaque ligne de lieu + ville indépendamment. scrollWidth n'est
-         pas fiable ici quand le bloc est sur deux lignes avec overflow:hidden. */
       const placeLineWidths=()=>{
         const explicit=[...placeEl.querySelectorAll('.poster-place-line')];
         if(explicit.length){
@@ -2269,8 +1484,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 
       const placeMaxLineWidth=()=>Math.max(0,...placeLineWidths());
 
-      /* Contrôle ciblé de la première ligne du lieu + ville
-         dans la largeur réellement disponible. */
       const safePlaceWidth=()=>{
         const cs=getComputedStyle(copy);
         return Math.max(0,copy.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0));
@@ -2303,12 +1516,10 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       };
 
       const fits=()=>{
-        /* Contrôle permanent des 4 marges. En portrait, chaque nouvelle
-           disposition (largeur, coupure ou taille) repasse par ce test. */
+        
         const cs=getComputedStyle(copy);
         const gap=parseFloat(cs.rowGap)||parseFloat(cs.gap)||0;
         const innerH=Math.max(0,copy.clientHeight);
-        const innerW=Math.max(0,copy.clientWidth);
         const els=[dateEl,timeEl,placeEl].filter(el=>el && el.textContent.trim());
         const usedH=els.reduce((sum,el)=>sum+el.getBoundingClientRect().height,0) +
                     Math.max(0,els.length-1)*gap;
@@ -2403,10 +1614,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         }
       }
 
-      /* Après TOUTE coupure, on refait une étude complète. La coupure peut
-         modifier à la fois la largeur de chaque ligne et la hauteur totale.
-         On exploite donc d'abord toute la largeur de panneau disponible,
-         puis on recalcule la meilleure coupure à cette largeur. */
       const recheckAfterPlaceSplit=()=>{
         setPanelWidth(maxW);
 
@@ -2431,10 +1638,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         ? {date:9,time:8,place:7}
         : {date:12,time:10,place:8};
 
-      /* Portrait mobile : boucle de validation permanente.
-         Après toute coupure ou variation de taille, on revérifie largeur ET
-         hauteur de date, heure et des deux lignes lieu + ville avec les
-         marges CSS 10 px haut/bas et 14 px gauche/droite intactes. */
       if(isPortraitMobile){
         setPanelWidth(maxW);
 
@@ -2442,9 +1645,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         let t=parseFloat(getComputedStyle(timeEl).fontSize)||ideal.time;
         let l=parseFloat(getComputedStyle(placeEl).fontSize)||ideal.place;
 
-        /* On ne valide jamais une étape sans repasser par fits(). Si le lieu
-           est responsable du débordement, il diminue très progressivement ;
-           si c'est la hauteur totale/date/heure, l'ensemble diminue ensuite. */
         for(let step=0;step<100 && !fits();step++){
           const placeTooWide=placeMaxLineWidth()>copy.clientWidth+0.5;
           if(placeTooWide && l>6){
@@ -2460,10 +1660,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         }
       }
 
-      /* Mobile paysage : après toutes les décisions de largeur et de coupure,
-         on repart volontairement des tailles souhaitées. On garde ensuite la
-         plus grande taille possible qui respecte réellement les quatre marges.
-         Cela évite de conserver une petite taille issue d'un calcul précédent. */
       const fitSiblingPanel=(host)=>{
         const c=host.querySelector('.poster-copy');
         const d=host.querySelector('.poster-date');
@@ -2536,8 +1732,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
         }
       };
 
-      /* En mode reporté, l'ancien panneau suit exactement le même régime
-         portrait / paysage / ordinateur que le nouveau. */
       if(statePanels.length>1){
         statePanels.slice(0,-1).forEach(fitSiblingPanel);
       }
@@ -2611,7 +1805,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 })();
 </script>
 
-
 <script>
 (function(){
   const featured=document.getElementById('photoFeatured'), grid=document.getElementById('photoAlbumGrid'), modal=document.getElementById('photoAlbumModal'), open=document.getElementById('photoAlbumOpen'), close=document.getElementById('photoAlbumClose'), lightbox=document.getElementById('photoLightbox'), lightImg=document.getElementById('photoLightboxImage'), lightClose=document.getElementById('photoLightboxClose'),prev=document.getElementById('photoLightboxPrev'),next=document.getElementById('photoLightboxNext'),info=document.getElementById('photoLightboxInfo');
@@ -2636,7 +1829,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   document.addEventListener('keydown',e=>{if(!lightbox.hidden&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){show(current+(e.key==='ArrowRight'?1:-1));return}if(e.key==='Escape'){if(!lightbox.hidden)lightbox.hidden=true;else if(!modal.hidden)closeModal()}});
 })();
 </script>
-
 
 <script>
 (function(){
@@ -2667,44 +1859,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 })();
 </script>
 
-<!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"a0e391cce3c6f9c596f6af67d38ee65b"}'></script>
-<!-- End Cloudflare Web Analytics -->
-
-<script>
-(()=>{
-  const form=document.getElementById("publicSubscribeForm");
-  const status=document.getElementById("publicSubscribeStatus");
-  if(!form||!status) return;
-  form.addEventListener("submit",async e=>{
-    e.preventDefault();
-    const button=form.querySelector('button[type="submit"]');
-    const fd=new FormData(form);
-    const payload={
-      email:String(fd.get("email")||"").trim(),
-      website:String(fd.get("website")||"").trim()
-    };
-    status.className="message-status";
-    status.textContent="Inscription…";
-    button.disabled=true;
-    try{
-      const res=await fetch("https://achalou-admin.achalou24.workers.dev/inscription-public",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(payload)
-      });
-      const data=await res.json().catch(()=>({}));
-      if(!res.ok||!data.ok) throw new Error(data.error||"Inscription impossible.");
-      form.reset();
-      status.className="message-status ok";
-      status.textContent=data.already ? "Cette adresse est déjà inscrite." : "Merci, votre inscription est enregistrée.";
-    }catch(err){
-      status.className="message-status err";
-      status.textContent="L’inscription n’a pas pu être enregistrée. Réessayez dans un instant.";
-    }finally{button.disabled=false;}
-  });
-})();
-</script>
 
 <script>
 (()=>{
@@ -2846,10 +2001,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       return;
     }
 
-    /* Desktop ET mobile :
-       le formulaire est placé sous la rangée des boutons du Contact.
-       Il profite ainsi de #contact .organizer-form (width:100%, max-width:590px)
-       et ne reste jamais coincé dans le flex .socials. */
     socials.insertAdjacentElement("afterend",form);
     form.hidden=false;
     contactButton.textContent=closeLabel;
@@ -2887,7 +2038,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
 })();
 </script>
 
-
 <script>
 (()=>{
   const button=document.getElementById("contactMessageOpen");
@@ -2911,7 +2061,6 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
   });
 })();
 </script>
-
 
 <script>
 (function(){

@@ -319,6 +319,12 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
   }
 }
 
+/* Introduction du formulaire Programmateur : visible dans Contact, masquée dans le bloc d’accueil */
+.organizer-contact-intro{display:none}
+#contact .organizer-contact-intro{display:block;margin:0 0 18px}
+#contact .organizer-contact-intro h3{margin:0 0 8px;color:var(--blue);font-size:1.35rem;line-height:1.2}
+#contact .organizer-contact-intro p{margin:0;font-weight:400;line-height:1.5}
+
 #visitorMessageBox[hidden]{display:none}
 #contact #visitorMessageBox{
   background:#fff;
@@ -459,7 +465,7 @@ section.nav-focus{animation:aclSectionFocus .9s ease-out}
 }
 
 @media (min-width:761px){
-  
+
   #heroPanel.has-concert #concertPoster > .poster-copy{
     padding:10px 14px;
   }
@@ -867,6 +873,15 @@ body.concert-modal-open{overflow:hidden}
 
 #duo .section-sign,
 #concerts .section-sign,
+
+/* Contact — Message et Programmateur : même largeur et même espacement sous les boutons */
+#contact #visitorMessageBox{
+  width:100%;
+  max-width:590px;
+  margin:0;
+  box-sizing:border-box;
+}
+
 #musique .section-sign,
 #videos .section-sign,
 #photos .section-sign,
@@ -1030,6 +1045,10 @@ body.concert-modal-open{overflow:hidden}
 <div class="organizer-invite" id="organizerInvite">
   <button type="button" class="organizer-open" id="organizerOpen">Programmer A’Cha Lou ?</button>
   <form id="organizerForm" class="organizer-form" hidden>
+    <div class="organizer-contact-intro">
+      <h3>Programmer A’Cha Lou</h3>
+      <p>Un concert, un bal, un festival ? Écrivez-nous ici.</p>
+    </div>
     <label>Nom / organisme<input name="nom" type="text" maxlength="80" autocomplete="organization" required></label>
     <label>Téléphone<input name="telephone" type="tel" maxlength="30" autocomplete="tel" placeholder="Téléphone ou e-mail requis"></label>
     <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" placeholder="Téléphone ou e-mail requis"></label>
@@ -1089,7 +1108,7 @@ body.concert-modal-open{overflow:hidden}
 
 <section class="contact reveal" id="contact"><div class="wrap"><h2 class="section-sign"><img src="acha-lou-sans-concert.png" alt="" aria-hidden="true"><span>Contact</span></h2><p class="copy">Concert, bal, festival, programmation ou simplement envie de suivre A’Cha Lou ?</p><div class="socials"><a class="social" href="https://www.facebook.com/profile.php?id=61571112552267" target="_blank" rel="noopener noreferrer" id="facebookLink">Facebook</a><a class="social" href="https://www.instagram.com/achalou24/" target="_blank" rel="noopener noreferrer" id="instagramLink">Instagram · @achalou24</a>
 <button type="button" class="social contact-programmer" id="contactMessageOpen">Envoyer un message</button>
-<button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div></div>
+<button type="button" class="social contact-programmer" id="contactProgrammer">Programmer A’Cha Lou ?</button></div>
 
 <div class="visitor-message" id="visitorMessageBox" hidden>
   <h3>Laisser un message à A’Cha Lou</h3>
@@ -1112,6 +1131,8 @@ body.concert-modal-open{overflow:hidden}
     <div id="publicMessageStatus" class="message-status" role="status" aria-live="polite"></div>
   </form>
 </div>
+</div>
+
 </section>
 </main>
 <footer class="foot"><div class="wrap"><strong>A’Cha Lou · Musique trad</strong><div class="tech">Site officiel · Montpellier / Occitanie · connexion HTTPS</div></div></footer>
@@ -1469,7 +1490,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       // En portrait mobile, on réserve 16 px de respiration de chaque côté.
       // Le panneau entier est donc toujours contenu dans la largeur visible.
       const parentW=panel.parentElement ? panel.parentElement.clientWidth : viewportW;
-      
+
       const screenMax=isPortraitMobile
         ? Math.max(240,Math.min(parentW,viewportW-36))
         : Math.max(280,Math.min(600,parentW));
@@ -1546,7 +1567,7 @@ document.write('<script src="concerts.js?v=' + Date.now() + '"><\/script>');
       };
 
       const fits=()=>{
-        
+
         const cs=getComputedStyle(copy);
         const gap=parseFloat(cs.rowGap)||parseFloat(cs.gap)||0;
         const innerH=Math.max(0,copy.clientHeight);

@@ -1035,6 +1035,36 @@ body.concert-modal-open{overflow:hidden}
 .attachment-help{display:block;margin:6px 0 0;font-size:.76rem;line-height:1.35;opacity:.62}
 @media(max-width:520px){.attachment-picker{align-items:flex-start;flex-direction:column;gap:6px}.attachment-name{width:100%;white-space:normal;overflow-wrap:anywhere}}
 
+
+/* Boutons principaux — gabarit uniforme sur tout le site */
+.hero .cta,
+.hero .organizer-open,
+#contact .social{
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:220px;
+  min-height:48px;
+  padding:12px 22px;
+  margin-left:0;
+  margin-right:0;
+  border-radius:999px;
+  font:inherit;
+  font-weight:850;
+  line-height:1.15;
+  text-align:center;
+}
+@media(max-width:760px){
+  .hero .cta,
+  .hero .organizer-open,
+  #contact .social{
+    width:100%;
+    max-width:280px;
+    min-width:0;
+  }
+}
+
 </style>
 
 </head>

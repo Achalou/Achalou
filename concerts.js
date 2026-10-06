@@ -40,5 +40,23 @@ window.ACHALOU_CONCERTS = [
     "statut": "publie",
     "publicationProgrammee": "",
     "supprimeLe": "2026-09-30T20:00:49.812Z"
+  },
+  {
+    "date": "2026-12-12",
+    "lieu": "Delirium · Montpellier",
+    "heure": "20:00",
+    "info": "salut tout le monde",
+    "url": "https://baletisauvage.github.io/Baleti-Sauvage-Montpellier/",
+    "etat": "normal",
+    "complet": false,
+    "raisonEtat": "",
+    "nouvelleDate": "",
+    "nouvelleHeure": "",
+    "nouveauLieu": "",
+    "nouvelleVille": "",
+    "heureAvant": "",
+    "lieuAvant": "",
+    "statut": "publie",
+    "publicationProgrammee": ""
   }
 ];
